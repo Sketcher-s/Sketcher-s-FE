@@ -1,26 +1,64 @@
+// module.exports = {
+//   env: {
+//     browser: true,
+//     es2021: true,
+//   },
+//   extends: 'airbnb',
+//   overrides: [
+//     {
+//       env: {
+//         node: true,
+//       },
+//       files: [
+//         '.eslintrc.{js,cjs}',
+//       ],
+//       parserOptions: {
+//         // sourceType: 'script',
+//         ecmaVersion: 6,
+//         sourceType: 'module',
+//       },
+//     },
+//   ],
+//   parserOptions: {
+//     ecmaVersion: 'latest',
+//     sourceType: 'module',
+//   },
+//   rules: {
+//   },
+// };
+
 module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
+  "env": {
+      "browser": true,
+      "es2021": true
   },
-  extends: 'airbnb',
-  overrides: [
-    {
-      env: {
-        node: true,
-      },
-      files: [
-        '.eslintrc.{js,cjs}',
-      ],
-      parserOptions: {
-        sourceType: 'script',
-      },
-    },
+  "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:react/recommended"
   ],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
+  "overrides": [
+      {
+          "env": {
+              "node": true
+          },
+          "files": [
+              ".eslintrc.{js,cjs}"
+          ],
+          "parserOptions": {
+              "sourceType": "script"
+          }
+      }
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
   },
-  rules: {
-  },
-};
+  "plugins": [
+      "@typescript-eslint",
+      "react"
+  ],
+  "rules": {
+  }
+}
