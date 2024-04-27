@@ -12,6 +12,10 @@ function PrepareDraw() {
     Navigate('/Draw');
   }
 
+  function handlePicClick(){
+    Navigate('/PreparePicture');
+  }
+
   //TODO 사진 첨부하기 navigate 만들기
 
 
@@ -52,7 +56,7 @@ function PrepareDraw() {
       </NoteContainer>
 
       <ButtonBox>
-      <PicButtonBox>
+      <PicButtonBox onClick={handlePicClick}>
         <PicButton>사진 첨부하기</PicButton>
       </PicButtonBox>
       <DraButtonBox onClick={handleDrawClick}>

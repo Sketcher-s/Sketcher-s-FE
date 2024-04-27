@@ -5,6 +5,7 @@ import PrepareDraw from './components/Draw/PrepareDraw';
 import Draw from './components/Draw/Draw';
 import styled from 'styled-components';
 import './assets/font/font.css';
+import PreparePicture from './components/Draw/PreparePic';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
             <Routes>
               <Route path="/" element={<PrepareDraw/>} />
               <Route path="/Draw" element={<Draw/>} />
+              <Route path="/PreparePicture" element={<PreparePicture/>} />
             </Routes>
           </BrowserRouter>
         </Background>
