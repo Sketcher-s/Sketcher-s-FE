@@ -2,20 +2,40 @@ import styled from 'styled-components';
 import { theme } from '../theme';
 
 export const LoginContainer = styled.div`
-  flex: 1;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   ${theme.media.mobile`
-  align-items: flex-start;
+  
 `}
 
   ${theme.media.desktop`
-  align-items: center;
+  
 `}
 `;
 
 export const LoginWrapper = styled.div`
+  height: 50%;
+  padding: 7rem 0;
+  background: white;
+  border-radius: 0.625rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+
+  ${theme.media.mobile`
+  width: 80%;
+`}
+
+  ${theme.media.desktop`
+  width: 60%;
+`}
+`;
+export const JoinWrapper = styled.form`
   height: 50%;
   padding: 7rem 0;
   background: white;
@@ -52,13 +72,14 @@ export const LoginTitle = styled.div`
 `;
 
 export const InputWrapper = styled.div`
-  
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   gap: 1.25rem;
+
   ${theme.media.mobile`
+  gap: 0.25rem;
   width: 75%;
 `}
 
@@ -66,18 +87,24 @@ export const InputWrapper = styled.div`
   width: 55%;
 `}
 `;
+export const InputContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+`;
 
 export const InputField = styled.div`
   width: 100%;
-  padding: 12px 20px;
   border-radius: 4px;
   border: 1px solid #e0e1e9;
-  display: inline-flex;
+  display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
 
   > div {
-    width: 1.875rem;
+    width: 1.5rem;
     color: #27282b;
     font-size: 1rem;
     font-family: Pretendard;
@@ -94,15 +121,18 @@ export const InputField = styled.div`
 `;
 
 export const InputValue = styled.input`
-  width: 100%;
+  width: calc(100% - 2rem);
   border: none;
   outline: none;
   color: #27282b;
   font-family: Pretendard;
   font-weight: 600;
   line-height: 1.5rem;
+  padding: 0.75rem 1.25rem;
+  wordwrap: 'break-word';
+
   ${theme.media.mobile`
-  font-size: 0.8rem;
+  font-size: 0.7rem;
 `}
 
   ${theme.media.desktop`
@@ -114,6 +144,7 @@ export const PasswordIcon = styled.div`
   width: 1.5rem;
   height: 1.5rem;
   position: relative;
+  margin-right: 0.5rem;
 
   > div {
     width: 1.124rem;
@@ -146,7 +177,6 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const Divider = styled.div`
-  
   height: 0;
   border: 1px #e0e1e9 solid;
   ${theme.media.mobile`
@@ -185,4 +215,14 @@ export const Button = styled.div`
   ${theme.media.desktop`
   
 `}
+`;
+
+export const ErrorText = styled.div`
+  color: #ff8888;
+  font-size: 0.7rem;
+  font-family: 'Pretendard';
+  font-weight: 600;
+  line-height: 1.5rem;
+  word-wrap: break-word;
+  text-align: left;
 `;
