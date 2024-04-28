@@ -27,7 +27,6 @@ export const Header = styled.div`
 `}
 `;
 
-
 export const HeaderTitle = styled.div`
   text-align: center;
   color: #5678be;
