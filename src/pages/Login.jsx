@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-//import Button from '../components/Button';
-//import { isDisabled } from '@testing-library/user-event/dist/utils';
-import Message from '../components/Message.jsx';
-import { ReactComponent as PwdIcon } from '../../assets/images/pwdIcon.svg';
-import { LoginWrapper } from '../components/LoginStyle.jsx';
+import { useForm } from 'react-hook-form';
+import { ReactComponent as PwdIcon } from '../assets/images/pwdIcon.svg';
+import { ReactComponent as NonPwdIcon } from '../assets/images/NonPwdIcon.svg';
+
+import { ErrorText, JoinWrapper } from '../components/LoginStyle.jsx';
 import { LoginContainer } from '../components/LoginStyle.jsx';
 import { LoginTitle } from '../components/LoginStyle.jsx';
 import { InputWrapper } from '../components/LoginStyle.jsx';
@@ -13,55 +13,88 @@ import { PasswordIcon } from '../components/LoginStyle.jsx';
 import { Divider } from '../components/LoginStyle.jsx';
 import { ButtonWrapper } from '../components/LoginStyle.jsx';
 import { Button } from '../components/LoginStyle.jsx';
-import { isDisabled } from '@testing-library/user-event/dist/utils/index.js';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, isValid },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    if (isValid) {
+      // 유효한 경우 폼 제출
+      console.log('제출 성공');
+    } else {
+      // 유효하지 않음
+      console.log('제출 실패');
+    }
+  };
+
+  const emailRegister = register('email', {
+    required: { value: true },
+  });
+
+  const pwdRegister = register('password', {
+    required: { value: true },
+  });
+
+  // 비밀번호 숨기기/보이기
+  const [hidePwd, setHidePwd] = useState(true);
 
   // const handleSubmit = (event) => {
   //   event.preventDefault();
   // 로그인 처리
   //};
 
+  // 비밀번호 보기/숨기기 핸들러
+  const togglePasswordVisibility = () => {
+    setHidePwd(!hidePwd);
+  };
+
   return (
     <LoginContainer>
-      <LoginWrapper>
+      <JoinWrapper onSubmit={handleSubmit(onSubmit)}>
         <LoginTitle>로그인</LoginTitle>
         <InputWrapper>
           <InputField>
             <InputValue
               type="email"
               id="email"
-              value={email}
               placeholder="이메일을 입력해 주세요"
-              onChange={(e) => setEmail(e.target.value)}
+              {...register('email', { required: true })}
             />
           </InputField>
           <InputField>
             <InputValue
-              type="password"
+              type={hidePwd ? 'password' : 'text'}
               id="password"
-              value={password}
               placeholder="비밀번호를 입력해 주세요"
-              onChange={(e) => setPassword(e.target.value)}
+              {...register('password', { required: true })}
             />
-            <PasswordIcon>
-              <PwdIcon />
-            </PasswordIcon>
+            <PasswordIcon onClick={togglePasswordVisibility}>{hidePwd ? <PwdIcon /> : <NonPwdIcon />}</PasswordIcon>
           </InputField>
-          <Message title="이메일 및 비밀번호를 입력해 주세요." />
+          {errors.email && <ErrorText>이메일을 입력해 주세요.</ErrorText>}
+          {errors.password && <ErrorText>비밀번호를 입력해 주세요.</ErrorText>}
         </InputWrapper>
         <Divider />
         <ButtonWrapper>
-          <Button width="100%" background="#6487e2" color="white">
-            <div>로그인</div>
+          <Button
+            width="100%"
+            background={isValid ? '#6487e2' : '#ccc'}
+            color={isValid ? 'white' : '#999'}
+            type="submit"
+            disabled={!isValid}
+          >
+            로그인
           </Button>
           <Button width="100%" background="white" color="#6487e2">
-            <div>회원가입</div>
+            회원가입
           </Button>
         </ButtonWrapper>
-      </LoginWrapper>
+      </JoinWrapper>
     </LoginContainer>
   );
 };

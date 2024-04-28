@@ -36,7 +36,7 @@ export const LoginWrapper = styled.div`
 `}
 `;
 export const JoinWrapper = styled.form`
-height: 50%;
+  height: 50%;
   padding: 7rem 0;
   background: white;
   border-radius: 0.625rem;
@@ -54,7 +54,7 @@ height: 50%;
   ${theme.media.desktop`
   width: 60%;
 `}
-`
+`;
 
 export const LoginTitle = styled.div`
   color: #27282b;
@@ -101,10 +101,10 @@ export const InputField = styled.div`
   border: 1px solid #e0e1e9;
   display: flex;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
 
   > div {
-    width: 1.875rem;
+    width: 1.5rem;
     color: #27282b;
     font-size: 1rem;
     font-family: Pretendard;
@@ -121,15 +121,15 @@ export const InputField = styled.div`
 `;
 
 export const InputValue = styled.input`
-  width: 100%;
+  width: calc(100% - 2rem);
   border: none;
   outline: none;
   color: #27282b;
   font-family: Pretendard;
   font-weight: 600;
   line-height: 1.5rem;
-  padding: 12px 20px;
-  wordWrap: 'break-word';
+  padding: 0.75rem 1.25rem;
+  wordwrap: 'break-word';
 
   ${theme.media.mobile`
   font-size: 0.7rem;
@@ -144,6 +144,7 @@ export const PasswordIcon = styled.div`
   width: 1.5rem;
   height: 1.5rem;
   position: relative;
+  margin-right: 0.5rem;
 
   > div {
     width: 1.124rem;
