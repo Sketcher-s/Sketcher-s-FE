@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import { theme } from '../theme';
 
-const Container = styled.div`
-  flex: 1;
-`;
+const Container = styled.div``;
 
 const HeaderWrapper = styled.div`
 height: 100%
@@ -23,7 +21,7 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10rem;
+
   ${theme.media.mobile`
   padding: 1rem;
 `}
@@ -52,8 +50,8 @@ const HeaderButtons = styled.div`
 `;
 
 const Button = styled.div`
-  width: ${(props) => props.width}px;
-  padding: 0 10px;
+  width: ${(props) => props.width};
+  padding: 0 0.7rem;
   border-radius: 0.25rem;
   display: flex;
   justify-content: center;
@@ -70,7 +68,7 @@ const Button = styled.div`
   }
 
   ${(props) =>
-    props.isSignup &&
+    props.issignup &&
     theme.media.mobile`
       display: none;
 `}
@@ -89,10 +87,10 @@ const Navbar = () => {
         <Header>
           <HeaderTitle>Catch Mind</HeaderTitle>
           <HeaderButtons>
-            <Button width={52} isSignup={false}>
+            <Button width={52} issignup={false}>
               <div>로그인</div>
             </Button>
-            <Button width={62} isSignup={true}>
+            <Button width={62} issignup={true}>
               <div>회원가입</div>
             </Button>
           </HeaderButtons>

@@ -15,7 +15,7 @@ import { useForm } from 'react-hook-form';
 import { ErrorText } from '../components/LoginStyle.jsx';
 
 
-const Join = () => {
+const Register = () => {
   const {
     register,
     handleSubmit,
@@ -125,4 +125,4 @@ const Join = () => {
   );
 };
 
-export default Join;
+export default Register;
