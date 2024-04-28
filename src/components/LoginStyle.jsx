@@ -215,3 +215,13 @@ export const Button = styled.div`
   
 `}
 `;
+
+export const ErrorText = styled.div`
+  color: #ff8888;
+  font-size: 0.7rem;
+  font-family: 'Pretendard';
+  font-weight: 600;
+  line-height: 1.5rem;
+  word-wrap: break-word;
+  text-align: left;
+`;
