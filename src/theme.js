@@ -5,13 +5,13 @@ export const theme = {
           ${styles}
         }
       `,
-    tablet: (styles) => `
-        @media (min-width: 768px) and (max-width: 1023px) {
-          ${styles}
-        }
-      `,
+    // tablet: (styles) => `
+    //     @media (min-width: 768px) and (max-width: 1023px) {
+    //       ${styles}
+    //     }
+    //   `,
     desktop: (styles) => `
-        @media (min-width: 1024px) {
+        @media (min-width: 768px) {
           ${styles}
         }
       `,
