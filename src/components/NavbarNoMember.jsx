@@ -24,4 +24,5 @@ const NavbarNoMember = () => {
   );
 };
 
+
 export default NavbarNoMember;
