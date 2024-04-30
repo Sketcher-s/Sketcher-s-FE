@@ -50,16 +50,19 @@ export const HeaderButtons = styled.div`
   gap: 1rem;
 `;
 
-export const Button = styled.div`
+export const Button = styled.button`
   width: ${(props) => props.width};
   padding: 0.4rem 0.5rem;
   border-radius: 0.25rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${(props) => props.background};
-  border: ${(props) => props.border};
 
+border: ${(props) => props.border || 'none'};
+background: ${(props) => props.background || 'transparent'}; // 배경색을 투명하게
+outline: none; // 클릭 시 나타나는 윤곽선 제거
+cursor: pointer;
+  
   // 비회원-모바일, 메인페이지 버튼 숨기기
   ${(props) =>
     props.noMember &&

@@ -1,4 +1,5 @@
 import { Container, HeaderWrapper, Header, HeaderTitle, HeaderButtons, Button, Text, Divider } from './NavbarStyle';
+import React from 'react';
 
 const NavbarNoMember = () => {
   return (
