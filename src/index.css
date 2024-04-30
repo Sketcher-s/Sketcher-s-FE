@@ -1,0 +1,4 @@
+/* input 태그 자동완성해도 배경색 하얀색 유지 */
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 500px white inset !important;
+  }

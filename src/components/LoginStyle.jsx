@@ -98,13 +98,13 @@ export const InputContainer = styled.div`
 export const InputField = styled.div`
   width: 100%;
   border-radius: 4px;
-  border: 1px solid #e0e1e9;
+  border:  ${(props) => (props.isError ? "1px solid #ff8888" : props.isFocused ? "1px solid #6487E2" : "1px solid #e0e1e9")};
   display: flex;
   justify-content: flex-start;
   align-items: center;
 
   > div {
-    width: 1.5rem;
+    width: 2.7rem;
     color: #27282b;
     font-size: 1rem;
     font-family: Pretendard;
@@ -112,6 +112,7 @@ export const InputField = styled.div`
     line-height: 1.5rem;
     word-wrap: break-word;
   }
+
   ${theme.media.mobile`
   
 `}
@@ -179,16 +180,17 @@ export const ButtonWrapper = styled.div`
 export const Divider = styled.div`
   height: 0;
   border: 1px #e0e1e9 solid;
+
   ${theme.media.mobile`
-  width: 87%;
+  width: 75%;
 `}
 
   ${theme.media.desktop`
-  width: 59%;
+  width: 55%;
 `}
 `;
 
-export const Button = styled.div`
+export const Button = styled.button`
   width: ${(props) => props.width};
   height: 3rem;
   padding: 0 1.25rem;
@@ -197,6 +199,12 @@ export const Button = styled.div`
   justify-content: center;
   align-items: center;
   background: ${(props) => props.background};
+  border: none;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
 
   > div {
     width: 16.875rem;
@@ -225,4 +233,29 @@ export const ErrorText = styled.div`
   line-height: 1.5rem;
   word-wrap: break-word;
   text-align: left;
+`;
+
+// NavbarStyle에서 가져옴
+export const CheckButton = styled.button`
+width: ${(props) => props.width};
+  padding: ;
+  border-radius: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${(props) => props.background};
+  border: ${(props) => (props.isError ? "1px solid #C1D1F2": "1px solid #6487E2")};
+  margin-right: 0.5rem;
+`;
+
+// NavbarStyle에서 가져옴
+export const Text = styled.div`
+  text-align: center;
+  color: ${(props) => props.isError ? '#C1D1F2' : '#6487E2'};
+  font-size: 0.5rem;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 600;
+  line-height: 1.12rem;
+  word-wrap: break-word;
+  white-space: nowrap;
 `;
