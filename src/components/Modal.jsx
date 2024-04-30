@@ -74,11 +74,8 @@ const ButtonText = styled(Text)`
 
 
 const Modal = ({close, title, message}) => {
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 74fc19d (회원가입 UI 완성, 모달 생성, 중복체크 버튼 생성)
     return (
         <ModalContainer>
                 <ModalWrapper>
