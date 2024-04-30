@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ReactComponent as PwdIcon } from '../assets/images/pwdIcon.svg';
 import { ReactComponent as NonPwdIcon } from '../assets/images/NonPwdIcon.svg';
-
 import { ErrorText, JoinWrapper } from '../components/LoginStyle.jsx';
 import { LoginContainer } from '../components/LoginStyle.jsx';
 import { LoginTitle } from '../components/LoginStyle.jsx';
@@ -33,6 +32,19 @@ const Login = () => {
     }
   };
 
+  // 입력 필드 클릭 시, border 색상 변경
+  const [focus, setFocus] = useState({
+    email: false,
+    password: false,
+  });
+
+  const handleFocus = (field) => {
+    setFocus({ ...focus, [field]: true });
+  };
+
+  const handleBlur = (field) => {
+    setFocus({ ...focus, [field]: false });
+  };
   const emailRegister = register('email', {
     required: { value: true },
   });
@@ -59,20 +71,24 @@ const Login = () => {
       <JoinWrapper onSubmit={handleSubmit(onSubmit)}>
         <LoginTitle>로그인</LoginTitle>
         <InputWrapper>
-          <InputField>
+          <InputField isFocused={focus.name}>
             <InputValue
               type="email"
               id="email"
               placeholder="이메일을 입력해 주세요"
               {...register('email', { required: true })}
+              onFocus={() => handleFocus('name')} 
+              onBlur={() => handleBlur('name')}
             />
           </InputField>
-          <InputField>
+          <InputField isFocused={focus.password}>
             <InputValue
               type={hidePwd ? 'password' : 'text'}
               id="password"
               placeholder="비밀번호를 입력해 주세요"
               {...register('password', { required: true })}
+              onFocus={() => handleFocus('password')} 
+              onBlur={() => handleBlur('password')}
             />
             <PasswordIcon onClick={togglePasswordVisibility}>{hidePwd ? <PwdIcon /> : <NonPwdIcon />}</PasswordIcon>
           </InputField>
