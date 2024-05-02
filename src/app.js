@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import Navbar from './components/Navbar_mobile';
+import Navbar from './components/NavbarMember';
 import './index.css';
 import GlobalStyle from './components/GlobalStyle';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -16,7 +16,7 @@ function App() {
   return (
     <BrowserRouter>
     {/* <GlobalStyle/> */}
-    < Navbar toggleSidebar={toggleSidebar} />
+    < NavbarNoMember toggleSidebar={toggleSidebar} />
       <Sidebar isOpen={isSidebarOpen} toggle={() => setIsSidebarOpen(false)}/>
       <Routes>
         <Route path="/" element={<MyPage/>}/>
