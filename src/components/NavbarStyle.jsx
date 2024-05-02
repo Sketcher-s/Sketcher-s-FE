@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { theme } from '../theme';
 
+
 export const Container = styled.div``;
 
 export const HeaderWrapper = styled.div`
@@ -62,18 +63,9 @@ border: ${(props) => props.border || 'none'};
 background: ${(props) => props.background || 'transparent'}; // 배경색을 투명하게
 outline: none; // 클릭 시 나타나는 윤곽선 제거
 cursor: pointer;
-  
-  // 비회원-모바일, 메인페이지 버튼 숨기기
-  ${(props) =>
-    props.noMember &&
-    theme.media.mobile`
-    display: none;
-`}
 
-  ${(props) =>
-    props.issignup &&
-    theme.media.mobile`
-      display: none;
+${theme.media.mobile`
+  display: none;
 `}
 `;
 
