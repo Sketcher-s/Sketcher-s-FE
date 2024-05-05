@@ -7,9 +7,10 @@ function PreparePicture() {
   return (
     <Container>
       <Section>
+        
         <PutSection>
           <Back />
-          <Title>사진 첨부하기</Title>
+          <Title>뒤로가기</Title>
         </PutSection>
 
         <Content>
