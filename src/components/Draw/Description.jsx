@@ -1,17 +1,43 @@
-//import React, { useRef, useState } from 'react';
-import React from 'react';
+import React, { useRef, useState } from 'react';
+//import React from 'react';
+import PropTypes from 'prop-types'; // prop-types 추가
 import styled from 'styled-components';
 import { ReactComponent as GCheck } from '../../assets/Draw/GCheck.svg';
 import { ReactComponent as PrepareDraw1 } from '../../assets/Draw/PrepareDraw1.svg';
-//import { ReactComponent as Shape } from '../../assets/Draw/Shape.svg';
-//import { ReactComponent as Rectangle } from '../../assets/Draw/Rectangle.svg';
+import Bar from '../Draw/Bar';
+import { ReactComponent as Shape } from '../../assets/Draw/Shape.svg';
+import { ReactComponent as Rectangle } from '../../assets/Draw/Rectangle.svg';
 
-const Description = () => {
+const Description = ({onClick}) => {
+    const [isBarBoxVisible, setBarBoxVisible] = useState(true);
+
+    const toggleBarBox = () => {
+        setBarBoxVisible(!isBarBoxVisible);
+        onClick(); // Description을 클릭했을 때 상위 컴포넌트의 onClick 함수 호출
+      };
+
+      Description.propTypes = {
+        onClick: PropTypes.func.isRequired, // onClick prop의 유효성 검사 추가
+      };
 
   return (
+    <div>
+    
     <Container>
 
-    <StyledContainer>
+    {isBarBoxVisible && (
+    <BarBox onClick={toggleBarBox}>
+        <StyledShape>
+            <Shape/>
+        </StyledShape>
+
+        <StyledRectangle>
+            <Rectangle/>
+        </StyledRectangle>
+    </BarBox>
+    )}
+
+    <StyledContainer onClick={toggleBarBox}>
 
       <StyledMissionContainer>
         <StyledMissionTag>Mission</StyledMissionTag>
@@ -40,19 +66,25 @@ const Description = () => {
       </StyledItemContainer>
     </StyledContainer>
 
-
     </Container>
- 
+    </div>
   );
 }
 
 export default Description;
 
 const Container = styled.div`
+
   background: #f3f3f6;
-  position: absolute;
+  position: relative;
+  display: flex;
+//   justify-content: center;
+//   align-items: center;
   right: 0; /* 오른쪽에 위치하도록 설정 */
+  justify-content: flex-end; /* 모든 내용을 컨테이너의 오른쪽 끝에 배치 */
+  align-items: center; /* 세로 가운데 정렬 */
 `;
+
 
 const StyledContainer = styled.div`
   width: 206px;
@@ -129,4 +161,28 @@ const StyledContent = styled.div`
   font-weight: 500;
   line-height: 18px;
   word-wrap: break-word;
+`;
+
+const BarBox = styled.div`
+//background: #f3f3f6;
+width: 20px;
+height: 70px;
+justify-content: center; /* 수평 중앙 정렬 */
+align-items: center; /* 수직 중앙 정렬 */
+// width: 100vw; /* 화면 너비 전체 */
+// height: 100vh; /* 화면 높이 전체 */
+//margin-right: auto; /* BarBox를 왼쪽으로 밀어서 모든 내용을 오른쪽으로 밀어냄 */
+`;
+
+const StyledShape = styled.div`
+position: absolute;
+margin-top: 25px;
+margin-left: 7px;
+z-index: 2;
+`;
+
+const StyledRectangle = styled.div`
+position: relative;
+z-index: 1;
+
 `;

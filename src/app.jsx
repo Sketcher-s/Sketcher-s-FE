@@ -20,9 +20,9 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<PrepareDraw/>} />
-              <Route path="/Draw" element={<DrawPage/>} />
+              <Route path="/Draw" element={<Draw/>} />
               <Route path="/PreparePicture" element={<PreparePicture/>} />
-              <Route path="/Loading" element={<Loading/>} />
+              <Route path="/Loading" element={<Description/>} />
               {/* <Route path="/Loading" element={<Bar/>} /> */}
             </Routes>
           </BrowserRouter>

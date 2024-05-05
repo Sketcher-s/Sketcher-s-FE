@@ -1,16 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Check } from '../../assets/Draw/Check.svg';
 import { ReactComponent as Back } from '../../assets/Draw/Back.svg';
 
 function PreparePicture() {
+
+  const Navigate = useNavigate();
+
+  function handleDrawClick() {
+    Navigate('/');
+  }
   return (
     <Container>
       <Section>
         
         <PutSection>
           <Back />
-          <Title>뒤로가기</Title>
+          <Title onClick={handleDrawClick}>뒤로가기</Title>
         </PutSection>
 
         <Content>
