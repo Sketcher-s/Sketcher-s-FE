@@ -136,14 +136,16 @@ const OutContainer = styled.div`
   gap: 1.875rem; // 30px;
   display: inline-flex;
   background: #f3f3f6;
+  border-radius: 10px;
 `;
 
 const Icon = styled.div`
-  left: 13.1875rem; //211px;
-  top: 7.25rem; //116px;
+  left: 211px;
+  top: 116px;
   display: flex;
   flex-direction: column;
 `;
+
 
 const DrawingArea = styled.div`
   left: 13.1875rem; //211px;
