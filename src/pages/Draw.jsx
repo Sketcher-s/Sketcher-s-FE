@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 //import { useRecoilState, useRecoilValue } from 'recoil';
 //import { searchToggleState, searchResultState, searchTextState } from '../recoil';
 import Description from '../components/Draw/Description';
 import Draw from '../components/Draw/Draw';
+import { theme } from '../theme';
 
 
 export default function DrawPage() {
@@ -13,7 +14,6 @@ export default function DrawPage() {
     <Container>
         <Draw/>
         <Description />
-
     </Container>
   );
 }
@@ -30,4 +30,9 @@ width: 100%;
   display: inline-flex;
   background: #f3f3f6;
   border-radius: 10px;
+
+  ${theme.media.mobile`
+
+`}
+  
 `;

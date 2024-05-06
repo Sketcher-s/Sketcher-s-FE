@@ -7,10 +7,7 @@ import Loading from './components/Draw/Loading';
 import styled from 'styled-components';
 import './assets/font/font.css';
 import PreparePicture from './components/Draw/PreparePic';
-//import DrawPage from '/Users/jangnanyoung/Desktop/sketchers-fe/src/pages/Draw';
-import Description from './components/Draw/Description';
-import Bar from './components/Draw/Bar';
-import DrawPage from './pages/Draw';
+import Navbar from './components/Nav';
 
 
 function App() {
@@ -18,11 +15,12 @@ function App() {
       <div>
         <Background>
           <BrowserRouter>
+            <Navbar/>
             <Routes>
               <Route path="/" element={<PrepareDraw/>} />
               <Route path="/Draw" element={<Draw/>} />
               <Route path="/PreparePicture" element={<PreparePicture/>} />
-              <Route path="/Loading" element={<Description/>} />
+              <Route path="/Loading" element={<Loading/>} />
               {/* <Route path="/Loading" element={<Bar/>} /> */}
             </Routes>
           </BrowserRouter>

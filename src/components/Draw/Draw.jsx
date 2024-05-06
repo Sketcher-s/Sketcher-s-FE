@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-//import React, { useRef, useState } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -9,8 +8,6 @@ import { ReactComponent as WPencil } from '../../assets/Draw/WPencil.svg';
 import { ReactComponent as WTrash } from '../../assets/Draw/WTrash.svg';
 import { ReactComponent as WAll } from '../../assets/Draw/WAll.svg';
 import Description from '../Draw/Description';
-import Bar from '../Draw/Bar';
-
 import { ReactComponent as Shape } from '../../assets/Draw/Shape.svg';
 import { ReactComponent as Rectangle } from '../../assets/Draw/Rectangle.svg';
 
@@ -131,58 +128,58 @@ const Wrap = styled.div`
 const OutContainer = styled.div`
   width: 100%;
   //height: 100%;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 2.5rem; //40px;
+  padding-bottom: 2.5rem; //40px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 30px;
+  gap: 1.875rem; // 30px;
   display: inline-flex;
   background: #f3f3f6;
 `;
 
 const Icon = styled.div`
-  left: 211px;
-  top: 116px;
+  left: 13.1875rem; //211px;
+  top: 7.25rem; //116px;
   display: flex;
   flex-direction: column;
 `;
 
 const DrawingArea = styled.div`
-  left: 211px;
-  top: 116px;
+  left: 13.1875rem; //211px;
+  top: 7.25rem; //116px;
   display: flex;
   flex-direction: row;
 `;
 
 
 const CanvasContainer = styled.div`
-  width: 482px;
-  height: 482px;
+  width: 30.125rem; //482px;
+  height: 30.125rem; //482px;
   background: white;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.04);
+  box-shadow: 0.3125rem 0.3125rem 0.625rem rgba(0, 0, 0, 0.04);
 `;
 
 const ButtonContainer = styled.div`
-  width: 160px;
-  height: 44px; 
-  padding-left: 20px;
-  padding-right: 20px;
+  width: 10rem; //160px;
+  height: 2.75rem; //44px; 
+  padding-left: 1.25rem; //20px;
+  padding-right: 1.25rem; //20px;
   background: #6487E2;
-  border-radius: 4px;
+  border-radius: 0.25rem; //4px;
   justify-content: center;
   align-items: center;
   display: inline-flex;
 `;
 
 const Button = styled.div`
-  width: 120px;
+  width: 7.5rem; //120px;
   text-align: center;
   color: white;
-  font-size: 16px;
+  font-size: 1rem; //16px;
   font-family: Pretendard-Regular;
   font-weight: 700;
-  line-height: 24px
+  line-height: 1.5rem; //24px
   word-wrap: break-word;
 `;
 
@@ -190,23 +187,23 @@ const Button = styled.div`
 
 // 스타일 컴포넌트 정의
 const StyledWrapper = styled.div`
-  width: 20px;
-  height: 20px;
-  padding: 10px;
+  width: 1.25rem; //20px;
+  height: 1.25rem; //20px;
+  padding: 0.625rem; //10px;
   background: white;
-  box-shadow: 0px 4px 4px rgba(39, 40, 43, 0.10);
-  border-radius: 300px;
+  box-shadow: 0rem 0.25rem 0.25rem rgba(39, 40, 43, 0.10);
+  border-radius:18.75rem; //300px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 0.625rem; //10px;
   display: inline-flex;
-  margin-right: 20px;
-  margin-bottom: 16px;
+  margin-right: 1.25rem; //20px;
+  margin-bottom: 1rem; //16px;
 `;
 
 const BarBox = styled.div`
-  width: 20px;
-  height: 70px;
+  width: 1.25rem; //20px;
+  height: 4.375rem; //70px;
   position: absolute;
   top: 50%; /* 상단 위치를 중앙으로 조정 */
   transform: translateY(-50%); /* 세로 중앙 정렬을 위한 변환 */

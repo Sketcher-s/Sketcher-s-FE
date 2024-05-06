@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ReactComponent as PrepareDraw1 } from '../../assets/Draw/PrepareDraw1.svg'; // vite 사용하여 SVG 파일 import
 import { ReactComponent as Check } from '../../assets/Draw/Check.svg';
 import { useNavigate } from 'react-router-dom';
+import { theme } from '../../theme';
 
 function PrepareDraw() {
   const Navigate = useNavigate();
@@ -78,37 +79,51 @@ export default PrepareDraw;
 const OuterContainer = styled.div`
   width: 100%;
   height: 100%;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 2.5rem; //40px;
+  padding-bottom: 2.5rem; //40px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 30px;
+  gap: 1.875rem; //30px;
   display: inline-flex;
   background: #f3f3f6;
-  border-radius: 10px;
+  //border-radius: 0.625rem; //10px;
+
+  ${theme.media.mobile`
+`}
+
 `;
 
 const InnerContainer = styled.div`
-  width: 644px;
-  height: 519px;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  width: 40.25rem; //644px;
+  height: 32.4375rem; //519px;
+  padding-top: 2.5rem; //40px;
+  padding-bottom: 2.5rem; //40px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 30px;
+  gap: 1.875rem; //30px;
   display: inline-flex;
   background: white;
-  border-radius: 10px;
+  border-radius: 0.625rem; //10px;
+
+  ${theme.media.mobile`
+
+  width: 21.125rem;
+  height: 37.875rem;
+`}
 `;
 
 const SubContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 20px;
+  gap: 1.25rem; //20px;
   display: flex;
+
+  ${theme.media.mobile`
+
+`}
 `;
 
 const TextContainer = styled.div`
@@ -116,40 +131,60 @@ const TextContainer = styled.div`
   height: 100%;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 14px;
+  gap: 0.875rem; //14px;
   display: inline-flex;
+
+  ${theme.media.mobile`
+    width: 18rem; 
+  `}
 `;
 
 const Text = styled.div`
   color: #27282b;
-  font-size: 26px;
+  font-size: 1.625rem; //26px;
   font-family: Pretendard-Regular;
   font-weight: 700;
-  line-height: 39px;
+  line-height: 2.4375rem; //39px;
   word-wrap: break-word;
+
+  ${theme.media.mobile`
+  font-size: 1.375rem;
+  `}
 `;
 
 const NoteContainer = styled.div`
-  width: 484px;
-  height: 266px;
-  padding: 30px;
+  width: 30.25rem; //484px;
+  height: 16.625rem; //266px;
+  padding: 1.875rem; //30px;
   background: white;
-  border-radius: 10px;
-  border: 1px #e0e1e9 solid;
+  border-radius: 0.625rem; //10px;
+  border: 0.0625rem #e0e1e9 solid;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 14px;
+  gap: 0.875rem; //14px;
   display: flex;
+
+  ${theme.media.mobile`
+  width:15rem;
+  border: none;
+  padding: 0;
+  align-items: center;
+`}
 `;
 
 const NoteText = styled.div`
   color: #27282b;
-  font-size: 16px;
+  font-size: 1rem; //16px;
   font-family: Pretendard-Regular;
   font-weight: 500;
-  line-height: 24px;
+  line-height: 1.5rem; //24px;
   word-wrap: break-word;
+
+  ${theme.media.mobile`
+  font-size: 0.875rem; 
+`}
+
 `;
 
 const ButtonBox = styled.div`
@@ -158,50 +193,77 @@ const ButtonBox = styled.div`
   // gap: 50px;
   // display: inline-flex;
   display: flex;
-  gap: 20px; /* 버튼 간격 */
+  gap: 1.25rem; //20px; /* 버튼 간격 */
+
+  ${theme.media.mobile`
+  height: 3rem;
+  display: block;
+  gap: 2.5rem;
+`}
+
+
 `;
 
 const PicButtonBox = styled.div`
-  width: 160px;
-  height: 44px;
-  padding: 0 20px;
+  width: 10rem; //160px;
+  height: 2.75rem; //44px;
+  padding: 0 1.25rem; //0 20px;
   background: white;
-  border-radius: 4px;
-  border: 1px solid #6487e2;
+  border-radius: 0.25rem; //4px;
+  border: 0.0625rem solid #6487e2;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${theme.media.mobile`
+  margin-top: 2.5rem;
+  width: 15.625rem;
+  height: 3rem;
+  padding: 0 1.25rem;
+`}
+
+
 `;
 
 const PicButton = styled.div`
-  width: 120px;
+  width: 7.5rem; //120px;
   text-align: center;
   color: #6487e2;
-  font-size: 16px;
+  font-size: 1rem; //16px;
   font-family: Pretendard-Regular;
   font-weight: 700;
-  line-height: 24px;
+  line-height: 1.5rem; //24px;
   word-wrap: break-word;
+
 `;
 
 const DraButton = styled.div`
-  width: 120px;
+  width: 7.5rem; //120px;
   text-align: center;
   color: white;
-  font-size: 16px;
+  font-size: 1rem; //16px;
   font-family: Pretendard-Regular;
   font-weight: 700;
-  line-height: 24px;
+  line-height: 1.5rem; //24px;
   word-wrap: break-word;
+
 `;
 
 const DraButtonBox = styled.div`
-  width: 160px;
-  height: 44px;
-  padding: 0 20px;
+  width: 10rem; //160px;
+  height: 2.75rem; //44px;
+  padding: 0 1.25rem; //0 20px;
   background: #6487e2;
-  border-radius: 4px;
+  border-radius: 0.25rem; //4px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${theme.media.mobile`
+  margin-top: 1.25rem;
+  width: 15.625rem;
+  height: 3rem;
+  padding: 0 1.25rem;
+`}
+
 `;

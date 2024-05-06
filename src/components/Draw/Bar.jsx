@@ -24,8 +24,8 @@ export default Bar;
 
 const BarBox = styled.div`
   background: #f3f3f6;
-  width: 20px;
-  height: 70px;
+  width: 1.25rem; //20px;
+  height: 4.375rem; //70px;
   position: absolute;
   top: 50%; /* 상단 위치를 중앙으로 조정 */
   transform: translateY(-50%); /* 세로 중앙 정렬을 위한 변환 */
