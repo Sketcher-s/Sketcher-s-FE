@@ -140,8 +140,8 @@ const OutContainer = styled.div`
 `;
 
 const Icon = styled.div`
-  left: 211px;
-  top: 116px;
+  left: 13.1875rem; //211px;
+  top: 7.25rem; //116px;
   display: flex;
   flex-direction: column;
 `;
