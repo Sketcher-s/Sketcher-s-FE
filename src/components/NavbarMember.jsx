@@ -1,8 +1,5 @@
 import React from "react";
 import { Container, HeaderWrapper, Header, HeaderTitle, HeaderButtons, Button, Text, Divider } from './NavbarStyle';
-import { useMediaQuery } from "react-responsive";
-import { FiMenu } from "react-icons/fi";
-import PropTypes from 'prop-types';
 
 const Navbar = () => {
   
