@@ -11,7 +11,8 @@ import Navbar from './components/Nav';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import MyPage from './pages/MyPage';
-
+import Result from './pages/Result';
+import Main from './pages/Main';
 
 function App() {
     return (
@@ -27,6 +28,8 @@ function App() {
               <Route path="/Draw" element={<Draw/>} />
               <Route path="/PreparePicture" element={<PreparePicture/>} />
               <Route path="/Loading" element={<Loading/>} />
+              <Route path="/Main" element={<Main/>} />
+              <Route path="/Result" element={<Result/>} />
               {/* <Route path="/Loading" element={<Bar/>} /> */}
             </Routes>
           </BrowserRouter>
