@@ -20,7 +20,7 @@ function Draw() {
   const Navigate = useNavigate();
 
   function handleDoneClick() {
-    Navigate('/Loading');
+    Navigate('/loading');
   }
 
   // 버튼 클릭시 그림 저장 및 화면 이동

@@ -23,7 +23,7 @@ function PreparePicture() {
   const Navigate = useNavigate();
 
   function handleDrawClick() {
-    Navigate('/');
+    Navigate('/preparedraw');
   }
 
  

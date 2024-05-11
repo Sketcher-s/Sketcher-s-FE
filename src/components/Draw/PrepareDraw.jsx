@@ -9,11 +9,11 @@ function PrepareDraw() {
   const Navigate = useNavigate();
 
   function handleDrawClick() {
-    Navigate('/Draw');
+    Navigate('/draw');
   }
 
   function handlePicClick() {
-    Navigate('/PreparePicture');
+    Navigate('/preparepicture');
   }
 
   return (

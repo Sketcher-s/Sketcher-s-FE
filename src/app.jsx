@@ -24,12 +24,12 @@ function App() {
               <Route path="/login" element={<Login/>} />
               <Route path="/register" element={<Register/>} />
               <Route path="/mypage" element={<MyPage/>} />
-              <Route path="/" element={<PrepareDraw/>} />
-              <Route path="/Draw" element={<Draw/>} />
-              <Route path="/PreparePicture" element={<PreparePicture/>} />
-              <Route path="/Loading" element={<Loading/>} />
-              <Route path="/Main" element={<Main/>} />
-              <Route path="/Result" element={<Result/>} />
+              <Route path="/preparedraw" element={<PrepareDraw/>} />
+              <Route path="/draw" element={<Draw/>} />
+              <Route path="/preparepicture" element={<PreparePicture/>} />
+              <Route path="/loading" element={<Loading/>} />
+              <Route path="/" element={<Main/>} />
+              <Route path="/result" element={<Result/>} />
               {/* <Route path="/Loading" element={<Bar/>} /> */}
             </Routes>
           </BrowserRouter>

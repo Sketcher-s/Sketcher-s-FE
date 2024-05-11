@@ -53,6 +53,7 @@ function Main() {
 export default Main;
 
 const MainContainer = styled.div`
+overflow: hidden;
 ${theme.media.mobile`
 `}
 `;
