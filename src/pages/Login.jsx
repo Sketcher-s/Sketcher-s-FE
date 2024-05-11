@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ReactComponent as PwdIcon } from '../assets/images/pwdIcon.svg';
-import { ReactComponent as NonPwdIcon } from '../assets/images/NonPwdIcon.svg';
+import { ReactComponent as NonPwdIcon } from '../assets/images/nonpwdIcon.svg';
 import { ErrorText, JoinWrapper } from '../components/LoginStyle.jsx';
 import { LoginContainer } from '../components/LoginStyle.jsx';
 import { LoginTitle } from '../components/LoginStyle.jsx';

@@ -137,6 +137,7 @@ const OutContainer = styled.div`
   display: inline-flex;
   background: #f3f3f6;
   border-radius: 10px;
+  overflow: hidden;
 `;
 
 const Icon = styled.div`

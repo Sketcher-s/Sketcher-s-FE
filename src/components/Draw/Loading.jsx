@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import spinner from '../../assets/Draw/spinner.gif';
 //import Picture from '../../assets/Draw/Picture.png'
 import Modal from '../Modal';
+import Scan from './Scan';
 
 export default function Loading() {
 
@@ -36,7 +37,7 @@ export default function Loading() {
       </CanvasContainer>
 
     </DrawingArea>
-
+    <Scan/>
     </OutContainer>
 
     {/* 모달을 열기 위한 버튼 */}
@@ -52,11 +53,6 @@ export default function Loading() {
 }
 
 const OutContainer = styled.div`
-  // width: 100%;
-  // height: 100%;
-  // position: relative;
-  // background: #f3f3f6;
-
   width: 100%;
   height: 100%;
   padding-top: 2.5rem; //40px;
@@ -65,8 +61,10 @@ const OutContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 2.5rem; //40px;
-  display: inline-flex;
+  display: flex;
   background: #f3f3f6;
+  position: relative;
+  overflow: hidden;
 `;
 
 const DrawingArea = styled.div`

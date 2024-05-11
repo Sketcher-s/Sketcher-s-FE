@@ -1,7 +1,7 @@
 import React, {useState,} from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as Check } from '../../assets/Draw/Check.svg';
+import { ReactComponent as Check } from '../../assets/Draw/GCheck.svg';
 import { ReactComponent as Back } from '../../assets/Draw/Back.svg';
 import Modal from '../Modal';
 import { theme } from '../../theme';

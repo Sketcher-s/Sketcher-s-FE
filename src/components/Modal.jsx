@@ -13,6 +13,7 @@ position :fixed;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 2;
 `
 const ModalWrapper = styled.div`
 background: white;

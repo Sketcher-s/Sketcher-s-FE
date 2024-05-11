@@ -8,6 +8,9 @@ import styled from 'styled-components';
 import './assets/font/font.css';
 import PreparePicture from './components/Draw/PreparePic';
 import Navbar from './components/Nav';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import MyPage from './pages/MyPage';
 
 
 function App() {
@@ -17,6 +20,9 @@ function App() {
           <BrowserRouter>
             <Navbar/>
             <Routes>
+              <Route path="/login" element={<Login/>} />
+              <Route path="/register" element={<Register/>} />
+              <Route path="/mypage" element={<MyPage/>} />
               <Route path="/" element={<PrepareDraw/>} />
               <Route path="/Draw" element={<Draw/>} />
               <Route path="/PreparePicture" element={<PreparePicture/>} />

@@ -5,7 +5,7 @@ import { JoinWrapper, LoginContainer, LoginTitle, InputWrapper,
   InputField, InputValue, PasswordIcon, Divider, ButtonWrapper,
   Button, CheckButton, Text, InputContainer, ErrorText } from '../components/LoginStyle.jsx';
 import { ReactComponent as PwdIcon } from '../assets/images/pwdIcon.svg';
-import { ReactComponent as NonPwdIcon } from '../assets/images/NonPwdIcon.svg';
+import { ReactComponent as NonPwdIcon } from '../assets/images/nonpwdIcon.svg';
 
 const Register = () => {
   const {

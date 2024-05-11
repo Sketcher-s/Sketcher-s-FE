@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as PrepareDraw1 } from '../../assets/Draw/PrepareDraw1.svg'; // vite 사용하여 SVG 파일 import
-import { ReactComponent as Check } from '../../assets/Draw/Check.svg';
+import { ReactComponent as Check } from '../../assets/Draw/GCheck.svg';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '../../theme';
 
