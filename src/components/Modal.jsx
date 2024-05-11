@@ -74,6 +74,8 @@ const ButtonText = styled(Text)`
 
 
 const Modal = ({close, title, message}) => {
+
+
     return (
         <ModalContainer>
                 <ModalWrapper>
@@ -94,4 +96,3 @@ Modal.propTypes = {
 };
 
 export default Modal;
-
