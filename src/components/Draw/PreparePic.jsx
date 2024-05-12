@@ -43,10 +43,13 @@ function PreparePicture() {
             <SubTitle>검사를 위해 준비해야 할 사항</SubTitle>
 
             <PreNoteContainer>
+
               <PreContainer>
+
               <Preparation>
                 <Check />
               </Preparation>
+
               <Text>연필, 볼펜, 색연필 등은 사용할 수 없으며, 지우개와 A4 용지 한 장을 준비해주세요.</Text>
               </PreContainer>
 
@@ -219,21 +222,26 @@ const Text = styled.div`
 
   ${theme.media.mobile`
     font-size: 0.875rem;
+    text-align: left;
 `}
 `;
 
-const PreContainer = styled.div`
+const PreContainer = styled.button`
 //flex-direction: column;
 justify-content: flex-start;
 //align-items: center;
 gap: 1.25rem; //20px;
 display: flex;
+border: none;
+background: none;
+display: flex;
   ${theme.media.mobile`
+  align-items: flex-start;
 `}
 `;
 
 const PreNoteContainer = styled.div`
-  width: 36.5rem; //584px;
+  width: 40.5rem; //584px;
   height: 9.75rem; //156px;
   padding-left: 2rem; //32px;
   padding-right: 2rem; //32px;
@@ -249,7 +257,7 @@ const PreNoteContainer = styled.div`
   display: inline-flex;
 
   ${theme.media.mobile`
-    width:18.625rem;
+    width:21.125rem;
     height: 12.375rem;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
@@ -260,7 +268,7 @@ const PreNoteContainer = styled.div`
 `;
 
 const NoteContainer = styled.div`
-  width: 36.75rem; //588px;
+  width: 40.5rem; //588px;
   height: 4.25rem; //68px;
   padding: 1.875rem; //30px;
   background: white;
@@ -273,7 +281,7 @@ const NoteContainer = styled.div`
   display: flex;
 
   ${theme.media.mobile`
-  width: 18.625rem;
+  width: 21.025rem;
   height: 6.25rem;
   padding-left: 1.25rem;
   padding-right: 1.25rem;

@@ -7,9 +7,15 @@ import { ReactComponent as WGoback } from '../../assets/Draw/WGoback.svg';
 import { ReactComponent as WPencil } from '../../assets/Draw/WPencil.svg';
 import { ReactComponent as WTrash } from '../../assets/Draw/WTrash.svg';
 import { ReactComponent as WAll } from '../../assets/Draw/WAll.svg';
+import { ReactComponent as BEraser } from '../../assets/Draw/BEraser.svg';
+import { ReactComponent as BGoback } from '../../assets/Draw/BGoback.svg';
+import { ReactComponent as BPencil } from '../../assets/Draw/BPencil.svg';
+import { ReactComponent as BTrash } from '../../assets/Draw/BTrash.svg';
+import { ReactComponent as BAll } from '../../assets/Draw/BAll.svg';
 import Description from '../Draw/Description';
 import { ReactComponent as Shape } from '../../assets/Draw/Shape.svg';
 import { ReactComponent as Rectangle } from '../../assets/Draw/Rectangle.svg';
+
 
 
 function Draw() {
@@ -23,13 +29,13 @@ function Draw() {
     Navigate('/loading');
   }
 
-  // 버튼 클릭시 그림 저장 및 화면 이동
+  // 완료 버튼 클릭시 그림 저장 및 화면 이동 :아직 미구현
   const handleButtonClick = () => {
     saveSignature();
     handleDoneClick();
   };
 
-  // 그림 저장 함수
+  // 그림 저장 함수 : 아직 미구현
   function saveSignature() {
     // toDataURL() 메서드를 사용하여 그림을 이미지로 변환
     const imageDataUrl = signatureCanvasRef.current.toDataURL();
@@ -49,8 +55,15 @@ function Draw() {
     setDescriptionVisible(!isDescriptionVisible);
   };
 
-
-
+  //각 버튼 클릭시 버튼 변경
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
+  // 버튼 클릭 시 상태 변경 함수
+  // const handleClick = () => {
+  //   setIsButtonClicked(!isButtonClicked); // 현재 버튼 상태를 반전
+  // };
+  const handleClick = (buttonName) => {
+    setIsButtonClicked(buttonName === isButtonClicked ? null : buttonName); // 현재 클릭된 버튼이면 상태를 null로 변경하고 아니면 버튼 이름으로 변경
+  };
 
 
   return (
@@ -61,25 +74,101 @@ function Draw() {
 
         <Icon>
           
-        <StyledWrapper>
+        {/* <WStyledWrapper>
           <WPencil/>
-        </StyledWrapper>
+        </WStyledWrapper>
 
-        <StyledWrapper>
+        <BStyledWrapper>
+          <BPencil/>
+        </BStyledWrapper>
+
+        <WStyledWrapper>
           <WAll/>
-        </StyledWrapper>
+        </WStyledWrapper>
 
-        <StyledWrapper>
+        <BStyledWrapper>
+          <BAll/>
+        </BStyledWrapper>
+
+        <WStyledWrapper>
           <WEraser/>
-        </StyledWrapper>
+        </WStyledWrapper>
 
-        <StyledWrapper>
+        <BStyledWrapper>
+          <BEraser/>
+        </BStyledWrapper>
+
+        <WStyledWrapper>
           <WGoback/>
-        </StyledWrapper>
+        </WStyledWrapper>
 
-        <StyledWrapper>
+        <BStyledWrapper>
+          <BGoback/>
+        </BStyledWrapper>
+
+        <WStyledWrapper>
           <WTrash/>
-        </StyledWrapper>
+        </WStyledWrapper>
+
+        <BStyledWrapper>
+          <BTrash/>
+        </BStyledWrapper> */}
+
+        {/* WPencil 버튼 */}
+      {isButtonClicked !== 'WPencil' ? (
+        <WStyledWrapper>
+          <WPencil onClick={() => handleClick('WPencil')} />
+        </WStyledWrapper>
+      ) : (
+        <BStyledWrapper>
+          <BPencil onClick={() => handleClick('WPencil')} />
+        </BStyledWrapper>
+      )}
+
+
+      {/* BEraser 버튼 */}
+      {isButtonClicked !== 'WEraser' ? (
+        <WStyledWrapper>
+          <WEraser onClick={() => handleClick('WEraser')} />
+        </WStyledWrapper>
+      ) : (
+        <BStyledWrapper>
+          <BEraser onClick={() => handleClick('WEraser')} />
+        </BStyledWrapper>
+      )}
+
+      {/* BGoback 버튼 */}
+      {isButtonClicked !== 'WGoback' ? (
+        <WStyledWrapper>
+          <WGoback onClick={() => handleClick('WGoback')} />
+        </WStyledWrapper>
+      ) : (
+        <BStyledWrapper>
+          <BGoback onClick={() => handleClick('WGoback')} />
+        </BStyledWrapper>
+      )}
+
+      {/* BTrash 버튼 */}
+      {isButtonClicked !== 'WTrash' ? (
+        <WStyledWrapper>
+          <WTrash onClick={() => handleClick('WTrash')} />
+        </WStyledWrapper>
+      ) : (
+        <BStyledWrapper>
+          <BTrash onClick={() => handleClick('WTrash')} />
+        </BStyledWrapper>
+      )}
+
+      {/* BAll 버튼 */}
+      {isButtonClicked !== 'WAll' ? (
+        <WStyledWrapper>
+          <WAll onClick={() => handleClick("WAll")} />
+        </WStyledWrapper>
+      ) : (
+        <BStyledWrapper>
+          <BAll onClick={() => handleClick('WAll')} />
+        </BStyledWrapper>
+      )}
 
         </Icon>
 
@@ -189,11 +278,26 @@ const Button = styled.div`
 
 
 // 스타일 컴포넌트 정의
-const StyledWrapper = styled.div`
+const WStyledWrapper = styled.div`
   width: 1.25rem; //20px;
   height: 1.25rem; //20px;
   padding: 0.625rem; //10px;
   background: white;
+  box-shadow: 0rem 0.25rem 0.25rem rgba(39, 40, 43, 0.10);
+  border-radius:18.75rem; //300px;
+  justify-content: center;
+  align-items: center;
+  gap: 0.625rem; //10px;
+  display: inline-flex;
+  margin-right: 1.25rem; //20px;
+  margin-bottom: 1rem; //16px;
+`;
+
+const BStyledWrapper = styled.div`
+  width: 1.25rem; //20px;
+  height: 1.25rem; //20px;
+  padding: 0.625rem; //10px;
+  background: #6487E2;
   box-shadow: 0rem 0.25rem 0.25rem rgba(39, 40, 43, 0.10);
   border-radius:18.75rem; //300px;
   justify-content: center;
