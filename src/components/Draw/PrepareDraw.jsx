@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as PrepareDraw1 } from '../../assets/Draw/PrepareDraw1.svg'; // vite 사용하여 SVG 파일 import
-import { ReactComponent as Check } from '../../assets/Draw/GCheck.svg';
+import { ReactComponent as Check } from '../../assets/Draw/Check.svg';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '../../theme';
 
@@ -122,7 +122,8 @@ const SubContainer = styled.div`
   display: flex;
 
   ${theme.media.mobile`
-
+  justify-content: center;
+  display: flex-direction: column;
 `}
 `;
 
@@ -166,10 +167,10 @@ const NoteContainer = styled.div`
   display: flex;
 
   ${theme.media.mobile`
-  width:15rem;
+  width:18rem;
   border: none;
   padding: 0;
-  align-items: center;
+  //align-items: center;
 `}
 `;
 
