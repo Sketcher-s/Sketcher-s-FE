@@ -52,7 +52,7 @@ export default function Loading() {
           close={handleModalClose} // 모달을 닫는 핸들러를 전달합니다.
         />
       )}
-</div>
+    </div>
   );
 }
 
