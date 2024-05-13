@@ -15,6 +15,7 @@ import { ReactComponent as BAll } from '../../assets/Draw/BAll.svg';
 import Description from '../Draw/Description';
 import { ReactComponent as Shape } from '../../assets/Draw/Shape.svg';
 import { ReactComponent as Rectangle } from '../../assets/Draw/Rectangle.svg';
+import { theme } from '../../theme';
 
 
 
@@ -134,7 +135,9 @@ function Draw() {
 
           <CanvasContainer>
             {/* 그림판 */}
-            <SignatureCanvas ref={signatureCanvasRef} penColor="black" canvasProps={{ width: 482, height: 482 }} />
+            <SignatureCanvas ref={signatureCanvasRef} 
+            penColor="black" canvasProps={{ width: theme.media.mobile('338px') || '482px',
+    height: theme.media.mobile('338px') || '482px'  }} />
             </CanvasContainer>
 
         </DrawingArea>
@@ -187,6 +190,10 @@ const OutContainer = styled.div`
   background: #f3f3f6;
   border-radius: 10px;
   overflow: hidden;
+
+
+  ${theme.media.mobile`
+  `}
 `;
 
 const Icon = styled.div`
@@ -194,6 +201,12 @@ const Icon = styled.div`
   top: 7.25rem; //116px;
   display: flex;
   flex-direction: column;
+
+  ${theme.media.mobile`
+  flex-direction: row;
+  margin-top: 1.25rem;
+`}
+
 `;
 
 
@@ -202,14 +215,24 @@ const DrawingArea = styled.div`
   top: 7.25rem; //116px;
   display: flex;
   flex-direction: row;
+
+  ${theme.media.mobile`
+  flex-direction: column-reverse;
+`}
 `;
 
 
 const CanvasContainer = styled.div`
-  width: 30.125rem; //482px;
-  height: 30.125rem; //482px;
+  width: 30.125rem;
+  height: 30.125rem;
   background: white;
   box-shadow: 0.3125rem 0.3125rem 0.625rem rgba(0, 0, 0, 0.04);
+
+  ${theme.media.mobile`
+  width: 21.125rem;
+  height: 21.125rem;
+  `}
+
 `;
 
 const ButtonContainer = styled.div`
@@ -279,6 +302,20 @@ const BarBox = styled.div`
   justify-content: center; /* 수평 중앙 정렬 */
   align-items: center; /* 수직 중앙 정렬 */
   boarder-radius: none;
+  
+  display: flex;
+
+  ${theme.media.mobile`
+
+  position: fixed;
+  top: 12.5%; /* 화면 위쪽 가운데로 */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto; /* 필요에 따라 너비 조정 */
+  height: auto; /* 필요에 따라 높이 조정 */
+  transform: translate(-50%, -50%) rotate(-90deg); /* 왼쪽으로 회전 */
+
+`}
 `;
 
 const StyledShape = styled.div`
@@ -291,3 +328,4 @@ position: relative;
 z-index: 1;
 `;
 
+// canvasProps={{ width: 482, height: 482 }} 

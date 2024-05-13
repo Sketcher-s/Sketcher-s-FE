@@ -2,7 +2,6 @@
 import React, {useState,} from 'react';
 import styled from 'styled-components';
 import spinner from '../../assets/Draw/spinner.gif';
-//import ExPic from '@/assets/Draw/ExPic.png'; 
 import Modal from '../Modal';
 import Scan from './Scan';
 import { theme } from '../../theme';
