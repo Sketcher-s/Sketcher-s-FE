@@ -16,27 +16,32 @@ import Description from '../Draw/Description';
 import { ReactComponent as Shape } from '../../assets/Draw/Shape.svg';
 import { ReactComponent as Rectangle } from '../../assets/Draw/Rectangle.svg';
 import { theme } from '../../theme';
+import { useRecoilValue } from 'recoil';
+//import { calculatedCanvasSizeState } from './atoms';
+
 
 
 
 function Draw() {
+  //const [calculatedCanvasSize, setCalculatedCanvasSize] = useState({ width: 0, height: 0 });
+  //const calculatedCanvasSize = useRecoilValue(calculatedCanvasSizeState);
+
   // Ref를 사용하여 Signaturecanvas 컴포넌트에 접근한다.
   const signatureCanvasRef = useRef();
 
   // 버튼 클릭했을 때 화면 이동
   const Navigate = useNavigate();
-
   function handleDoneClick() {
     Navigate('/loading');
   }
 
-  // 완료 버튼 클릭시 그림 저장 및 화면 이동 :아직 미구현
+  //Todo// 완료 버튼 클릭시 그림 저장 및 화면 이동 :아직 미구현
   const handleButtonClick = () => {
     saveSignature();
     handleDoneClick();
   };
 
-  // 그림 저장 함수 : 아직 미구현
+  // Todo//그림 저장 함수 : 아직 미구현
   function saveSignature() {
     // toDataURL() 메서드를 사용하여 그림을 이미지로 변환
     const imageDataUrl = signatureCanvasRef.current.toDataURL();
@@ -62,40 +67,41 @@ function Draw() {
   // const handleClick = () => {
   //   setIsButtonClicked(!isButtonClicked); // 현재 버튼 상태를 반전
   // };
-  const handleClick = (buttonName) => {
-    setIsButtonClicked(buttonName === isButtonClicked ? null : buttonName); // 현재 클릭된 버튼이면 상태를 null로 변경하고 아니면 버튼 이름으로 변경
-  };
-
-  const [color, setColor] = useState("black");
-  //const signatureRef = useRef(null);
-
-  const handleColorChange = (newColor) => {
-      setColor(newColor);
+  const handleUndo = () => {
+    if (signatureRef.current) { // null 체크 추가
+      signatureRef.current.undo();
+    }
   };
 
   const handleClear = () => {
+    if (signatureRef.current) { // null 체크 추가
       signatureRef.current.clear();
+    }
   };
 
-  const handleUndo = () => {
-      signatureRef.current.undo();
+  const handleColorChange = (newColor) => {
+    setColor(newColor);
   };
 
-  const handleSave = () => {
-      const imageDataUrl = signatureRef.current.toDataURL();
-      console.log("ImageDataUrl:", imageDataUrl);
+  const handleClick = (buttonName) => {
+    setIsButtonClicked(buttonName === isButtonClicked ? null : buttonName); // 현재 클릭된 버튼이면 상태를 null로 변경하고 아니면 버튼 이름으로 변경
+    if (buttonName === 'WTrash') {
+      handleClear(); // 클릭 시 지우기 기능 호출
+    } else if (buttonName === 'WGoback' && signatureRef.current) {
+      handleUndo(); // 클릭 시 지우기 기능 호출
+    }
   };
 
-//그림판 지대로 구현해보즈아
+    //그림판 구현
     const signatureRef = useRef(null);
     const [canvasSize, setCanvasSize] = useState({ width: '21.125rem', height: '21.125rem' });
+    const [color, setColor] = useState("black");
   
     useEffect(() => {
       const handleResize = () => {
         // 화면 크기에 따라 canvas 크기를 조정
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
-        // const newSize = Math.min(screenWidth, screenHeight) * 0.5; // 캔버스 크기를 화면의 80%로 설정
         const newSize = Math.min(screenWidth, screenHeight) * 0.657; // 캔버스 크기를 화면의 80%로 설정
   
         setCanvasSize({ width: newSize, height: newSize });
@@ -106,6 +112,8 @@ function Draw() {
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    //화면 크기가 변경될때마다 상태관리 recoil로 구현
   
 
   
@@ -133,7 +141,7 @@ function Draw() {
       {/* BEraser 버튼 */}
       {isButtonClicked !== 'WEraser' ? (
         <WStyledWrapper>
-          <WEraser onClick={() => handleClick('WEraser')} />
+          <WEraser onClick={() => {handleClick('WEraser'); handleColorChange('white'); }} />
         </WStyledWrapper>
       ) : (
         <BStyledWrapper>
@@ -162,6 +170,7 @@ function Draw() {
           <BTrash onClick={() => handleClick('WTrash')} />
         </BStyledWrapper>
       )}
+
 
       {/* BAll 버튼 */}
       {isButtonClicked !== 'WAll' ? (

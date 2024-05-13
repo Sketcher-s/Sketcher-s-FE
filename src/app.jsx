@@ -16,8 +16,6 @@ import Main from './pages/Main';
 import NavbarNoMember from './components/NavbarNoMember';
 import Sidebar from './components/Sidebar';
 
-import DrawPage from './components/Draw/DrawPage';
-
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () =>{
@@ -39,7 +37,6 @@ function App() {
               <Route path="/loading" element={<Loading/>} />
               <Route path="/" element={<Main/>} />
               <Route path="/result" element={<Result/>} />
-              <Route path="/DrawPage" element={<DrawPage/>} />
               {/* <Route path="/Loading" element={<Bar/>} /> */}
             </Routes>
           </BrowserRouter>
