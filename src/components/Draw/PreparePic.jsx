@@ -1,7 +1,7 @@
 import React, {useState,} from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as Check } from '../../assets/Draw/GCheck.svg';
+import { ReactComponent as Check } from '../../assets/Draw/Check.svg';
 import { ReactComponent as Back } from '../../assets/Draw/Back.svg';
 import Modal from '../Modal';
 import { theme } from '../../theme';
@@ -43,32 +43,35 @@ function PreparePicture() {
             <SubTitle>검사를 위해 준비해야 할 사항</SubTitle>
 
             <PreNoteContainer>
+
               <PreContainer>
+
               <Preparation>
                 <Check />
-                <Text>연필, 볼펜, 색연필 등은 사용할 수 없으며, 지우개와 A4 용지 한 장을 준비해주세요.</Text>
               </Preparation>
+
+              <Text>연필, 볼펜, 색연필 등은 사용할 수 없으며, 지우개와 A4 용지 한 장을 준비해주세요.</Text>
               </PreContainer>
 
               <PreContainer>
               <Preparation>
                 <Check />
-                <Text>지우개를 사용할 경우, 깨끗하게 지워 잔상이나 다른 연필 선이 남지 않도록 주의해주세요.</Text>
               </Preparation>
+              <Text>지우개를 사용할 경우, 깨끗하게 지워 잔상이나 다른 연필 선이 남지 않도록 주의해주세요.</Text>
               </PreContainer>
 
               <PreContainer>
               <Preparation>
                 <Check />
-                <Text>종이가 접히거나 구겨지지 않도록 주의해주세요.</Text>
               </Preparation>
+              <Text>종이가 접히거나 구겨지지 않도록 주의해주세요.</Text>
               </PreContainer>
 
               <PreContainer>
               <Preparation>
                 <Check />
-                <Text>아이가 새로운 종이에 다시 그리거나 할 경우, 최종적으로 그린 그림을 업로드해주세요.</Text>
               </Preparation>
+              <Text>아이가 새로운 종이에 다시 그리거나 할 경우, 최종적으로 그린 그림을 업로드해주세요.</Text>
               </PreContainer>
 
             </PreNoteContainer>
@@ -78,14 +81,20 @@ function PreparePicture() {
             <SubTitle>사진 첨부 시 유의사항</SubTitle>
 
             <NoteContainer>
+
+              <PreContainer>
               <Preparation>
                 <Check />
-                <Text>밝고 어두운 그림자가 없는 밝은 곳에서 촬영해주세요.</Text>
               </Preparation>
+              <Text>밝고 어두운 그림자가 없는 밝은 곳에서 촬영해주세요.</Text>
+              </PreContainer>
+
+              <PreContainer>
               <Preparation>
                 <Check />
-                <Text>A4 용지에 딱 맞춰서 촬영하고, 그림자가 생기지 않도록 주의해주세요.</Text>
               </Preparation>
+              <Text>A4 용지에 딱 맞춰서 촬영하고, 그림자가 생기지 않도록 주의해주세요.</Text>
+              </PreContainer>
             </NoteContainer>
           </SubSection>
         </Content>
@@ -213,26 +222,31 @@ const Text = styled.div`
 
   ${theme.media.mobile`
     font-size: 0.875rem;
+    text-align: left;
 `}
 `;
 
-const PreContainer = styled.div`
-lex-direction: column;
+const PreContainer = styled.button`
+//flex-direction: column;
 justify-content: flex-start;
-align-items: center;
+//align-items: center;
 gap: 1.25rem; //20px;
 display: flex;
+border: none;
+background: none;
+display: flex;
   ${theme.media.mobile`
+  align-items: flex-start;
 `}
 `;
 
 const PreNoteContainer = styled.div`
-  width: 36.5rem; //584px;
+  width: 40.5rem; //584px;
   height: 9.75rem; //156px;
   padding-left: 2rem; //32px;
   padding-right: 2rem; //32px;
   padding-top: 1.875rem; //30px;
-  padding-bottom: 0.875rem; //14px;
+  padding-bottom: 1.875rem; //14px;
   background: white;
   border-radius: 0.625rem; //10px;
   border: 0.0625rem #e0e1e9 solid;
@@ -243,19 +257,18 @@ const PreNoteContainer = styled.div`
   display: inline-flex;
 
   ${theme.media.mobile`
-    width:18.625rem;
+    width:21.125rem;
     height: 12.375rem;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
     padding-top: 1.875rem;
-    padding-bottom: 1.875rem;
-    align-items: center;
+    padding-bottom: 2.875rem;
   `}
   
 `;
 
 const NoteContainer = styled.div`
-  width: 36.75rem; //588px;
+  width: 40.5rem; //588px;
   height: 4.25rem; //68px;
   padding: 1.875rem; //30px;
   background: white;
@@ -268,7 +281,7 @@ const NoteContainer = styled.div`
   display: flex;
 
   ${theme.media.mobile`
-  width: 18.625rem;
+  width: 21.025rem;
   height: 6.25rem;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
@@ -285,6 +298,7 @@ const Preparation = styled.div`
   display: inline-flex;
 
   ${theme.media.mobile`
+  
 `}
 `;
 

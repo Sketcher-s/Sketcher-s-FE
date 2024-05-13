@@ -6,6 +6,7 @@ import { ReactComponent as GCheck } from '../../assets/Draw/GCheck.svg';
 import { ReactComponent as PrepareDraw1 } from '../../assets/Draw/PrepareDraw1.svg';
 import { ReactComponent as Shape } from '../../assets/Draw/Shape.svg';
 import { ReactComponent as Rectangle } from '../../assets/Draw/Rectangle.svg';
+import { theme } from '../../theme';
 
 const Description = ({onClick}) => {
     const [isBarBoxVisible, setBarBoxVisible] = useState(true);
@@ -82,6 +83,9 @@ const Container = styled.div`
   right: 0; /* 오른쪽에 위치하도록 설정 */
   justify-content: flex-end; /* 모든 내용을 컨테이너의 오른쪽 끝에 배치 */
   align-items: center; /* 세로 가운데 정렬 */
+
+  ${theme.media.mobile`
+`}
 `;
 
 
@@ -95,6 +99,10 @@ const StyledContainer = styled.div`
   align-items: flex-start;
   gap:  1.25rem; //20px;
   display: inline-flex;
+
+  ${theme.media.mobile`
+  height: 15.5rem;
+`}
 `;
 
 const StyledMissionContainer = styled.div`
