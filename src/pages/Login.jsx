@@ -7,11 +7,12 @@ import { LoginContainer } from '../components/LoginStyle.jsx';
 import { LoginTitle } from '../components/LoginStyle.jsx';
 import { InputWrapper } from '../components/LoginStyle.jsx';
 import { InputField } from '../components/LoginStyle.jsx';
-import { InputValue } from '../components/LoginStyle.jsx';
+import { InputValue, InputContainer } from '../components/LoginStyle.jsx';
 import { PasswordIcon } from '../components/LoginStyle.jsx';
 import { Divider } from '../components/LoginStyle.jsx';
 import { ButtonWrapper } from '../components/LoginStyle.jsx';
 import { Button } from '../components/LoginStyle.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const {
@@ -21,6 +22,11 @@ const Login = () => {
     formState: { errors, isValid },
   } = useForm();
 
+  // 회원가입 페이지 이동
+  const navigate = useNavigate();
+  const moveToRegister =() => {
+    navigate('/register');
+  }
   const onSubmit = (data) => {
     console.log(data);
     if (isValid) {
@@ -46,11 +52,11 @@ const Login = () => {
     setFocus({ ...focus, [field]: false });
   };
   const emailRegister = register('email', {
-    required: { value: true },
+    required: { value: true, message: '이메일을 입력해주세요.' },
   });
 
   const pwdRegister = register('password', {
-    required: { value: true },
+    required: { value: true, message: '비밀번호를 입력해주세요.' },
   });
 
   // 비밀번호 숨기기/보이기
@@ -71,43 +77,47 @@ const Login = () => {
       <JoinWrapper onSubmit={handleSubmit(onSubmit)}>
         <LoginTitle>로그인</LoginTitle>
         <InputWrapper>
-          <InputField isFocused={focus.name}>
-            <InputValue
-              type="email"
-              id="email"
-              placeholder="이메일을 입력해 주세요"
-              {...register('email', { required: true })}
-              onFocus={() => handleFocus('name')} 
-              onBlur={() => handleBlur('name')}
-            />
-          </InputField>
-          <InputField isFocused={focus.password}>
-            <InputValue
-              type={hidePwd ? 'password' : 'text'}
-              id="password"
-              placeholder="비밀번호를 입력해 주세요"
-              {...register('password', { required: true })}
-              onFocus={() => handleFocus('password')} 
-              onBlur={() => handleBlur('password')}
-            />
-            <PasswordIcon onClick={togglePasswordVisibility}>{hidePwd ? <PwdIcon /> : <NonPwdIcon />}</PasswordIcon>
-          </InputField>
-          {errors.email && <ErrorText>이메일을 입력해 주세요.</ErrorText>}
-          {errors.password && <ErrorText>비밀번호를 입력해 주세요.</ErrorText>}
+          <InputContainer>
+            <InputField isFocused={focus.name}>
+              <InputValue
+                {...emailRegister}
+                type="email"
+                id="email"
+                placeholder="이메일을 입력해 주세요"
+            
+                onFocus={() => handleFocus('email')}
+                onBlur={() => handleBlur('email')}
+              />
+            </InputField>
+            {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
+          </InputContainer>
+          <InputContainer>
+            <InputField isFocused={focus.password}>
+              <InputValue
+                {...pwdRegister}
+                type={hidePwd ? 'password' : 'text'}
+                id="password"
+                placeholder="비밀번호를 입력해 주세요"
+                onFocus={() => handleFocus('password')}
+                onBlur={() => handleBlur('password')}
+              />
+              <PasswordIcon onClick={togglePasswordVisibility}>{hidePwd ? <PwdIcon /> : <NonPwdIcon />}</PasswordIcon>
+            </InputField>
+            {errors.password && <ErrorText>{errors.password.message}</ErrorText>}
+          </InputContainer>
         </InputWrapper>
         <Divider />
         <ButtonWrapper>
           <Button
             width="100%"
-            background={isValid ? '#6487e2' : '#ccc'}
-            color={isValid ? 'white' : '#999'}
+            back={isValid}
+            color="white"
             type="submit"
-            disabled={!isValid}
           >
-            로그인
+            <div>로그인</div>
           </Button>
-          <Button width="100%" background="white" color="#6487e2">
-            회원가입
+          <Button width="100%" fixed={true} color="#6487e2" onClick={moveToRegister}>
+            <div>회원가입</div>
           </Button>
         </ButtonWrapper>
       </JoinWrapper>

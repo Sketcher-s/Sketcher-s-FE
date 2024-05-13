@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import './index.css';
 import PrepareDraw from './components/Draw/PrepareDraw';
@@ -7,19 +7,26 @@ import Loading from './components/Draw/Loading';
 import styled from 'styled-components';
 import './assets/font/font.css';
 import PreparePicture from './components/Draw/PreparePic';
-import Navbar from './components/Nav';
+// import NavbarMember from './components/Nav';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import MyPage from './pages/MyPage';
 import Result from './pages/Result';
 import Main from './pages/Main';
+import NavbarNoMember from './components/NavbarNoMember';
+import Sidebar from './components/Sidebar';
 
 function App() {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const toggleSidebar = () =>{
+        setIsSidebarOpen(!isSidebarOpen);
+    };
     return (
       <div>
         <Background>
           <BrowserRouter>
-            <Navbar/>
+            <NavbarNoMember toggleSidebar={toggleSidebar}/>
+            <Sidebar isOpen={isSidebarOpen} toggle={() => setIsSidebarOpen(false)}/>
             <Routes>
               <Route path="/login" element={<Login/>} />
               <Route path="/register" element={<Register/>} />

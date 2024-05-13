@@ -6,6 +6,7 @@ import { JoinWrapper, LoginContainer, LoginTitle, InputWrapper,
   Button, CheckButton, Text, InputContainer, ErrorText } from '../components/LoginStyle.jsx';
 import { ReactComponent as PwdIcon } from '../assets/images/pwdIcon.svg';
 import { ReactComponent as NonPwdIcon } from '../assets/images/nonpwdIcon.svg';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const {
@@ -34,6 +35,12 @@ const Register = () => {
     setFocus({ ...focus, [field]: false });
   };
 
+  // 로그인 페이지 이동
+  // const navigate = useNavigate();
+
+  // const moveToLogin = () => {
+  //   navigate('/login');
+  // }
 
   // 이메일 중복 체크하기
 
@@ -80,7 +87,7 @@ const Register = () => {
   };
 
   const nameRegister = register('name', {
-    required: { value: true },
+    required: { value: true , message: '이름을 입력해주세요.'},
     minLength: {
       value: 2,
       message: '이름은 2글자 이상 6글자 이하여야 합니다.',
@@ -92,7 +99,7 @@ const Register = () => {
   });
 
   const emailRegister = register('email', {
-    required: { value: true },
+    required: { value: true, message: '이메일을 입력해주세요.'},
     pattern: {
       value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       message: '이메일 형식이 올바르지 않습니다.',
@@ -100,19 +107,19 @@ const Register = () => {
   });
 
   const pwdRegister = register('password', {
-    required: { value: true },
+    required: { value: true, message: '비밀번호를 입력해주세요.'},
     pattern: {
       value: /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@])[a-zA-Z\d!@]{8,12}$/,
       message: '비밀번호는 영문, 숫자, 특수문자(!,@)를 모두 포함하여 8~12글자이어야 합니다.',
     },
   });
   const matchRegister = register('matchPassword', {
-    required: { value: true },
+    required: { value: true, message: '비밀번호를 다시 입력해주세요.'},
     validate: (value) => value === getValues('password') || '비밀번호가 일치하지 않습니다.', // 수정된 부분
   });
 
   const userName = getValues('name'); // name 필드 값
-  const eamilWatch = watch('email');
+  const emailWatch = watch('email');
   return (
     <LoginContainer>
       <JoinWrapper onSubmit={handleSubmit(onSubmit)}>
@@ -131,7 +138,7 @@ const Register = () => {
             <InputField isError={!!errors.email} isFocused={focus.email}>
               <InputValue type="email" id="email" placeholder="이메일을 입력해 주세요" {...emailRegister} onFocus={() => handleFocus('email')} 
                             onBlur={() => handleBlur('email')} /> 
-              <CheckButton isError={!!errors.email} disabled={!!errors.email || !eamilWatch} width={62} background="white" border='1px #6487E2 solid' onClick = {() => {!!errors.email && setCheckOpen(true)}}><Text>중복체크</Text></CheckButton>
+              <CheckButton isError={!!errors.email} disabled={!!errors.email || !emailWatch} width={62} background="white" border='1px #6487E2 solid' onClick = {() => {setCheckOpen(true)}}><Text>중복체크</Text></CheckButton>
             </InputField>
             {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
           </InputContainer>
@@ -162,13 +169,12 @@ const Register = () => {
         <ButtonWrapper>
           <Button
             width="100%"
-            background={isValid ? '#6487e2' : '#ccc'}
-            color={isValid ? 'white' : '#999'}
+            back={isValid}
+            color={'white'}
             type="submit"
-            disabled={!isValid}
             onClick={() => {isValid && setOpen(true)}}
           >
-            <div>회원가입</div>
+            <div>회원가입 완료</div>
           </Button>
         </ButtonWrapper>
         {/* 이메일 중복체크 통과 */}
