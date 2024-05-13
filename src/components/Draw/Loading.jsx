@@ -2,9 +2,11 @@
 import React, {useState,} from 'react';
 import styled from 'styled-components';
 import spinner from '../../assets/Draw/spinner.gif';
-//import Picture from '../../assets/Draw/Picture.png'
+//import ExPic from '@/assets/Draw/ExPic.png'; 
 import Modal from '../Modal';
 import Scan from './Scan';
+import { theme } from '../../theme';
+
 
 export default function Loading() {
 
@@ -26,7 +28,9 @@ export default function Loading() {
 
     <TContainer>
     <Spinner src={spinner} alt="로딩중" width="5%" />
+    <TexDiv>
     <Text>검사 결과를 기다리고 있어요!</Text>
+    </TexDiv>
     </TContainer>
 
     <DrawingArea>
@@ -34,6 +38,7 @@ export default function Loading() {
     <CanvasContainer>
       {/* 그림판 */}
       {/* <SignatureCanvas ref={signatureCanvasRef} penColor="black" canvasProps={{ width: 482, height: 482 }} /> */}
+      <EXImage src={`${process.env.PUBLIC_URL}/assets/ExPic.png`} alt="사진에시"/>
       </CanvasContainer>
 
     </DrawingArea>
@@ -41,7 +46,7 @@ export default function Loading() {
     </OutContainer>
 
     {/* 모달을 열기 위한 버튼 */}
-{modalOpen && (
+        {modalOpen && (
         <Modal
           title="그림 확인이 필요해요 !"
           message="집, 나무, 사람이 제대로 그려졌는지 확인해주세요."
@@ -99,12 +104,37 @@ const Text = styled.div`
   font-weight: 700;
   line-height: 2.4375rem; //39px;
   word-wrap: break-word;
+
+
+  ${theme.media.mobile`
+    font-size: 1.125rem;
+    align-items: center;
+    justify-content: center;
+  `}
 `;
 
 
 const CanvasContainer = styled.div`
-  width: 30.125rem; //482px;
-  height: 30.125rem; //482px;
-  background: white;
-  box-shadow: 0.3125rem 0.3125rem 0.625rem rgba(0, 0, 0, 0.04);
+  width: 20rem; //482px;
+  height: 24.625rem; //482px;
+
+  ${theme.media.mobile`
+  width: 18.625rem;
+  height: 23.375rem;
+  `}
+`;
+
+
+const EXImage = styled.img`
+  // width: 20rem; //482px;
+  // height: 24.625rem; //482px;
+`;
+
+const TexDiv = styled.div`
+  // width: 20rem; //482px;
+  // height: 24.625rem; //482px;
+
+  ${theme.media.mobile`
+  text-align: center;
+`}
 `;

@@ -34,17 +34,27 @@ const SpinnerWrapper = styled.div`
   top: 1;
   left: 50;
   z-index: 1;
+  margin-top: 4rem;
 
   ${theme.media.mobile`
-  width: 80%;
+    width: 21.125rem;
+    margin-top: 0rem;
 `}
 
   ${theme.media.desktop`
-  width: 45%;
+    width: 40rem;
 `}
 `;
 
 const StyledSpinnerImg = styled(SpinnerImg)`
   width: 100%;
   height: 100%;
+
+  ${theme.media.desktop`
+    width: 40rem;
+`}
+
+${theme.media.mobile`
+    width: 21.125rem;
+`}
 `;

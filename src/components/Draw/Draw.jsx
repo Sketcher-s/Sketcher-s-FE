@@ -73,46 +73,6 @@ function Draw() {
           <DrawingArea>
 
         <Icon>
-          
-        {/* <WStyledWrapper>
-          <WPencil/>
-        </WStyledWrapper>
-
-        <BStyledWrapper>
-          <BPencil/>
-        </BStyledWrapper>
-
-        <WStyledWrapper>
-          <WAll/>
-        </WStyledWrapper>
-
-        <BStyledWrapper>
-          <BAll/>
-        </BStyledWrapper>
-
-        <WStyledWrapper>
-          <WEraser/>
-        </WStyledWrapper>
-
-        <BStyledWrapper>
-          <BEraser/>
-        </BStyledWrapper>
-
-        <WStyledWrapper>
-          <WGoback/>
-        </WStyledWrapper>
-
-        <BStyledWrapper>
-          <BGoback/>
-        </BStyledWrapper>
-
-        <WStyledWrapper>
-          <WTrash/>
-        </WStyledWrapper>
-
-        <BStyledWrapper>
-          <BTrash/>
-        </BStyledWrapper> */}
 
         {/* WPencil 버튼 */}
       {isButtonClicked !== 'WPencil' ? (
