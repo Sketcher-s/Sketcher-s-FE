@@ -23,8 +23,7 @@ function App() {
     };
     return (
       <div>
-        <Background>
-          <BrowserRouter>
+        <BrowserRouter>
             <NavbarNoMember toggleSidebar={toggleSidebar}/>
             <Sidebar isOpen={isSidebarOpen} toggle={() => setIsSidebarOpen(false)}/>
             <Routes>
@@ -40,7 +39,6 @@ function App() {
               {/* <Route path="/Loading" element={<Bar/>} /> */}
             </Routes>
           </BrowserRouter>
-        </Background>
       </div>
     );
 
