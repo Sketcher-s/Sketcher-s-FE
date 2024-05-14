@@ -4,7 +4,7 @@ import { useMediaQuery } from "react-responsive";
 import { FiMenu } from "react-icons/fi";
 import PropTypes from 'prop-types';
 
-const Navbar = () => {
+const NavbarMember = () => {
   
   return (
     <Container>
@@ -26,4 +26,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarMember;

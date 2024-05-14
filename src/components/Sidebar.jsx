@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {IoCloseOutline} from 'react-icons/io5';
 import { ReactComponent as User } from '../assets/images/user.svg';
+import { useNavigate } from 'react-router-dom';
 
 const Background = styled.div`
 position: fixed;
@@ -74,19 +75,38 @@ const LinkContainer = styled.div`
   display: flex;
 `;
 
-const Link = styled.div`
+// const Link = styled.div`
+//   width: 11.125rem; /* 178px */
+//   padding: 0.625rem 0; /* 10px 0 */
+//   justify-content: flex-start;
+//   align-items: center;
+//   gap: 0.625rem; /* 10px */
+//   display: inline-flex;
+//   color: ${(props) => props.color || '#3F4045'};
+//   font-size: 1rem; /* 16px */
+//   font-family: 'Pretendard';
+//   font-weight: 700;
+//   line-height: 1.5rem; /* 24px */
+//   word-wrap: break-word;
+// `;
+
+const MoveBtn = styled.button`
   width: 11.125rem; /* 178px */
   padding: 0.625rem 0; /* 10px 0 */
   justify-content: flex-start;
   align-items: center;
   gap: 0.625rem; /* 10px */
-  display: inline-flex;
+  display: flex;
   color: ${(props) => props.color || '#3F4045'};
   font-size: 1rem; /* 16px */
   font-family: 'Pretendard';
   font-weight: 700;
   line-height: 1.5rem; /* 24px */
   word-wrap: break-word;
+  border: none; /* 버튼의 기본 테두리 제거 */
+  background: transparent; /* 버튼의 기본 배경 제거 */
+  cursor: pointer; /* 마우스를 올렸을 때 커서 변경 */
+  text-align: left; /* 텍스트 왼쪽 정렬 */
 `;
 
 const Email = styled.div`
@@ -106,6 +126,16 @@ top: 3rem;
 `;
 
 const Sidebar = ({isOpen, toggle}) => {
+  const navigate = useNavigate();
+    // 검사하기 이동
+  const moveToReady = () => {
+    navigate('/preparedraw');
+  }
+  // 마이페이지 이동
+  const moveToMy = () => {
+    navigate('/mypage');
+  }
+  // 로그아웃 처리하기
     return (
       <>
       <Background show={isOpen} onClick={toggle}/>
@@ -123,9 +153,9 @@ const Sidebar = ({isOpen, toggle}) => {
           
           <Divider />
           <LinkContainer>
-            <Link color="#6487E2">검사하기</Link>
-            <Link>마이페이지</Link>
-            <Link>로그아웃</Link>
+            <MoveBtn color="#6487E2" onClick={moveToReady}>검사하기</MoveBtn>
+            <MoveBtn onClick={moveToMy}>마이페이지</MoveBtn>
+            <MoveBtn>로그아웃</MoveBtn>
           </LinkContainer>
         </InnerContainer>
       </SideContainer>

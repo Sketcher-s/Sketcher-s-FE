@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Shape } from '../../assets/Draw/Shape.svg';
 import { ReactComponent as Rectangle } from '../../assets/Draw/Rectangle.svg';
+import { theme } from '../../theme';
 
 const Bar = () => {
 
@@ -33,6 +34,9 @@ const BarBox = styled.div`
   display: flex;
   justify-content: center; /* 수평 중앙 정렬 */
   align-items: center; /* 수직 중앙 정렬 */
+
+  ${theme.media.mobile`
+  `}
 `;
 
 const StyledShape = styled.div`

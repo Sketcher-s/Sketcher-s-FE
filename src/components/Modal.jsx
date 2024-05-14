@@ -36,7 +36,7 @@ ${theme.media.desktop`
 `
 // 텍스트 스타일 (공통 부분을 재사용)
 const Text = styled.div`
-  width: 19.375rem; // 310px to rem
+  max-width: 19.375rem; // 310px to rem
   text-align: center;
   color: ${(props) => props.color || "#27282B"};
   font-family: 'Pretendard';

@@ -1,7 +1,7 @@
 import React, {useState,useRef} from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { ReactComponent as Check } from '../../assets/Draw/GCheck.svg';
+import { ReactComponent as Check } from '../../assets/Draw/Check.svg';
 import { ReactComponent as Back } from '../../assets/Draw/Back.svg';
 import Modal from '../Modal';
 import Camera from './Camera';
@@ -48,65 +48,64 @@ function PreparePicture() {
 
 
   return (
-    <div>
-    <Container onClick={handleModalOpen}>
+    <Container>
       <Section>
-        
         <PutSection>
           <Back />
           <Title onClick={handleDrawClick}>뒤로가기</Title>
         </PutSection>
-
         <Content>
-          <SubSection>
-            <SubTitle>검사를 위해 준비해야 할 사항</SubTitle>
+          <SubTitle>검사를 위해 준비해야 할 사항</SubTitle>
 
-            <PreNoteContainer>
+            <NoteContainer>
               <PreContainer>
               <Preparation>
                 <Check />
-                <Text>연필, 볼펜, 색연필 등은 사용할 수 없으며, 지우개와 A4 용지 한 장을 준비해주세요.</Text>
               </Preparation>
+              <Text>연필, 볼펜, 색연필 등은 사용할 수 없으며, 지우개와 A4 용지 한 장을 준비해주세요.</Text>
               </PreContainer>
 
               <PreContainer>
               <Preparation>
                 <Check />
-                <Text>지우개를 사용할 경우, 깨끗하게 지워 잔상이나 다른 연필 선이 남지 않도록 주의해주세요.</Text>
               </Preparation>
+              <Text>지우개를 사용할 경우, 깨끗하게 지워 잔상이나 다른 연필 선이 남지 않도록 주의해주세요.</Text>
               </PreContainer>
 
               <PreContainer>
               <Preparation>
                 <Check />
-                <Text>종이가 접히거나 구겨지지 않도록 주의해주세요.</Text>
               </Preparation>
+              <Text>종이가 접히거나 구겨지지 않도록 주의해주세요.</Text>
               </PreContainer>
 
               <PreContainer>
               <Preparation>
                 <Check />
-                <Text>아이가 새로운 종이에 다시 그리거나 할 경우, 최종적으로 그린 그림을 업로드해주세요.</Text>
               </Preparation>
+              <Text>아이가 새로운 종이에 다시 그리거나 할 경우, 최종적으로 그린 그림을 업로드해주세요.</Text>
               </PreContainer>
 
-            </PreNoteContainer>
-          </SubSection>
+            </NoteContainer>
 
-          <SubSection>
             <SubTitle>사진 첨부 시 유의사항</SubTitle>
 
             <NoteContainer>
+              <PreContainer>
               <Preparation>
                 <Check />
-                <Text>밝고 어두운 그림자가 없는 밝은 곳에서 촬영해주세요.</Text>
               </Preparation>
+              <Text>밝고 어두운 그림자가 없는 밝은 곳에서 촬영해주세요.</Text>
+              </PreContainer>
+
+              <PreContainer>
               <Preparation>
                 <Check />
-                <Text>A4 용지에 딱 맞춰서 촬영하고, 그림자가 생기지 않도록 주의해주세요.</Text>
               </Preparation>
+              <Text>A4 용지에 딱 맞춰서 촬영하고, 그림자가 생기지 않도록 주의해주세요.</Text>
+              </PreContainer>
             </NoteContainer>
-          </SubSection>
+          
         </Content>
       </Section>
 
@@ -126,42 +125,37 @@ function PreparePicture() {
       </ButtonContainer>
     </Container>
 
-
- 
-
-    </div>
   );
 }
 
 export default PreparePicture;
 
 const Container = styled.div`
-  width: 100%;
-  height: 100%;
+
+  height: 100vh;
   padding-top: 2.5rem; //40px;
   padding-bottom: 2.5rem; //40px;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 1.875rem; //30px;
-  display: inline-flex;
+  display: flex;
   background: white;
-  border-radius: 0.625rem; //10px;
-
+  overflow: hidden;
   ${theme.media.mobile`
+    padding-top: 1rem; //40px;
+    padding-bottom: 1rem; //40px;
   `}
 `;
 
 const Section = styled.div`
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 1.25rem; //20px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem; //20px;
 
   ${theme.media.mobile`
-  width: 21.125rem;
-  //height: 37.875rem;
+
   justify-content: center;
 `}
 `;
@@ -195,6 +189,9 @@ const SubTitle = styled.div`
   font-weight: 700;
   line-height: 2.0625rem; //33px;
   word-wrap: break-word;
+  text-align: center;
+  align-self: flex-start;
+  padding-left: 1rem;
 
   ${theme.media.mobile`
     font-size: 1.125rem;
@@ -213,18 +210,6 @@ const Content = styled.div`
 `}
 `;
 
-const SubSection = styled.div`
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 1.25rem; //20px;
-  display: flex;
-
-  ${theme.media.mobile`
-  justify-content: flex-start;
-`}
-`;
-
 const Text = styled.div`
   color: #27282b;
   font-size: 1rem; //16px;
@@ -235,96 +220,69 @@ const Text = styled.div`
 
   ${theme.media.mobile`
     font-size: 0.875rem;
+    text-align: left;
 `}
 `;
 
 const PreContainer = styled.div`
-lex-direction: column;
 justify-content: flex-start;
-align-items: center;
 gap: 1.25rem; //20px;
 display: flex;
-  ${theme.media.mobile`
-`}
-`;
 
-const PreNoteContainer = styled.div`
-  width: 36.5rem; //584px;
-  height: 9.75rem; //156px;
-  padding-left: 2rem; //32px;
-  padding-right: 2rem; //32px;
-  padding-top: 1.875rem; //30px;
-  padding-bottom: 0.875rem; //14px;
-  background: white;
-  border-radius: 0.625rem; //10px;
-  border: 0.0625rem #e0e1e9 solid;
-  flex-direction: column;
-  justify-content: flex-start;
+  ${theme.media.mobile`
   align-items: flex-start;
-  gap: 0.875rem; //14px;
-  display: inline-flex;
-
-  ${theme.media.mobile`
-    width:18.625rem;
-    height: 12.375rem;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-    padding-top: 1.875rem;
-    padding-bottom: 1.875rem;
-    align-items: center;
-  `}
-  
+`}
 `;
 
 const NoteContainer = styled.div`
-  width: 36.75rem; //588px;
-  height: 4.25rem; //68px;
-  padding: 1.875rem; //30px;
   background: white;
-  border-radius: 0.625rem; //10px;
+  border-radius: 0.625rem;
   border: 0.0625rem #e0e1e9 solid;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 0.875rem; //14px;
+  gap: 0.875rem;
   display: flex;
 
   ${theme.media.mobile`
-  width: 18.625rem;
-  height: 6.25rem;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  padding-top: 1.875rem;
-  padding-bottom: 1.875rem;
-  align-items: center;
-`}
+    width: 75%;
+    padding: 1.8rem 1.3rem;
+  `}
+
+  ${theme.media.desktop`
+    width: 40.5rem;
+    padding: 1.875rem 2rem;
+  `}
 `;
 
 const Preparation = styled.div`
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 0.6875rem; //11px;
-  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
 
   ${theme.media.mobile`
+  padding-top: 0.3rem;
 `}
 `;
 
-const ButtonContainer = styled.div`
-  width: 10rem; //160px;
-  height: 2.75rem; //44px;
-  padding: 0 1.25rem; //0 20px;
+const ButtonContainer = styled.button`
   background: #6487e2;
   border-radius: 0.25rem; //4px;
   justify-content: center;
   align-items: center;
-  display: inline-flex;
+  display: flex;
+  border: none;
 
   ${theme.media.mobile`
+    width: 75%;
 `}
+
+  ${theme.media.desktop`
+   width: 30%;
+  `}
 `;
 
-const ButtonText = styled.div`
+const ButtonText = styled.h1`
   width: 7.5rem; //120px;
   text-align: center;
   color: white;

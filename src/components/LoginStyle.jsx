@@ -46,13 +46,16 @@ export const JoinWrapper = styled.form`
   justify-content: center;
   align-items: center;
   gap: 2.5rem;
+  margin-top: 5rem;
 
   ${theme.media.mobile`
   width: 80%;
+  
 `}
 
   ${theme.media.desktop`
   width: 60%;
+  
 `}
 `;
 
@@ -63,7 +66,7 @@ export const LoginTitle = styled.div`
   line-height: 2.4rem;
   word-wrap: break-word;
   ${theme.media.mobile`
-  font-size: 1rem;
+  font-size: 1.375rem;
 `}
 
   ${theme.media.desktop`
@@ -198,7 +201,7 @@ export const Button = styled.button`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  background: ${(props) => props.background};
+  background-color: ${(props) => props.fixed ? "white" : props.back ? "#6487E2" : "#C1D1F2"};
   border: none;
   outline: none;
 
