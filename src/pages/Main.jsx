@@ -63,7 +63,6 @@ const InspectionSection = styled.div`
     display:flex;
     justify-content: center;
     align-items: center;
-    gap:56px;
     ${theme.media.mobile`
     flex-direction: column;  // 모바일에서는 수직 배치
     order: 0;  // 설명을 세 번째 위치로
@@ -71,6 +70,7 @@ const InspectionSection = styled.div`
 `;
 
 const InspectionContent = styled.div`
+width:319px;
 ${theme.media.mobile`
     text-align: center;
   `}
@@ -96,11 +96,13 @@ color: #6487E2;
   `}
 `;
 const InspectionDescription = styled.p`
+width: 360px;
     font-family: Pretendard;
     font-size: 26px;
     font-weight: 700;
     line-height: 39px;
-
+    color:black;
+    
     ${theme.media.mobile`
     //styleName: display2/B;
 font-family: Pretendard;
@@ -120,8 +122,11 @@ border-radius: 4px;
 background: #6487E2;
 color: white;
 border:none;
+font-weight:700;
 ${theme.media.mobile`
-margin-bottom:40px;
+margin-bottom:20px;
+position:relative;
+top:400px;
 `}
 `;
 const Image1 = styled.img`
@@ -131,8 +136,8 @@ margin:50px;
 ${theme.media.mobile`
 width: 338px; 
 height: 300px;
-order: 2;  // 설명을 세 번째 위치로
-margin:-30px;
+margin-top:-50px;
+margin-bottom:200px;
 `}
 `;
 
@@ -176,6 +181,7 @@ const Highlighted = styled.span`
 `;
 const MindDescription = styled.p`
 //styleName: body1/SB;
+width: 360px;
 font-family: Pretendard;
 font-size: 14px;
 font-weight: 600;
@@ -202,6 +208,8 @@ const ResultsSection = styled.div`
 display:flex;
 justify-content: center;
 align-items: center;
+color:black;
+    
 ${theme.media.mobile`
 
 flex-direction: column-reverse; // 모바일에서는 열 방향으로 변경하고 순서 반전
@@ -210,18 +218,18 @@ flex-direction: column-reverse; // 모바일에서는 열 방향으로 변경하
 
 const ResultsContent = styled.div`
   padding:100px;
+
   ${theme.media.mobile`
   width: Fixed (336.31px)px;
   height: Fixed (298px)px;
   padding: 35.12px 43.64px 35.12px 43.64px;
   border-radius: 21.29px;
-
+  
   
 `}
 `;
 
 const ResultsTitle = styled.h2`
-//styleName: display2/B;
 font-family: Pretendard;
 font-size: 22px;
 font-weight: 700;
@@ -229,6 +237,7 @@ line-height: 33px;
 text-align: left;
 ${theme.media.mobile`
 //styleName: title1/B;
+width:180px;
 font-family: Pretendard;
 font-size: 18px;
 font-weight: 700;
@@ -238,6 +247,7 @@ text-align: left;
 `;
 const ResultsDescription = styled.p`
 //styleName: body1/SB;
+width: 360px;
 font-family: Pretendard;
 font-size: 14px;
 font-weight: 600;
@@ -245,12 +255,7 @@ line-height: 21px;
 text-align: left;
 color: #3F4045;
 ${theme.media.mobile`
-//styleName: body1/SB;
-font-family: Pretendard;
-font-size: 14px;
-font-weight: 600;
-line-height: 21px;
-text-align: left; 
+
 `}
 `;
 const Image3 = styled.img`
@@ -260,7 +265,7 @@ const Image3 = styled.img`
     display:flex;
     flex-direction:column;
     width: 338px;
-height: 300px;
+    height: 300px;
     `}
 `;
 
