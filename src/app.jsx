@@ -13,7 +13,7 @@ import Register from './pages/Register';
 import MyPage from './pages/MyPage';
 import Result from './pages/Result';
 import Main from './pages/Main';
-
+import Camera from './components/Draw/Camera';
 function App() {
     return (
       <div>
@@ -30,6 +30,7 @@ function App() {
               <Route path="/Loading" element={<Loading/>} />
               <Route path="/Main" element={<Main/>} />
               <Route path="/Result" element={<Result/>} />
+              <Route path="/Camera" element={<Camera/>} />
               {/* <Route path="/Loading" element={<Bar/>} /> */}
             </Routes>
           </BrowserRouter>

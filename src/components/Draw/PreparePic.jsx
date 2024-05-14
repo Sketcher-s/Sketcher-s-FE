@@ -1,17 +1,20 @@
-import React, {useState,} from 'react';
+import React, {useState,useRef} from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Check } from '../../assets/Draw/GCheck.svg';
 import { ReactComponent as Back } from '../../assets/Draw/Back.svg';
 import Modal from '../Modal';
+import Camera from './Camera';
 import { theme } from '../../theme';
-
 
 function PreparePicture() {
 
-
   const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
- 
+  const [fileSelected, setFileSelected] = useState(false);
+  const fileInputRef = useRef(null);
+
+  const navigate = useNavigate();
+
   const handleModalOpen = () => {
     setModalOpen(true); // 모달을 열기 위해 상태를 변경하는 함수
   };
@@ -20,13 +23,29 @@ function PreparePicture() {
     setModalOpen(false);
   }
 
-  const Navigate = useNavigate();
 
-  function handleDrawClick() {
-    Navigate('/');
-  }
+  const handleFileChange = (event) => {
+    const files = Array.from(event.target.files).slice(0, 4); // 최대 4개의 파일만 선택 가능
+    if (files.length > 0) {
+      setFileSelected(true);
+    }
+  };
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+  const handleDrawClick = () => {
+      handleModalOpen(); // 사진이 첨부되지 않았다면 모달창을 띄웁니다
+  };
 
- 
+  const handleUpload = () => {
+    if (!fileSelected) {
+      handleModalOpen(); // 파일이 선택되지 않았다면 모달창을 띄웁니다.
+    } else {
+      // 파일 업로드 로직을 여기에 추가하거나 다음 단계로 진행합니다.
+      alert('파일이 업로드 준비가 되었습니다!');
+    }
+  };
+
 
   return (
     <div>
@@ -92,20 +111,23 @@ function PreparePicture() {
       </Section>
 
       <ButtonContainer>
-        <ButtonText>사진 첨부하기</ButtonText>
+        <ButtonText onClick={handleButtonClick}>
+          사진 첨부하기
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+            ref={fileInputRef}
+          />
+        </ButtonText>
+    
       </ButtonContainer>
-
     </Container>
 
 
-    {/* 모달을 열기 위한 버튼 */}
-      {modalOpen && (
-        <Modal
-          title="사진 확인이 필요해요 !"
-          message="사진이 적절하게 촬영되었는지 다시 확인해주세요."
-          close={handleModalClose} // 모달을 닫는 핸들러를 전달합니다.
-        />
-      )}
+ 
 
     </div>
   );

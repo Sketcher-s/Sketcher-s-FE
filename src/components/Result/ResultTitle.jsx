@@ -73,7 +73,7 @@ const ResultSection = styled.div`
 `;
 
 const TitleInput = styled.input`
-  width: 650px;
+  width: 810px;
   height: 30px;
   color: black;
   font-size: 26px;

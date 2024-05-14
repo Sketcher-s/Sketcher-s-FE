@@ -36,7 +36,7 @@ function ResultContent() {
   return (
     <div>
         <Resultcontent>
-          <ContentTitle>검사결과 상세 내용</ContentTitle>
+          <ContentTitle>검사 결과 상세 내용</ContentTitle>
           <Content>{analysisResult || "분석 결과를 불러오는 중입니다..."}</Content>
         
         <Accordion>
@@ -73,7 +73,14 @@ ${theme.media.mobile`
 `;
 const ContentTitle = styled.p`
   padding-bottom:20px;
-  color: rgb(99, 127, 233);
+  //styleName: title2/B;
+font-family: Pretendard;
+font-size: 16px;
+font-weight: 700;
+line-height: 24px;
+text-align: left;
+color:#6487E2;
+
   ${theme.media.mobile`
  
   `}
@@ -81,6 +88,14 @@ const ContentTitle = styled.p`
 const Content = styled.p`
   width: 100%;
   padding-bottom:20px;
+  //styleName: title2/SB;
+  //styleName: title2/SB;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  text-align: justified;
+  color:#3F4045;  
   ${theme.media.mobile`
 
   
