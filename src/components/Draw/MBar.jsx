@@ -90,13 +90,13 @@ const Container = styled.div`
   background: #f3f3f6;
   position: relative;
   display: flex;
-  // right: 0; /* 오른쪽에 위치하도록 설정 */
-  //justify-content: flex-end; /* 모든 내용을 컨테이너의 오른쪽 끝에 배치 */
+  right: 0; /* 오른쪽에 위치하도록 설정 */
+  justify-content: flex-end; /* 모든 내용을 컨테이너의 오른쪽 끝에 배치 */
   align-items: center; /* 세로 가운데 정렬 */
 
   ${theme.media.mobile`
-  width: 12.875rem; //206px;
-  height: 38.875rem; //622px;
+  width: 100%;
+  height: 7.5rem;
 
 `}
 `;
@@ -115,8 +115,8 @@ const StyledContainer = styled.div`
   height: 42.625rem;
 
   ${theme.media.mobile`
-  width: 100%;
-  height: 7.5rem;
+  width: 7.5rem;
+  height: 100%;
 
   justify-content: center;
   align-items: center;

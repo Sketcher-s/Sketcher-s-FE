@@ -13,10 +13,11 @@ import { ReactComponent as BPencil } from '../../assets/Draw/BPencil.svg';
 import { ReactComponent as BTrash } from '../../assets/Draw/BTrash.svg';
 import { ReactComponent as BAll } from '../../assets/Draw/BAll.svg';
 import Description from '../Draw/Description';
+//import MDescription from '../Draw/MDescription';
 import { ReactComponent as Shape } from '../../assets/Draw/Shape.svg';
 import { ReactComponent as Rectangle } from '../../assets/Draw/Rectangle.svg';
 import { theme } from '../../theme';
-import { useRecoilValue } from 'recoil';
+// import { useRecoilValue } from 'recoil';
 //import { calculatedCanvasSizeState } from './atoms';
 
 
@@ -113,7 +114,7 @@ function Draw() {
       return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    //화면 크기가 변경될때마다 상태관리 recoil로 구현
+    //화면 크기가 변경될때마다 상태관리 필요 -> 연동후 예정
   
 
   
@@ -214,9 +215,7 @@ function Draw() {
         </BarBox>
       )}
 
-{isDescriptionVisible && <Description onClick={toggleBarBox} />}
-
-
+      {isDescriptionVisible && <Description onClick={toggleBarBox} />}
 
     </Wrap>
 
@@ -228,6 +227,7 @@ export default Draw;
 const Wrap = styled.div`
   display: flex;
   justify-content: space-between; /* 컨테이너 사이의 여백을 최대로 확보하여 내부 요소를 양쪽으로 분산 배치 */
+
 `;
 
 const OutContainer = styled.div`
@@ -288,6 +288,7 @@ const CanvasContainer = styled.div`
   ${theme.media.mobile`
   // width: 21.125rem;
   // height: 21.125rem;
+  margin-top: 7.5rem;
 `}
 
 `;
@@ -375,9 +376,7 @@ const BarBox = styled.div`
   display: flex;
 
   ${theme.media.mobile`
-
-  position: fixed;
-  top: 12.5%; /* 화면 위쪽 가운데로 */
+  top: 8%; /* 화면 위쪽 가운데로 */
   left: 50%;
   transform: translate(-50%, -50%);
   width: auto; /* 필요에 따라 너비 조정 */
@@ -396,3 +395,5 @@ const StyledRectangle = styled.div`
 position: relative;
 z-index: 1;
 `;
+
+
