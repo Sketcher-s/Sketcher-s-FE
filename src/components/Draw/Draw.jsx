@@ -63,10 +63,12 @@ function Draw() {
 
   //각 버튼 클릭시 버튼 변경
   const [isButtonClicked, setIsButtonClicked] = useState(false);
+
   // 버튼 클릭 시 상태 변경 함수
   // const handleClick = () => {
   //   setIsButtonClicked(!isButtonClicked); // 현재 버튼 상태를 반전
   // };
+
   const handleUndo = () => {
     if (signatureRef.current) { // null 체크 추가
       signatureRef.current.undo();
@@ -78,10 +80,22 @@ function Draw() {
       signatureRef.current.clear();
     }
   };
-
+  
   const handleColorChange = (newColor) => {
     setColor(newColor);
   };
+
+  // 펜의 최소 두께와 최대 두께
+  const minPenSize = 0.5;
+  const maxPenSize = 20;
+  
+  // 펜의 최소 두께와 최대 두께를 설정하는 함수
+  const changePenSize = () => {
+    signatureCanvasRef.current.penSize = { // 펜의 최소 두께와 최대 두께 설정
+      minWidth: minPenSize,
+      maxWidth: maxPenSize,
+  };
+};
 
   const handleClick = (buttonName) => {
     setIsButtonClicked(buttonName === isButtonClicked ? null : buttonName); // 현재 클릭된 버튼이면 상태를 null로 변경하고 아니면 버튼 이름으로 변경
@@ -114,9 +128,6 @@ function Draw() {
     }, []);
 
     //화면 크기가 변경될때마다 상태관리 필요 -> 연동후 예정
-  
-
-  
 
   return (
     <Wrap>
@@ -133,7 +144,7 @@ function Draw() {
         {/* WPencil 버튼 */}
       {isButtonClicked !== 'WPencil' ? (
         <WStyledWrapper>
-          <WPencil onClick={() => handleClick('WPencil')} />
+          <WPencil onClick={() => {handleClick('WPencil'); handleColorChange('black');}} />
         </WStyledWrapper>
       ) : (
         <BStyledWrapper>
@@ -145,7 +156,7 @@ function Draw() {
       {/* BEraser 버튼 */}
       {isButtonClicked !== 'WEraser' ? (
         <WStyledWrapper>
-          <WEraser onClick={() => {handleClick('WEraser'); handleColorChange('white'); }} />
+          <WEraser onClick={() => {handleClick('WEraser'); handleColorChange('white');}} />
         </WStyledWrapper>
       ) : (
         <BStyledWrapper>
@@ -193,6 +204,7 @@ function Draw() {
             <SignatureCanvas
                 ref={signatureRef}
                 penColor={color}
+                PenSize={maxPenSize}
                 canvasProps={{ width: canvasSize.width, height: canvasSize.height }}
             />
             </CanvasContainer>
