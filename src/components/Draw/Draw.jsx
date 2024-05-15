@@ -13,12 +13,11 @@ import { ReactComponent as BPencil } from '../../assets/Draw/BPencil.svg';
 import { ReactComponent as BTrash } from '../../assets/Draw/BTrash.svg';
 import { ReactComponent as BAll } from '../../assets/Draw/BAll.svg';
 import Description from '../Draw/Description';
-//import MDescription from '../Draw/MDescription';
 import { ReactComponent as Shape } from '../../assets/Draw/Shape.svg';
 import { ReactComponent as Rectangle } from '../../assets/Draw/Rectangle.svg';
 import { theme } from '../../theme';
-// import { useRecoilValue } from 'recoil';
-//import { calculatedCanvasSizeState } from './atoms';
+import MBar from './MBar';
+import MDescription from './MDescription';
 
 
 
@@ -123,6 +122,10 @@ function Draw() {
     <Wrap>
       <OutContainer>
 
+          <MobileContainer>
+          <MBar/>
+          </MobileContainer>
+
           <DrawingArea>
 
         <Icon>
@@ -200,6 +203,10 @@ function Draw() {
           <Button>완료</Button>
         </ButtonContainer>
 
+        <DMobileContainer>
+        <MDescription/>
+      </DMobileContainer>
+
       </OutContainer>
 
       {/* <Description/> */}
@@ -216,6 +223,7 @@ function Draw() {
       )}
 
       {isDescriptionVisible && <Description onClick={toggleBarBox} />}
+
 
     </Wrap>
 
@@ -245,6 +253,7 @@ const OutContainer = styled.div`
   overflow: hidden;
   
   ${theme.media.mobile`
+  padding-top: 1rem;
   `}
 `;
 
@@ -276,8 +285,6 @@ const DrawingArea = styled.div`
 
 
 const CanvasContainer = styled.div`
-  // width: 30.125rem;
-  // height: 30.125rem;
   width: ${({ canvasWidth }) => canvasWidth}px;
   height: ${({ canvasHeight }) => canvasHeight}px;
   //width: 100%; /* 너비를 부모 요소에 맞게 설정 */
@@ -286,9 +293,7 @@ const CanvasContainer = styled.div`
   box-shadow: 0.3125rem 0.3125rem 0.625rem rgba(0, 0, 0, 0.04);
 
   ${theme.media.mobile`
-  // width: 21.125rem;
-  // height: 21.125rem;
-  margin-top: 7.5rem;
+
 `}
 
 `;
@@ -319,6 +324,13 @@ const Button = styled.div`
   word-wrap: break-word;
 
   ${theme.media.mobile`
+
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  align-items: center; /* 중앙 정렬 */
+  width: 100%; /* 화면 너비에 맞게 설정 */
+  margin-left: 1.625rem;
+  margin-right: 1.625rem;
   `}
 `;
 
@@ -376,14 +388,10 @@ const BarBox = styled.div`
   display: flex;
 
   ${theme.media.mobile`
-  top: 8%; /* 화면 위쪽 가운데로 */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: auto; /* 필요에 따라 너비 조정 */
-  height: auto; /* 필요에 따라 높이 조정 */
-  transform: translate(-50%, -50%) rotate(-90deg); /* 왼쪽으로 회전 */
 
-`}
+    display: none;
+  `}
+
 `;
 
 const StyledShape = styled.div`
@@ -394,6 +402,38 @@ z-index: 2;
 const StyledRectangle = styled.div`
 position: relative;
 z-index: 1;
+`;
+
+const MobileContainer = styled.div`
+
+  display: none;  
+
+  ${theme.media.mobile`
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    align-items: center; /* 중앙 정렬 */
+    width: 100%; /* 화면 너비에 맞게 설정 */
+    margin-left: 1.625rem;
+    margin-right: 1.625rem;
+  `}
+
+`;
+
+
+const DMobileContainer = styled.div`
+
+display: none;  
+
+${theme.media.mobile`
+display: flex;
+justify-content: center; /* 중앙 정렬 */
+align-items: center; /* 중앙 정렬 */
+width: 100%; /* 화면 너비에 맞게 설정 */
+margin-left: 1.625rem;
+margin-right: 1.625rem;
+
+`}
+
 `;
 
 

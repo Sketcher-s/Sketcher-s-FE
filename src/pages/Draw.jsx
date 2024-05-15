@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Description from '../components/Draw/Description';
 import Draw from '../components/Draw/Draw';
 import { theme } from '../theme';
+import MDescription from '../components/Draw/MBar';
 
 
 export default function DrawPage() {

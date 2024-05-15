@@ -25,18 +25,6 @@ const Description = ({onClick}) => {
     
     <Container>
 
-    {/* {isBarBoxVisible && (
-    <BarBox onClick={toggleBarBox}>
-        <StyledShape>
-            <Shape/>
-        </StyledShape>
-
-        <StyledRectangle>
-            <Rectangle/>
-        </StyledRectangle>
-    </BarBox>
-    )} */}
-
         {isBarBoxVisible && (
     <BarBox onClick={toggleBarBox}>
         <StyledShape>
