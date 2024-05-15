@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import main1Image from '../assets/Main/Main1.png'; 
-import main2Image from '../assets/Main/Main2.png'; 
-import main3Image from '../assets/Main/Main3.png'; 
+import main1Image from '../assets/Main/Main1.svg';
+import main2Image from  '../assets/Main/Main2.svg';
+import main3Image from  '../assets/Main/Main3.svg';
 import { theme } from '../theme';
 
 function Main() {
@@ -70,7 +70,7 @@ const InspectionSection = styled.div`
 `;
 
 const InspectionContent = styled.div`
-width:319px;
+
 ${theme.media.mobile`
     text-align: center;
   `}

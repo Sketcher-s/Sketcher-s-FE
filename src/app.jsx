@@ -8,6 +8,8 @@ import styled from 'styled-components';
 import './assets/font/font.css';
 import PreparePicture from './components/Draw/PreparePic';
 import NavbarMember from './components/Nav';
+import NavbarNoMember from './components/NavbarNoMember'
+import Sidebar from './components/Sidebar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import MyPage from './pages/MyPage';
@@ -22,6 +24,8 @@ function App() {
     return (
       <div>
         <BrowserRouter>
+            <NavbarNoMember toggleSidebar={toggleSidebar}/>
+            <Sidebar isOpen={isSidebarOpen} toggle={() => setIsSidebarOpen(false)}/>
             <Routes>
               <Route path="/login" element={<Login/>} />
               <Route path="/register" element={<Register/>} />
