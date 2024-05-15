@@ -37,7 +37,7 @@ export default function Loading() {
     <CanvasContainer>
       {/* 그림판 */}
       {/* <SignatureCanvas ref={signatureCanvasRef} penColor="black" canvasProps={{ width: 482, height: 482 }} /> */}
-      <EXImage src={`${process.env.PUBLIC_URL}/assets/ExPic.png`} alt="사진에시"/>
+      <EXImage src={`${process.env.PUBLIC_URL}/assets/ExPic.png`} alt="사진예시"/>
       </CanvasContainer>
 
     </DrawingArea>

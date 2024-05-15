@@ -28,20 +28,10 @@ export const Header = styled.div`
 `}
 `;
 
-
-export const HeaderTitle = styled.div`
-  text-align: center;
-  color: #5678be;
-  font-family: 'Montserrat';
-  font-weight: 400;
-  word-wrap: break-word;
-  ${theme.media.mobile`
-  font-size: 1rem;
-`}
-
-  ${theme.media.desktop`
-  font-size: 1.2rem;
-`}
+export const LogoContainer = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 `;
 
 export const HeaderButtons = styled.div`

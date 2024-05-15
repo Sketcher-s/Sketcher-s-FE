@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import NavbarMember from '../components/NavbarMember'
+import NavbarMember from '../components/NavbarNoMember'
 import ResultButton from '../components/Result/ResultButton';
 import ResultContent from '../components/Result/ResultContent';
 import ResultTitle from '../components/Result/ResultTitle';

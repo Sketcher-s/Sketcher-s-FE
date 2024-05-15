@@ -7,7 +7,7 @@ import Loading from './components/Draw/Loading';
 import styled from 'styled-components';
 import './assets/font/font.css';
 import PreparePicture from './components/Draw/PreparePic';
-import NavbarMember from './components/Nav';
+import NavbarMember from './components/NavbarMember';
 import NavbarNoMember from './components/NavbarNoMember'
 import Sidebar from './components/Sidebar';
 import Login from './pages/Login';
@@ -24,20 +24,19 @@ function App() {
     return (
       <div>
         <BrowserRouter>
-            <NavbarNoMember toggleSidebar={toggleSidebar}/>
+            <NavbarMember toggleSidebar={toggleSidebar}/>
             <Sidebar isOpen={isSidebarOpen} toggle={() => setIsSidebarOpen(false)}/>
             <Routes>
               <Route path="/login" element={<Login/>} />
               <Route path="/register" element={<Register/>} />
               <Route path="/mypage" element={<MyPage/>} />
               <Route path="/" element={<PrepareDraw/>} />
-              <Route path="/Draw" element={<Draw/>} />
-              <Route path="/PreparePicture" element={<PreparePicture/>} />
-              <Route path="/Loading" element={<Loading/>} />
-              <Route path="/Main" element={<Main/>} />
-              <Route path="/Result" element={<Result/>} />
-              <Route path="/Camera" element={<Camera/>} />
-              {/* <Route path="/Loading" element={<Bar/>} /> */}
+              <Route path="/draw" element={<Draw/>} />
+              <Route path="/preparepicture" element={<PreparePicture/>} />
+              <Route path="/loading" element={<Loading/>} />
+              <Route path="/main" element={<Main/>} />
+              <Route path="/result" element={<Result/>} />
+              <Route path="/camera" element={<Camera/>} />
             </Routes>
           </BrowserRouter>
       </div>
