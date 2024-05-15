@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect} from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -16,27 +16,32 @@ import Description from '../Draw/Description';
 import { ReactComponent as Shape } from '../../assets/Draw/Shape.svg';
 import { ReactComponent as Rectangle } from '../../assets/Draw/Rectangle.svg';
 import { theme } from '../../theme';
+import MBar from './MBar';
+import MDescription from './MDescription';
+
 
 
 
 function Draw() {
+  //const [calculatedCanvasSize, setCalculatedCanvasSize] = useState({ width: 0, height: 0 });
+  //const calculatedCanvasSize = useRecoilValue(calculatedCanvasSizeState);
+
   // Ref를 사용하여 Signaturecanvas 컴포넌트에 접근한다.
   const signatureCanvasRef = useRef();
 
   // 버튼 클릭했을 때 화면 이동
   const Navigate = useNavigate();
-
   function handleDoneClick() {
     Navigate('/loading');
   }
 
-  // 완료 버튼 클릭시 그림 저장 및 화면 이동 :아직 미구현
+  //Todo// 완료 버튼 클릭시 그림 저장 및 화면 이동 :아직 미구현
   const handleButtonClick = () => {
     saveSignature();
     handleDoneClick();
   };
 
-  // 그림 저장 함수 : 아직 미구현
+  // Todo//그림 저장 함수 : 아직 미구현
   function saveSignature() {
     // toDataURL() 메서드를 사용하여 그림을 이미지로 변환
     const imageDataUrl = signatureCanvasRef.current.toDataURL();
@@ -62,14 +67,64 @@ function Draw() {
   // const handleClick = () => {
   //   setIsButtonClicked(!isButtonClicked); // 현재 버튼 상태를 반전
   // };
-  const handleClick = (buttonName) => {
-    setIsButtonClicked(buttonName === isButtonClicked ? null : buttonName); // 현재 클릭된 버튼이면 상태를 null로 변경하고 아니면 버튼 이름으로 변경
+  const handleUndo = () => {
+    if (signatureRef.current) { // null 체크 추가
+      signatureRef.current.undo();
+    }
   };
 
+  const handleClear = () => {
+    if (signatureRef.current) { // null 체크 추가
+      signatureRef.current.clear();
+    }
+  };
+
+  const handleColorChange = (newColor) => {
+    setColor(newColor);
+  };
+
+  const handleClick = (buttonName) => {
+    setIsButtonClicked(buttonName === isButtonClicked ? null : buttonName); // 현재 클릭된 버튼이면 상태를 null로 변경하고 아니면 버튼 이름으로 변경
+    if (buttonName === 'WTrash') {
+      handleClear(); // 클릭 시 지우기 기능 호출
+    } else if (buttonName === 'WGoback' && signatureRef.current) {
+      handleUndo(); // 클릭 시 지우기 기능 호출
+    }
+  };
+
+    //그림판 구현
+    const signatureRef = useRef(null);
+    const [canvasSize, setCanvasSize] = useState({ width: '21.125rem', height: '21.125rem' });
+    const [color, setColor] = useState("black");
+  
+    useEffect(() => {
+      const handleResize = () => {
+        // 화면 크기에 따라 canvas 크기를 조정
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        const newSize = Math.min(screenWidth, screenHeight) * 0.657; // 캔버스 크기를 화면의 80%로 설정
+  
+        setCanvasSize({ width: newSize, height: newSize });
+      };
+  
+      // 컴포넌트가 마운트될 때와 화면 크기가 변경될 때마다 크기를 업데이트
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    //화면 크기가 변경될때마다 상태관리 필요 -> 연동후 예정
+  
+
+  
 
   return (
     <Wrap>
       <OutContainer>
+
+          <MobileContainer>
+          <MBar/>
+          </MobileContainer>
 
           <DrawingArea>
 
@@ -90,7 +145,7 @@ function Draw() {
       {/* BEraser 버튼 */}
       {isButtonClicked !== 'WEraser' ? (
         <WStyledWrapper>
-          <WEraser onClick={() => handleClick('WEraser')} />
+          <WEraser onClick={() => {handleClick('WEraser'); handleColorChange('white'); }} />
         </WStyledWrapper>
       ) : (
         <BStyledWrapper>
@@ -120,6 +175,7 @@ function Draw() {
         </BStyledWrapper>
       )}
 
+
       {/* BAll 버튼 */}
       {isButtonClicked !== 'WAll' ? (
         <WStyledWrapper>
@@ -133,11 +189,12 @@ function Draw() {
 
         </Icon>
 
-          <CanvasContainer>
-            {/* 그림판 */}
-            <SignatureCanvas ref={signatureCanvasRef} 
-            penColor="black" canvasProps={{ width: theme.media.mobile('338px') || '482px',
-    height: theme.media.mobile('338px') || '482px'  }} />
+            <CanvasContainer>
+            <SignatureCanvas
+                ref={signatureRef}
+                penColor={color}
+                canvasProps={{ width: canvasSize.width, height: canvasSize.height }}
+            />
             </CanvasContainer>
 
         </DrawingArea>
@@ -145,6 +202,10 @@ function Draw() {
         <ButtonContainer onClick={handleDoneClick}>
           <Button>완료</Button>
         </ButtonContainer>
+
+        <DMobileContainer>
+        <MDescription/>
+      </DMobileContainer>
 
       </OutContainer>
 
@@ -161,8 +222,7 @@ function Draw() {
         </BarBox>
       )}
 
-{isDescriptionVisible && <Description onClick={toggleBarBox} />}
-
+      {isDescriptionVisible && <Description onClick={toggleBarBox} />}
 
 
     </Wrap>
@@ -175,6 +235,7 @@ export default Draw;
 const Wrap = styled.div`
   display: flex;
   justify-content: space-between; /* 컨테이너 사이의 여백을 최대로 확보하여 내부 요소를 양쪽으로 분산 배치 */
+
 `;
 
 const OutContainer = styled.div`
@@ -190,9 +251,9 @@ const OutContainer = styled.div`
   background: #f3f3f6;
   border-radius: 10px;
   overflow: hidden;
-
-
+  
   ${theme.media.mobile`
+  padding-top: 1rem;
   `}
 `;
 
@@ -218,20 +279,22 @@ const DrawingArea = styled.div`
 
   ${theme.media.mobile`
   flex-direction: column-reverse;
+  display: flex;
 `}
 `;
 
 
 const CanvasContainer = styled.div`
-  width: 30.125rem;
-  height: 30.125rem;
+  width: ${({ canvasWidth }) => canvasWidth}px;
+  height: ${({ canvasHeight }) => canvasHeight}px;
+  //width: 100%; /* 너비를 부모 요소에 맞게 설정 */
+  //height: 60vh; /* 높이를 화면 높이의 60%로 설정 */
   background: white;
   box-shadow: 0.3125rem 0.3125rem 0.625rem rgba(0, 0, 0, 0.04);
 
   ${theme.media.mobile`
-  width: 21.125rem;
-  height: 21.125rem;
-  `}
+
+`}
 
 `;
 
@@ -245,6 +308,9 @@ const ButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   display: inline-flex;
+
+  ${theme.media.mobile`
+  `}
 `;
 
 const Button = styled.div`
@@ -256,6 +322,16 @@ const Button = styled.div`
   font-weight: 700;
   line-height: 1.5rem; //24px
   word-wrap: break-word;
+
+  ${theme.media.mobile`
+
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  align-items: center; /* 중앙 정렬 */
+  width: 100%; /* 화면 너비에 맞게 설정 */
+  margin-left: 1.625rem;
+  margin-right: 1.625rem;
+  `}
 `;
 
 
@@ -274,6 +350,9 @@ const WStyledWrapper = styled.div`
   display: inline-flex;
   margin-right: 1.25rem; //20px;
   margin-bottom: 1rem; //16px;
+
+  ${theme.media.mobile`
+  `}
 `;
 
 const BStyledWrapper = styled.div`
@@ -289,6 +368,9 @@ const BStyledWrapper = styled.div`
   display: inline-flex;
   margin-right: 1.25rem; //20px;
   margin-bottom: 1rem; //16px;
+
+  ${theme.media.mobile`
+  `}
 `;
 
 const BarBox = styled.div`
@@ -307,15 +389,9 @@ const BarBox = styled.div`
 
   ${theme.media.mobile`
 
-  position: fixed;
-  top: 12.5%; /* 화면 위쪽 가운데로 */
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: auto; /* 필요에 따라 너비 조정 */
-  height: auto; /* 필요에 따라 높이 조정 */
-  transform: translate(-50%, -50%) rotate(-90deg); /* 왼쪽으로 회전 */
+    display: none;
+  `}
 
-`}
 `;
 
 const StyledShape = styled.div`
@@ -328,4 +404,36 @@ position: relative;
 z-index: 1;
 `;
 
-// canvasProps={{ width: 482, height: 482 }} 
+const MobileContainer = styled.div`
+
+  display: none;  
+
+  ${theme.media.mobile`
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    align-items: center; /* 중앙 정렬 */
+    width: 100%; /* 화면 너비에 맞게 설정 */
+    margin-left: 1.625rem;
+    margin-right: 1.625rem;
+  `}
+
+`;
+
+
+const DMobileContainer = styled.div`
+
+display: none;  
+
+${theme.media.mobile`
+display: flex;
+justify-content: center; /* 중앙 정렬 */
+align-items: center; /* 중앙 정렬 */
+width: 100%; /* 화면 너비에 맞게 설정 */
+margin-left: 1.625rem;
+margin-right: 1.625rem;
+
+`}
+
+`;
+
+

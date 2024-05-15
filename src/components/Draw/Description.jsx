@@ -25,7 +25,7 @@ const Description = ({onClick}) => {
     
     <Container>
 
-    {isBarBoxVisible && (
+        {isBarBoxVisible && (
     <BarBox onClick={toggleBarBox}>
         <StyledShape>
             <Shape/>
@@ -78,20 +78,21 @@ const Container = styled.div`
   background: #f3f3f6;
   position: relative;
   display: flex;
-//   justify-content: center;
-//   align-items: center;
-  right: 0; /* 오른쪽에 위치하도록 설정 */
-  justify-content: flex-end; /* 모든 내용을 컨테이너의 오른쪽 끝에 배치 */
+  // right: 0; /* 오른쪽에 위치하도록 설정 */
+  //justify-content: flex-end; /* 모든 내용을 컨테이너의 오른쪽 끝에 배치 */
   align-items: center; /* 세로 가운데 정렬 */
 
   ${theme.media.mobile`
+  width: 12.875rem; //206px;
+  height: 38.875rem; //622px;
+
 `}
 `;
 
 
 const StyledContainer = styled.div`
   width: 12.875rem; //206px;
-  height: 38.875rem; //622px;
+  //height: 38.875rem; //622px;
   padding:  1.875rem 1.125rem; //30px 18px;
   background: white;
   flex-direction: column;
@@ -99,10 +100,17 @@ const StyledContainer = styled.div`
   align-items: flex-start;
   gap:  1.25rem; //20px;
   display: inline-flex;
+  height: 42.625rem;
 
   ${theme.media.mobile`
-  height: 15.5rem;
-`}
+  width: 100%;
+  height: 7.5rem;
+
+  justify-content: center;
+  align-items: center;
+
+  `}
+
 `;
 
 const StyledMissionContainer = styled.div`
@@ -111,6 +119,12 @@ const StyledMissionContainer = styled.div`
   justify-content: center;
   align-items: flex-start;
   gap: 0.625rem; //10px;
+
+  ${theme.media.mobile`
+
+
+  `}
+
 `;
 
 const StyledMissionTag = styled.div`
@@ -132,6 +146,15 @@ const StyledMissionText = styled.div`
   font-weight: 700;
   line-height: 1.3125rem; //21px;
   word-wrap: break-word;
+
+  ${theme.media.mobile`
+
+  width: 17.625rem;
+  height: 8.625rem;
+  justify-content: center;
+  align-items: center;
+
+`}
 `;
 
 const StyledItemContainer = styled.div`
@@ -144,6 +167,13 @@ const StyledItemContainer = styled.div`
   align-items: flex-start;
   gap: 0.75rem; //12px;
   display: flex;
+
+  ${theme.media.mobile`
+
+
+
+`}
+
 `;
 
 const StyledItem = styled.div`
@@ -179,6 +209,10 @@ align-items: center; /* 수직 중앙 정렬 */
 // width: 100vw; /* 화면 너비 전체 */
 // height: 100vh; /* 화면 높이 전체 */
 //margin-right: auto; /* BarBox를 왼쪽으로 밀어서 모든 내용을 오른쪽으로 밀어냄 */
+
+
+
+
 `;
 
 const StyledShape = styled.div`
@@ -186,6 +220,17 @@ position: absolute;
 margin-top: 1.5625rem; //25px;
 margin-left: 0.4375rem; //7px;
 z-index: 2;
+
+${theme.media.mobile`
+//position: fixed;
+top: 25.5%; /* 화면 위쪽 가운데로 */
+left: 50%;
+transform: translate(-50%, -50%);
+width: auto; /* 필요에 따라 너비 조정 */
+height: auto; /* 필요에 따라 높이 조정 */
+transform: translate(-50%, -50%) rotate(-90deg); /* 왼쪽으로 회전 */
+
+`}
 `;
 
 const StyledRectangle = styled.div`
@@ -193,3 +238,20 @@ position: relative;
 z-index: 1;
 
 `;
+
+// const MobileModalContainer = styled.div`
+//   display: none;
+
+//   ${theme.media.mobile`
+//   background: white;
+//   width: 100%;
+//   height: 7.5rem;
+//   position: fixed;
+//   left: 0;
+//   z-index: 9999;
+//   display: flex;
+//   flex-direction: column;
+
+//   `}
+
+// `;

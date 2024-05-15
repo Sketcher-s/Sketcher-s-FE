@@ -5,6 +5,12 @@ key: 'countState',
 default: 0,
 })
  
+//그림그리기 페이지 
+export const canvasSizeState = atom({
+    key: 'canvasSize',
+    default: { width: '21.125rem', height: '21.125rem' },
+  });
+  
 // 이제 이걸 Counter라는 컴포넌트에서 useRecoilState(countState)로 사용
 // useRecoilValue는 상태의 값을 가져오기
 // useRecoilState는 상태의 값을 가져오고, 설정함
