@@ -1,58 +1,66 @@
-import React, {useState,useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Check } from '../../assets/Draw/Check.svg';
 import { ReactComponent as Back } from '../../assets/Draw/Back.svg';
 import Modal from '../Modal';
-import Camera from './Camera';
+//import Camera from './Camera';
 import { theme } from '../../theme';
 
 function PreparePicture() {
 
+  //모달 부분
   const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
-  const [fileSelected, setFileSelected] = useState(false);
-  const fileInputRef = useRef(null);
 
-  const navigate = useNavigate();
-
-  const handleModalOpen = () => {
-    setModalOpen(true); // 모달을 열기 위해 상태를 변경하는 함수
-  };
+  // const handleModalOpen = () => {
+  //   setModalOpen(true); // 모달을 열기 위해 상태를 변경하는 함수
+  // };
 
   const handleModalClose = () => {
     setModalOpen(false);
   }
 
+  //페이지 이동 부분
+  const Navigate = useNavigate();
 
-  const handleFileChange = (event) => {
-    const files = Array.from(event.target.files).slice(0, 4); // 최대 4개의 파일만 선택 가능
-    if (files.length > 0) {
-      setFileSelected(true);
+  function handleDrawClick() {
+    Navigate('/PrepareDraw');
+  }
+
+  //파일 첨부 기능 -> command key를 이용하여 4개의 파일을 한번에 첨부함
+  const [imgFile, setImgFile] = useState([]); // 이미지 배열
+  const fileInputRef = useRef(); 
+
+  const handleFileChange = () => {
+    console.log(fileInputRef.current.files); //파일 잘 들어갔는지 확인
+
+    const files = Array.from(fileInputRef.current.files);
+    const remainingSpace = 4 - imgFile.length; // 남은 공간 계산
+  
+    // 최대 개수를 초과하지 않도록 파일 추가
+    const newFiles = files.slice(0, remainingSpace);
+
+    // 기존 파일과 새로운 파일 합치기
+    const updatedFiles = [...imgFile, ...newFiles.map(file => URL.createObjectURL(file))];
+    setImgFile(updatedFiles);
+
+    if(updatedFiles.length !== 4){
+      setModalOpen(true);
     }
+
   };
+
   const handleButtonClick = () => {
+    // 파일을 선택하기 위해 input 요소 클릭
     fileInputRef.current.click();
   };
-  const handleDrawClick = () => {
-      handleModalOpen(); // 사진이 첨부되지 않았다면 모달창을 띄웁니다
-  };
-
-  const handleUpload = () => {
-    if (!fileSelected) {
-      handleModalOpen(); // 파일이 선택되지 않았다면 모달창을 띄웁니다.
-    } else {
-      // 파일 업로드 로직을 여기에 추가하거나 다음 단계로 진행합니다.
-      alert('파일이 업로드 준비가 되었습니다!');
-    }
-  };
-
 
   return (
     <Container>
       <Section>
-        <PutSection>
+        <PutSection onClick={handleDrawClick}>
           <Back />
-          <Title onClick={handleDrawClick}>뒤로가기</Title>
+          <Title>뒤로가기</Title>
         </PutSection>
         <Content>
           <SubTitle>검사를 위해 준비해야 할 사항</SubTitle>
@@ -107,7 +115,6 @@ function PreparePicture() {
             </NoteContainer>
           
         </Content>
-      </Section>
 
       <ButtonContainer>
         <ButtonText onClick={handleButtonClick}>
@@ -123,6 +130,16 @@ function PreparePicture() {
         </ButtonText>
     
       </ButtonContainer>
+
+      </Section>
+      {/* 모달을 열기 위한 버튼 */}
+      {modalOpen && (
+        <Modal
+          title="사진 확인이 필요해요 !"
+          message="사진이 4장이 적절하게 첨부되었는지 다시 확인해주세요."
+          close={handleModalClose} // 모달을 닫는 핸들러를 전달합니다.
+        />
+      )}
     </Container>
 
   );
