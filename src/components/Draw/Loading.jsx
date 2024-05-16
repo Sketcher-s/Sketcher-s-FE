@@ -5,6 +5,9 @@ import spinner from '../../assets/Draw/spinner.gif';
 import Modal from '../Modal';
 import Scan from './Scan';
 import { theme } from '../../theme';
+import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
+
 
 
 export default function Loading() {
@@ -18,6 +21,9 @@ export default function Loading() {
   const handleModalClose = () => {
     setModalOpen(false);
   }
+
+  const location = useLocation();
+  const imageData = location.state?.imageData;
 
 
   return (
@@ -35,9 +41,8 @@ export default function Loading() {
     <DrawingArea>
 
     <CanvasContainer>
-      {/* 그림판 */}
-      {/* <SignatureCanvas ref={signatureCanvasRef} penColor="black" canvasProps={{ width: 482, height: 482 }} /> */}
-      <EXImage src={`${process.env.PUBLIC_URL}/assets/ExPic.png`} alt="사진예시"/>
+      {/* <EXImage src={`${process.env.PUBLIC_URL}/assets/ExPic.png`} alt="사진예시"/> */}
+      {imageData && <img src={imageData} alt="그림" />}
       </CanvasContainer>
 
     </DrawingArea>
@@ -55,6 +60,10 @@ export default function Loading() {
 </div>
   );
 }
+
+Loading.propTypes = {
+  imageData: PropTypes.string // imageData의 타입을 문자열로 정의
+};
 
 const OutContainer = styled.div`
   width: 100%;
