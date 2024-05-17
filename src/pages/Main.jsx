@@ -302,4 +302,6 @@ ${theme.media.mobile`
   position: relative; /* Reset position */
   bottom: 1rem;
   left: -12rem;
+
+  
 `;
