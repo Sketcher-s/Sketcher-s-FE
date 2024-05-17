@@ -66,18 +66,18 @@ export default ResultContent;
 
 const Resultcontent = styled.div`
 ${theme.media.mobile`
-    width: 298px;
+    width: 18.625rem;
     margin: 0 auto; // 가운데 정렬 추가
 
 `}
 `;
 const ContentTitle = styled.p`
-  padding-bottom:20px;
+  padding-bottom:1.25rem;
   //styleName: title2/B;
 font-family: Pretendard;
-font-size: 16px;
+font-size: 1rem;
 font-weight: 700;
-line-height: 24px;
+line-height: 1.5rem;
 text-align: left;
 color:#6487E2;
 
@@ -87,13 +87,11 @@ color:#6487E2;
 `;
 const Content = styled.p`
   width: 100%;
-  padding-bottom:20px;
-  //styleName: title2/SB;
-  //styleName: title2/SB;
+  padding-bottom:1.25rem;
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600;
-  line-height: 24px;
+  line-height: 1.5rem;
   text-align: justified;
   color:#3F4045;  
   ${theme.media.mobile`
@@ -104,9 +102,9 @@ const Content = styled.p`
 `
 const Accordion = styled.div`
   width: 100%;
-  border: 1px solid #96B5F3;
-  border-radius:10px;
-  margin-bottom:20px;
+  border: 0.0625rem solid #96B5F3;
+  border-radius:0.625rem;
+  margin-bottom:1.25rem;
   ${theme.media.mobile`
     width:298px;
 
@@ -117,27 +115,26 @@ const AccordionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 26px 20px 26px;
-  font-size: 16px;
+  padding: 1.25rem 1.625rem 1.25rem 1.625rem;
   color:#4D4F56;
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
-  line-height: 24px;
+  line-height: 1.5rem;
   text-align: left;
 
 `;
 
 const Icon = styled.span`
   border: solid #96B5F3;
-  border-width: 0 2px 2px 0;
-  padding: 3px;
+  border-width: 0 0.125rem 0.125rem 0;
+  padding: 0.1875rem;
   transform: ${props => props.isOpen ? 'rotate(-135deg)' : 'rotate(45deg)'};
 `;
 
 const AccordionBody = styled.div`
-  padding: 20px 26px;
-  font-size: 14px;
+  padding: 1.25rem 1.625rem;
+  font-size: 0.875rem;
   color: #666;
   display: ${props => props.isOpen ? 'block' : 'none'};
 `;
