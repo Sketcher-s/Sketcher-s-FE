@@ -54,8 +54,6 @@ export default Main;
 
 const MainContainer = styled.div`
 overflow: hidden;
-${theme.media.mobile`
-`}
 `;
 const InspectionSection = styled.div`
     width:100%;
@@ -65,60 +63,42 @@ const InspectionSection = styled.div`
     align-items: center;
     ${theme.media.mobile`
     flex-direction: column;  // 모바일에서는 수직 배치
-    order: 0;  // 설명을 세 번째 위치로
+
   `}
 `;
 
 const InspectionContent = styled.div`
-
+  margin:1.875rem;
 ${theme.media.mobile`
     text-align: center;
   `}
 `;
 
 const InspectionTitle = styled.h2`
-    font-family: Pretendard;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 24px;
-    text-align: left;
-    color: #6487E2;
-
-    ${theme.media.mobile`
-    //styleName: title1/B;
 font-family: Pretendard;
-font-size: 18px;
+font-size: 1.125rem;  // 18px
 font-weight: 700;
-line-height: 27px;
-text-align: center;
+line-height: 1.6875rem;  // 27px
 color: #6487E2;
-
-  `}
 `;
 const InspectionDescription = styled.p`
-width: 360px;
     font-family: Pretendard;
-    font-size: 26px;
+    font-size: 1.625rem;
     font-weight: 700;
-    line-height: 39px;
     color:black;
     
     ${theme.media.mobile`
-    //styleName: display2/B;
-font-family: Pretendard;
-font-size: 22px;
-font-weight: 700;
-line-height: 33px;
+
+font-size: 1.375rem;
 text-align: center;
 
   `}
 `;
 
 const DetailButton = styled.button`
-width: 160px;
-height: 44px;
-padding: 0px 20px 0px 20px;
-border-radius: 4px;
+width: 10rem;
+height: 2.75rem;
+border-radius: 0.25rem;
 background: #6487E2;
 color: white;
 border:none;
@@ -130,8 +110,8 @@ top:400px;
 `}
 `;
 const Image1 = styled.img`
-width: 497px;
-height: 359px;
+width: 35vw; 
+height: auto;
 margin:50px;
 ${theme.media.mobile`
 width: 338px; 
@@ -162,16 +142,15 @@ const MindSection = styled.div`
 `;
 
 const MindContent = styled.div`
-  padding:50px;
 
+padding:3.125rem;
 `;
 
 const MindTitle = styled.h2`
 //styleName: display2/B;
 font-family: Pretendard;
-font-size: 22px;
+font-size: 1.375rem;
 font-weight: 700;
-line-height: 33px;
 text-align: left;
 color: #27282B;
 `;
@@ -181,27 +160,24 @@ const Highlighted = styled.span`
 `;
 const MindDescription = styled.p`
 //styleName: body1/SB;
-width: 360px;
+width: 22.5rem;
 font-family: Pretendard;
-font-size: 14px;
+font-size: 0.875rem;
 font-weight: 600;
-line-height: 21px;
+line-height: 1.3125rem;
 text-align: left;
 color: #3F4045;
-
 
 `;
 
 const Image2 = styled.img`
-width: 316px;
-height: 280px;
+width: 19.75rem;
+height: 17.5rem;
 ${theme.media.mobile`
     display:flex;
     flex-direction:column;
     width: 338px;
     height: 300px;
-    justify-content: center;
-    align-items: center;
     `}
 `;
 const ResultsSection = styled.div`
@@ -211,47 +187,35 @@ align-items: center;
 color:black;
     
 ${theme.media.mobile`
-
 flex-direction: column-reverse; // 모바일에서는 열 방향으로 변경하고 순서 반전
 `}
 `;
 
 const ResultsContent = styled.div`
-  padding:100px;
-
+  padding:1.25rem;
   ${theme.media.mobile`
-  width: Fixed (336.31px)px;
-  height: Fixed (298px)px;
   padding: 35.12px 43.64px 35.12px 43.64px;
-  border-radius: 21.29px;
-  
   
 `}
 `;
 
 const ResultsTitle = styled.h2`
 font-family: Pretendard;
-font-size: 22px;
+font-size: 1.375rem;
 font-weight: 700;
 line-height: 33px;
 text-align: left;
 ${theme.media.mobile`
-//styleName: title1/B;
-width:180px;
-font-family: Pretendard;
-font-size: 18px;
-font-weight: 700;
-line-height: 27px;
-text-align: left;
+
 `}
 `;
 const ResultsDescription = styled.p`
 //styleName: body1/SB;
-width: 360px;
+width: 22.5rem;
 font-family: Pretendard;
-font-size: 14px;
+font-size: 0.875rem;
 font-weight: 600;
-line-height: 21px;
+line-height: 1.3125rem;
 text-align: left;
 color: #3F4045;
 ${theme.media.mobile`
@@ -259,8 +223,8 @@ ${theme.media.mobile`
 `}
 `;
 const Image3 = styled.img`
-    width: 316px;
-    height: 280px;
+    width: 19.75rem;
+    height: 17.5rem;
     ${theme.media.mobile`
     display:flex;
     flex-direction:column;
@@ -273,29 +237,26 @@ const Footer = styled.footer`
   width: 100%;
   background: #27282B;
   ${theme.media.mobile`
-  padding: 50px 20px;
+  padding: 3.125rem 1.35rem;
 `}
 `;
 
 const FooterBox = styled.footer`
-  padding:70px;
+  padding:4.375rem;
 `;
 const FooterTitle = styled.div`
-//styleName: display2/B;
-font-family: Pretendard;
-font-size: 22px;
+
+font-size: 1.375rem;
 font-weight: 700;
-line-height: 33px;
+line-height: 2.0625rem;
 text-align: center;
 color:white;
-margin-bottom:20px;
+margin-bottom:1.25rem;
 `;
 const FooterContent = styled.div`
-//styleName: body1/SB;
-font-family: Pretendard;
-font-size: 14px;
+font-size: 0.875rem;
 font-weight: 600;
-line-height: 21px;
+line-height: 1.3125rem;
 text-align: center;
 color:white;
 
