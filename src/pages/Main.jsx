@@ -7,7 +7,8 @@ import { theme } from '../theme';
 
 const StyledMain1 = styled(Main1)`
   width: ${props => props.width || '100%'};
-  height: ${props => props.height || 'auto'};
+  height: ${props => props.height || '22.4475rem'};
+
 `;
 
 const StyledMain2 = styled(Main2)`
@@ -24,14 +25,14 @@ function Main() {
   return (
     <MainContainer>
          <InspectionSection>
-            <InspectionContent>
-                <InspectionTitle>HTP 그림 검사 결과</InspectionTitle>
-                <InspectionDescription>아이의 내면을 탐험하고,<br/> 건강한 정신 발달을 지원하세요!</InspectionDescription>
-                <DetailButton>검사하기</DetailButton>
-            </InspectionContent>  
-            <ImgBox>
-            <StyledMain1/>
-            </ImgBox>
+         <InspectionContent>
+          <InspectionTitle>HTP 그림 검사 결과</InspectionTitle>
+          <InspectionDescription>아이의 내면을 탐험하고,<br/> 건강한 정신 발달을 지원하세요!</InspectionDescription>
+          <DetailButton>검사하기</DetailButton>
+        </InspectionContent>
+        <ImgBox>
+          <StyledMain1 />
+        </ImgBox>
         </InspectionSection>
         <Section>
         <MindSection>
@@ -77,21 +78,21 @@ const MainContainer = styled.div`
 overflow: hidden;
 `;
 const InspectionSection = styled.div`
-    width:100%;
-    background: #f3f3f6;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    ${theme.media.mobile`
-    flex-direction: column;  // 모바일에서는 수직 배치
-
+display: flex;
+align-items: center;
+background: #f3f3f6;
+width: 100%;
+flex-direction:row;
+${theme.media.mobile`
+flex-direction:column;
   `}
 `;
 
 const InspectionContent = styled.div`
-  margin:1.875rem;
+    margin : 4rem;
+    width:60%;
 ${theme.media.mobile`
-    text-align: center;
+text-align: center;
   `}
 `;
 
@@ -101,18 +102,19 @@ font-size: 1.125rem;  // 18px
 font-weight: 700;
 line-height: 1.6875rem;  // 27px
 color: #6487E2;
+${theme.media.mobile`
+font-size: 1.375rem;
+text-align: center;
+  `}
 `;
 const InspectionDescription = styled.p`
     font-family: Pretendard;
-    font-size: 1.625rem;
+    font-size: 2vw;
     font-weight: 700;
     color:black;
-    
     ${theme.media.mobile`
-
 font-size: 1.375rem;
 text-align: center;
-
   `}
 `;
 
@@ -124,10 +126,9 @@ background: #6487E2;
 color: white;
 border:none;
 font-weight:700;
+margin-top:20px;
 ${theme.media.mobile`
-margin-bottom: 1.25rem;
-position:relative;
-top: 23rem;
+
 `}
 `;
 
@@ -180,13 +181,14 @@ const MindDescription = styled.p`
   line-height: 1.3125rem;
   text-align: left;
   color: #3F4045;
+  ${theme.media.mobile`
+  width:100%;
+`}
 
 `;
 
 const ResultsSection = styled.div`
   display:flex;
-  justify-content: center;
-  align-items: center;
   color:black;
     
 ${theme.media.mobile`
@@ -208,7 +210,6 @@ const ResultsTitle = styled.h2`
 font-family: Pretendard;
 font-size: 1.375rem;
 font-weight: 700;
-line-height: 33px;
 text-align: left;
 ${theme.media.mobile`
 
@@ -224,7 +225,7 @@ line-height: 1.3125rem;
 text-align: left;
 color: #3F4045;
 ${theme.media.mobile`
-
+  width:100%;
 `}
 `;
 
@@ -265,8 +266,6 @@ ${theme.media.mobile`
 `;
 
 const ImgBox = styled.div`
-
-display: flex;
 width: 100%;
 height: 100%;
 justify-content: center;
