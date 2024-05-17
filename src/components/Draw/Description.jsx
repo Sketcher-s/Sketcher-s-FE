@@ -1,14 +1,34 @@
 import React, { useState } from 'react';
-//import React from 'react';
-import PropTypes from 'prop-types'; // prop-types 추가
 import styled from 'styled-components';
+import PropTypes from 'prop-types'; // prop-types 추가
 import { ReactComponent as GCheck } from '../../assets/Draw/GCheck.svg';
 import { ReactComponent as PrepareDraw1 } from '../../assets/Draw/PrepareDraw1.svg';
 import { ReactComponent as Shape } from '../../assets/Draw/Shape.svg';
+import { ReactComponent as RectangleH } from '../../assets/Draw/RectangleH.svg';
 import { ReactComponent as Rectangle } from '../../assets/Draw/Rectangle.svg';
+
 import { theme } from '../../theme';
 
-const Description = ({onClick}) => {
+// Container 컴포넌트
+export const Container = styled.div`
+  display: flex; 
+  z-index: 10;
+  position: fixed;
+
+
+  ${theme.media.mobile`
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+  `}
+  ${theme.media.desktop`
+    right: 0;
+  `}
+`;
+
+const Ver3=({onClick}) => {
     const [isBarBoxVisible, setBarBoxVisible] = useState(true);
 
     const toggleBarBox = () => {
@@ -16,104 +36,95 @@ const Description = ({onClick}) => {
         onClick(); // Description을 클릭했을 때 상위 컴포넌트의 onClick 함수 호출
       };
 
-    Description.propTypes = {
+    Ver3.propTypes = {
         onClick: PropTypes.func.isRequired, // onClick prop의 유효성 검사 추가
     };
 
   return (
-    <div>
-    
     <Container>
-
+        <DeskBtn>
         {isBarBoxVisible && (
-    <BarBox onClick={toggleBarBox}>
-        <StyledShape>
-            <Shape/>
-        </StyledShape>
+      <BarContainer>
+          <BarBox onClick={toggleBarBox}>
+            <StyledShape>
+                <Shape/>
+            </StyledShape>
+            <StyledRectangle>
+              <Rectangle />
+            </StyledRectangle>
+          </BarBox>
+      </BarContainer>
+      )}
+        </DeskBtn>
+      <StyledContainer onClick={toggleBarBox}>
 
-        <StyledRectangle>
-            <Rectangle/>
-        </StyledRectangle>
-    </BarBox>
-    )}
+<StyledMissionContainer>
+  <StyledMissionTag>Mission</StyledMissionTag>
+  <StyledMissionText>집, 나무, 사람을 그려주세요!</StyledMissionText>
+</StyledMissionContainer>
 
-    <StyledContainer onClick={toggleBarBox}>
-
-      <StyledMissionContainer>
-        <StyledMissionTag>Mission</StyledMissionTag>
-        <StyledMissionText>집, 나무, 사람을 그려주세요!</StyledMissionText>
-      </StyledMissionContainer>
-      
-      <StyledItemContainer>
-        <StyledItem>
-          <StyledIconContainer>
-            <GCheck/>
-          </StyledIconContainer>
-          <StyledContent>아이가 검정색으로 그림을 완성할 수 있도록 도와주세요.</StyledContent>
-        </StyledItem>
-        <StyledItem>
-          <StyledIconContainer>
-            <PrepareDraw1 />
-          </StyledIconContainer>
-          <StyledContent>새로고침을 하면 그림이 초기화 됩니다.</StyledContent>
-        </StyledItem>
-        <StyledItem>
-          <StyledIconContainer>
-          <PrepareDraw1 />
-          </StyledIconContainer>
-          <StyledContent>검정색 이외의 색상은 지원하지 않습니다.</StyledContent>
-        </StyledItem>
-      </StyledItemContainer>
-    </StyledContainer>
+<StyledItemContainer>
+  <StyledItem>
+    <StyledIconContainer>
+      <GCheck/>
+    </StyledIconContainer>
+    <StyledContent>아이가 검정색으로 그림을 완성할 수 있도록 도와주세요.</StyledContent>
+  </StyledItem>
+  <StyledItem>
+    <StyledIconContainer>
+      <PrepareDraw1 />
+    </StyledIconContainer>
+    <StyledContent>새로고침을 하면 그림이 초기화 됩니다.</StyledContent>
+  </StyledItem>
+  <StyledItem>
+    <StyledIconContainer>
+    <PrepareDraw1 />
+    </StyledIconContainer>
+    <StyledContent>검정색 이외의 색상은 지원하지 않습니다.</StyledContent>
+  </StyledItem>
+</StyledItemContainer>
+</StyledContainer>
+      <MobileBtn>
+          {isBarBoxVisible && (
+          <BarContainer>
+              <BarBox onClick={toggleBarBox}>
+                <StyledShape>
+                    <Shape/>
+                </StyledShape>
+                <StyledRectangle>
+                  <RectangleH />
+                </StyledRectangle>
+              </BarBox>
+          </BarContainer>
+          )}
+      </MobileBtn>
 
     </Container>
-    </div>
   );
 }
 
-export default Description;
+export default Ver3;
 
-const Container = styled.div`
-
-  background: #f3f3f6;
-  position: relative;
-  display: flex;
-  // right: 0; /* 오른쪽에 위치하도록 설정 */
-  //justify-content: flex-end; /* 모든 내용을 컨테이너의 오른쪽 끝에 배치 */
-  align-items: center; /* 세로 가운데 정렬 */
-
-  ${theme.media.mobile`
+export const StyledContainer = styled.div`
   width: 12.875rem; //206px;
-  height: 38.875rem; //622px;
-
-`}
-`;
-
-
-const StyledContainer = styled.div`
-  width: 12.875rem; //206px;
-  //height: 38.875rem; //622px;
-  padding:  1.875rem 1.125rem; //30px 18px;
+  padding: 1.875rem 1.125rem; //30px 18px;
   background: white;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   gap:  1.25rem; //20px;
-  display: inline-flex;
+  display: flex;
   height: 42.625rem;
+  box-shadow: 0px 0px 10px rgba(39, 40, 43, 0.05);
 
   ${theme.media.mobile`
   width: 100%;
-  height: 7.5rem;
-
-  justify-content: center;
-  align-items: center;
-
+  height: 20%;
   `}
 
 `;
 
-const StyledMissionContainer = styled.div`
+export const StyledMissionContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -121,13 +132,13 @@ const StyledMissionContainer = styled.div`
   gap: 0.625rem; //10px;
 
   ${theme.media.mobile`
-
-
+  width: 85%;
+  align-self: center;
+  text-align: left;
   `}
-
 `;
 
-const StyledMissionTag = styled.div`
+export const StyledMissionTag = styled.div`
   padding: 0.125rem 0.5rem; //2px 8px;
   background: #E7EFFF;
   border-radius: 3.125rem; //50px;
@@ -139,7 +150,7 @@ const StyledMissionTag = styled.div`
   word-wrap: break-word;
 `;
 
-const StyledMissionText = styled.div`
+export const StyledMissionText = styled.div`
   color: #27282B;
   font-size: 0.875rem; //14px;
   font-family: Pretendard-Regular;
@@ -148,16 +159,14 @@ const StyledMissionText = styled.div`
   word-wrap: break-word;
 
   ${theme.media.mobile`
-
-  width: 17.625rem;
-  height: 8.625rem;
   justify-content: center;
   align-items: center;
+  text-align: flex-start;
 
 `}
 `;
 
-const StyledItemContainer = styled.div`
+export const StyledItemContainer = styled.div`
   padding: 1.125rem 1rem; //18px 16px;
   background: #FDFDFF;
   border-radius: 0.625rem; //10px;
@@ -169,28 +178,36 @@ const StyledItemContainer = styled.div`
   display: flex;
 
   ${theme.media.mobile`
-
+  width: 80%;
+  align-self: center;
 
 
 `}
 
 `;
 
-const StyledItem = styled.div`
-  display: inline-flex;
+export const StyledItem = styled.div`
+  display: flex;
   gap: 0.625rem; //10px;
   align-items: flex-start;
+  ${theme.media.mobile`
+  
+
+`}
 `;
 
-const StyledIconContainer = styled.div`
+export const StyledIconContainer = styled.div`
   width: 1rem; //16px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 0.625rem; //10px;
+  ${theme.media.mobile`
+  align-items: flex-start;
+`}
 `;
 
-const StyledContent = styled.div`
+export const StyledContent = styled.div`
   width: 9.375rem; //150px;
   color: #27282B;
   font-size: 0.75rem; //12px;
@@ -198,60 +215,77 @@ const StyledContent = styled.div`
   font-weight: 500;
   line-height: 1.125rem; //18px;
   word-wrap: break-word;
-`;
-
-const BarBox = styled.div`
-//background: #f3f3f6;
-width: 1.25rem; //20px;
-height: 4.375rem; //70px;
-justify-content: center; /* 수평 중앙 정렬 */
-align-items: center; /* 수직 중앙 정렬 */
-// width: 100vw; /* 화면 너비 전체 */
-// height: 100vh; /* 화면 높이 전체 */
-//margin-right: auto; /* BarBox를 왼쪽으로 밀어서 모든 내용을 오른쪽으로 밀어냄 */
-
-
-
-
-`;
-
-const StyledShape = styled.div`
-position: absolute;
-margin-top: 1.5625rem; //25px;
-margin-left: 0.4375rem; //7px;
-z-index: 2;
-
-${theme.media.mobile`
-//position: fixed;
-top: 25.5%; /* 화면 위쪽 가운데로 */
-left: 50%;
-transform: translate(-50%, -50%);
-width: auto; /* 필요에 따라 너비 조정 */
-height: auto; /* 필요에 따라 높이 조정 */
-transform: translate(-50%, -50%) rotate(-90deg); /* 왼쪽으로 회전 */
-
+  ${theme.media.mobile`
+  width: 90%;
 `}
 `;
 
-const StyledRectangle = styled.div`
-position: relative;
-z-index: 1;
+export const BarContainer = styled.div`
+display: flex;
 
+
+${theme.media.mobile`
+width: 100%;
+justify-content: center;
+`}
+${theme.media.desktop`
+height: 100%;
+align-items: center;
+`}
+`
+export const BarBox = styled.div`
+align-items: center; /* 수직 중앙 정렬 */
+
+${theme.media.mobile`
+width: auto;
+height: auto;
+position: relative;
+
+`}
+${theme.media.desktop`
+width: 1.25rem; //20px;
+height: 4.375rem; //70px;
+justify-content: center; /* 수평 중앙 정렬 */
+`}
 `;
 
-// const MobileModalContainer = styled.div`
-//   display: none;
+export const StyledShape = styled.div`
+position: absolute;
+z-index: 2;
 
-//   ${theme.media.mobile`
-//   background: white;
-//   width: 100%;
-//   height: 7.5rem;
-//   position: fixed;
-//   left: 0;
-//   z-index: 9999;
-//   display: flex;
-//   flex-direction: column;
+${theme.media.mobile`
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(90deg); // Shape를 중앙에 위치시킵니다.
+`}
+${theme.media.desktop`
+  margin-top: 1.5625rem; //25px;
+  margin-left: 0.4375rem; //7px;
+`}
+`;
 
-//   `}
+export const StyledRectangle = styled.div`
+position: relative;
+z-index: 1;
+`;
 
-// `;
+export const DeskBtn = styled.div`
+${theme.media.mobile`
+    display: none;
+`}
+${theme.media.desktop`
+    display: flex;
+`}
+`;
+
+export const MobileBtn = styled.div`
+${theme.media.mobile`
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+`}
+${theme.media.desktop`
+    display: none;
+`}
+`;

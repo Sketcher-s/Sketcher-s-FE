@@ -9,15 +9,16 @@ import { ReactComponent as BPencil } from '../../assets/Draw/BPencil.svg';
 import { ReactComponent as BTrash } from '../../assets/Draw/BTrash.svg';
 import { ReactComponent as Shape } from '../../assets/Draw/Shape.svg';
 import { ReactComponent as Rectangle } from '../../assets/Draw/Rectangle.svg';
-import MBar from './MBar';
-import MDescription from './MDescription';
-import Description from '../Draw/Description';
 import { Wrap, OutContainer, Icon, DrawingArea, CanvasContainer, ButtonContainer, Button } from './DrawStyle';
-import { WStyledWrapper, BStyledWrapper, BarBox, StyledShape, StyledRectangle, MobileContainer, DMobileContainer  } from './DrawStyle';
+import { WStyledWrapper, BStyledWrapper} from './DrawStyle';
+import { BarBox, StyledShape, StyledRectangle, BarContainer, DeskBtn, MobileBtn, StyledMissionContainer, StyledMissionTag, StyledMissionText, StyledContainer } from './Description';
+import { Container } from './Description';
+import { ReactComponent as RectangleH } from '../../assets/Draw/RectangleH.svg';
 import {} from 'recoil';
 //import { useRecoilValue } from 'recoil';
 //import { useRecoilState } from 'recoil';
 import { atom, useRecoilState } from 'recoil';
+import Ver3 from './Description';
 
 // Recoil을 사용하여 캔버스의 내용을 상태로 관리합니다.
 const canvasContentState = atom({
@@ -137,11 +138,36 @@ function Draw() {
 
   return (
     <Wrap>
+      <MobileBtn>
+        {!isDescriptionVisible && (
+        <Container>
+          <StyledContainer>
+            <StyledMissionContainer>
+            <StyledMissionTag>Mission</StyledMissionTag>
+            <StyledMissionText>집, 나무, 사람을 그려주세요!</StyledMissionText>
+            </StyledMissionContainer>
+          </StyledContainer>
+          <BarContainer>
+              <BarBox onClick={toggleDescription}>
+                  <StyledShape>
+                    <Shape/>
+                  </StyledShape>
+                  <StyledRectangle>
+                    <RectangleH/>
+                  </StyledRectangle>
+                </BarBox>
+            </BarContainer>
+        </Container>
+        )}
+        {isDescriptionVisible && <Ver3 onClick={toggleBarBox} />}
+      </MobileBtn>
+
+      
       <OutContainer>
 
-          <MobileContainer>
+          {/* <MobileContainer>
           <MBar/>
-          </MobileContainer>
+          </MobileContainer> */}
 
           <DrawingArea>
 
@@ -213,26 +239,30 @@ function Draw() {
           <Button>완료</Button>
         </ButtonContainer>
 
-        <DMobileContainer>
+        {/* <DMobileContainer>
         <MDescription/>
-      </DMobileContainer>
+      </DMobileContainer> */}
 
       </OutContainer>
 
       {/* <Description/> */}
-      {!isDescriptionVisible && (
-      <BarBox onClick={toggleDescription}>
-          <StyledShape>
-            <Shape/>
-          </StyledShape>
+      <DeskBtn>
+        {!isDescriptionVisible && (
+        <BarContainer>
+          <BarBox onClick={toggleDescription}>
+              <StyledShape>
+                <Shape/>
+              </StyledShape>
+              <StyledRectangle>
+                <Rectangle/>
+              </StyledRectangle>
+            </BarBox>
+        </BarContainer>
+        )}
+        {isDescriptionVisible && <Ver3 onClick={toggleBarBox} />}
+      </DeskBtn>
 
-          <StyledRectangle>
-            <Rectangle/>
-          </StyledRectangle>
-        </BarBox>
-      )}
-
-      {isDescriptionVisible && <Description onClick={toggleBarBox} />}
+      
 
 
     </Wrap>

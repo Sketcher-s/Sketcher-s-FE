@@ -4,6 +4,10 @@ import { theme } from '../../theme';
 export const Wrap = styled.div`
   display: flex;
   justify-content: space-between; /* 컨테이너 사이의 여백을 최대로 확보하여 내부 요소를 양쪽으로 분산 배치 */
+  ${theme.media.mobile`
+  position: relative;
+  flex-direction: column;
+  `}
 
 `;
 
@@ -140,67 +144,4 @@ export const BStyledWrapper = styled.div`
 
   ${theme.media.mobile`
   `}
-`;
-
-export const BarBox = styled.div`
-  width: 1.25rem; //20px;
-  height: 4.375rem; //70px;
-  position: absolute;
-  top: 50%; /* 상단 위치를 중앙으로 조정 */
-  transform: translateY(-50%); /* 세로 중앙 정렬을 위한 변환 */
-  right: 0; /* 오른쪽 정렬 */
-  display: flex;
-  justify-content: center; /* 수평 중앙 정렬 */
-  align-items: center; /* 수직 중앙 정렬 */
-  boarder-radius: none;
-  
-  display: flex;
-
-  ${theme.media.mobile`
-
-    display: none;
-  `}
-
-`;
-
-export const StyledShape = styled.div`
-position: absolute;
-z-index: 2;
-`;
-
-export const StyledRectangle = styled.div`
-position: relative;
-z-index: 1;
-`;
-
-export const MobileContainer = styled.div`
-
-  display: none;  
-
-  ${theme.media.mobile`
-    display: flex;
-    justify-content: center; /* 중앙 정렬 */
-    align-items: center; /* 중앙 정렬 */
-    width: 100%; /* 화면 너비에 맞게 설정 */
-    margin-left: 1.625rem;
-    margin-right: 1.625rem;
-  `}
-
-`;
-
-
-export const DMobileContainer = styled.div`
-
-display: none;  
-
-${theme.media.mobile`
-display: flex;
-justify-content: center; /* 중앙 정렬 */
-align-items: center; /* 중앙 정렬 */
-width: 100%; /* 화면 너비에 맞게 설정 */
-margin-left: 1.625rem;
-margin-right: 1.625rem;
-
-`}
-
 `;
