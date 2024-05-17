@@ -67,37 +67,29 @@ export default ResultTitle;
 
 const ResultSection = styled.div`
   width: 100%;
-  ${theme.media.mobile`'
-  
-`}
 `;
+
 const TitleInput = styled.input`
-  width: 50.625rem; // 810px in rem
-  height: 1.875rem; // 30px in rem
-  color: black;
-  font-size: 1.625rem; // 26px in rem
+  width: 100%;
+  height: 1.875rem;
+  font-size: 1.625rem;
   font-family: 'Pretendard-Regular';
   font-weight: bold;
-  border: none; 
-  border-bottom: 0.125rem solid transparent; // 2px in rem
-
+  border: none;
+  border-bottom: 0.125rem solid transparent;
   &:focus {
-    outline: none; 
-    border-bottom: 0.125rem solid #6487e2; // 2px in rem
+    border-bottom: 0.125rem solid #6487e2;
   }
   border-bottom-color: ${props => props.isError ? 'red' : 'transparent'};
   &::placeholder {
     color: rgb(177, 178, 184);
   }
-  ${theme.media.mobile`
-    width: 18.625rem; // 298px in rem
-    margin: 0 auto; // 가운데 정렬 추가
-  `}
 `;
+
 const ErrorMessage = styled.p`
   color: red;
-  font-size: 0.75rem; // 12px in rem
-  margin-top: 0.5rem; // 8px in rem
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
   font-weight: 200;
 `
 
@@ -106,5 +98,4 @@ const DrawResult = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
- 
 `;

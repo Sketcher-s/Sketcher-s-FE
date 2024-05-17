@@ -21,33 +21,29 @@ function Result() {
 export default Result;
 
 const Wrapper = styled.div`
-width: 100%;
-position: relative;
-background: #f3f3f6;
-display: flex;
-flex-direction: column;
-align-items: center; // 중앙 정렬을 위해 추가
-justify-content: center; // 중앙 정렬을 위해 추가
-padding: 20px 0; // 상하 패딩 추가
-${theme.media.mobile`
-
-`}
+  width: 100%;
+  position: relative;
+  background: #f3f3f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center; // 중앙 정렬
+  justify-content: center; // 중앙 정렬
+  padding: 20px 0; // 상하 패딩
+  ${theme.media.mobile`
+    padding: 15px 10px; // 모바일에서 패딩 조정
+  `}
 `;
 
 const DrawingSection = styled.div`
-  width: 810px;
-  height: auto; // 높이를 auto로 조정
+  width: 70%; // 기본 화면에서의 너비
+  height: auto;
   justify-content: center;
   background: white;
-  border-radius:10px;
-padding: 50px 80px 50px 80px;
-border-radius: 10px;
-
-
+  border-radius: 10px;
+  padding: 50px 80px; // 데스크탑에서의 패딩
   ${theme.media.mobile`  
-  width:338px;
-padding: 30px 20px 30px 20px;
-border-radius: 10px;
-margin-bottom:50px;
-`}
+    width: 95%; // 모바일에서 너비 조정
+    padding: 30px 20px; // 모바일에서 패딩 조정
+    margin-bottom: 30px; // 하단 마진 추가
+  `}
 `;
