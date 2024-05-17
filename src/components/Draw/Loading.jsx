@@ -6,7 +6,7 @@ import Modal from '../Modal';
 import Scan from './Scan';
 import { theme } from '../../theme';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 
@@ -18,8 +18,11 @@ export default function Loading() {
     setModalOpen(true); // 모달을 열기 위해 상태를 변경하는 함수
   };
 
+  const navigate = useNavigate();
+  
   const handleModalClose = () => {
     setModalOpen(false);
+    navigate('/result'); // 화면 이동 테스트를 위한 코드. 연동 후 삭제하기
   }
 
   const location = useLocation();

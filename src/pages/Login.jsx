@@ -25,8 +25,14 @@ const Login = () => {
   // 회원가입 페이지 이동
   const navigate = useNavigate();
   const moveToRegister =() => {
-    navigate('/register');
+    navigate('/');
   }
+
+  // 테스트를 위한 임시 main으로 이동
+  const moveToMain = () => {
+    navigate('/main');
+  }
+
   const onSubmit = (data) => {
     console.log(data);
     if (isValid) {
@@ -113,6 +119,7 @@ const Login = () => {
             back={isValid}
             color="white"
             type="submit"
+            onClick={moveToMain}
           >
             <div>로그인</div>
           </Button>

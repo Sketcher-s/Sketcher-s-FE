@@ -28,10 +28,10 @@ function App() {
             <NavbarMember toggleSidebar={toggleSidebar}/>
             <Sidebar isOpen={isSidebarOpen} toggle={() => setIsSidebarOpen(false)}/>
             <Routes>
-              <Route path="/login" element={<Login/>} />
+              <Route path="/" element={<Login/>} />
               <Route path="/register" element={<Register/>} />
               <Route path="/mypage" element={<MyPage/>} />
-              <Route path="/" element={<PrepareDraw/>} />
+              <Route path="/preparedraw" element={<PrepareDraw/>} />
               <Route path="/draw" element={<Draw/>} />
               <Route path="/preparepicture" element={<PreparePicture/>} />
               <Route path="/loading" element={<Loading/>} />

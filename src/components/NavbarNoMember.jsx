@@ -10,7 +10,7 @@ const NavbarNoMember = () => {
     navigate('/login');
   };
   const moveToRegister = () => {
-    navigate('/register');
+    navigate('/');
   }
   return (
     <Container>

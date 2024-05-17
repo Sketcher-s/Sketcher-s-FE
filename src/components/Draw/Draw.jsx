@@ -127,6 +127,8 @@ function Draw() {
 
     //연동 후 그림 서버에 저장하고 loading, result page에 다시 불러오기
     const handleDoneClick = () => {
+      // 화면 테스트를 위해 loading으로 화면 이동! 연동 후 삭제하기
+      Navigate('/loading');
       if (signatureCanvasRef.current) {
         const dataURL = signatureCanvasRef.current.toDataURL("image/png");
         setSavedSignatures(prevSignatures => [...prevSignatures, dataURL]);
