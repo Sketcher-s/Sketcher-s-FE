@@ -1,9 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
-import main1Image from '../assets/Main/Main1.svg';
-import main2Image from  '../assets/Main/Main2.svg';
-import main3Image from  '../assets/Main/Main3.svg';
+import { ReactComponent as Main1 } from '../assets/Main/Main1.svg';
+import { ReactComponent as Main2 } from  '../assets/Main/Main2.svg';
+import { ReactComponent as Main3 } from  '../assets/Main/Main3.svg';
 import { theme } from '../theme';
+
+const StyledMain1 = styled(Main1)`
+  width: ${props => props.width || '100%'};
+  height: ${props => props.height || 'auto'};
+`;
+
+const StyledMain2 = styled(Main2)`
+  width: ${props => props.width || '100%'};
+  height: ${props => props.height || 'auto'};
+`;
+
+const StyledMain3 = styled(Main3)`
+  width: ${props => props.width || '100%'};
+  height: ${props => props.height || 'auto'};
+`;
 
 function Main() {
   return (
@@ -14,11 +29,15 @@ function Main() {
                 <InspectionDescription>아이의 내면을 탐험하고,<br/> 건강한 정신 발달을 지원하세요!</InspectionDescription>
                 <DetailButton>검사하기</DetailButton>
             </InspectionContent>  
-            <Image1 src={main1Image} alt="HTP 검사 결과"/>
+            <ImgBox>
+            <StyledMain1/>
+            </ImgBox>
         </InspectionSection>
         <Section>
         <MindSection>
-        <Image2 src={main2Image} alt="아이의 마음"/>
+        <ImgBox>
+        <StyledMain2/>
+        </ImgBox>
             <MindContent>
                 <MindTitle>아이의 마음, <Highlighted>그림</Highlighted>으로 알아보아요</MindTitle>
                 <MindDescription>HTP 그림 심리 검사를 통해<br/> 
@@ -31,7 +50,9 @@ function Main() {
             <ResultsDescription>사용자가 집, 나무, 사람을 그리는 것을 통해 <br/>그들의 심리 상태를 분석하는 방법입니다.</ResultsDescription>
             <ResultsDescription>사용자의 그림을 통해 형식 분석과 내용 분석을 진행하여, <br/>그림의 크기, 위치, 세밀함 등 다양한 요소를 평가하고, <br/>이를 통해 사용자의 자신감, 감정 상태, 대인 관계 태도 등을 <br/>파악할 수 있습니다.</ResultsDescription>
         </ResultsContent>
-        <Image3 src={main3Image} alt="HTP 검사란"/>
+        <ImgBox>
+        <StyledMain3/>
+        </ImgBox>
       </ResultsSection>
       </Section>
       <Footer>
@@ -104,20 +125,9 @@ color: white;
 border:none;
 font-weight:700;
 ${theme.media.mobile`
-margin-bottom:20px;
+margin-bottom: 1.25rem;
 position:relative;
-top:400px;
-`}
-`;
-const Image1 = styled.img`
-width: 35vw; 
-height: auto;
-margin:50px;
-${theme.media.mobile`
-width: 338px; 
-height: 300px;
-margin-top:-50px;
-margin-bottom:200px;
+top: 23rem;
 `}
 `;
 
@@ -126,10 +136,10 @@ const Section = styled.div`
     flex-direction:column;
     justify-content: center;
     align-items: center;
-    padding:100px;
+    padding: 3.25rem;
     background:white;
     ${theme.media.mobile`
-    align-items: left;
+    align-items: center;
   `}
 `;
 const MindSection = styled.div`
@@ -137,64 +147,59 @@ const MindSection = styled.div`
     ${theme.media.mobile`
     display:flex;
     flex-direction:column;
+    width: 100%;
+    height: 100%;
     
     `}
 `;
 
 const MindContent = styled.div`
 
-padding:3.125rem;
+  padding: 2.125rem;
+  justify-content: center;
+    align-items: center;
+
 `;
 
 const MindTitle = styled.h2`
-//styleName: display2/B;
-font-family: Pretendard;
-font-size: 1.375rem;
-font-weight: 700;
-text-align: left;
-color: #27282B;
+  font-family: Pretendard;
+  font-size: 1.375rem;
+  font-weight: 700;
+  text-align: left;
+  color: #27282B;
 `;
 
 const Highlighted = styled.span`
   color: #6487E2;
 `;
 const MindDescription = styled.p`
-//styleName: body1/SB;
-width: 22.5rem;
-font-family: Pretendard;
-font-size: 0.875rem;
-font-weight: 600;
-line-height: 1.3125rem;
-text-align: left;
-color: #3F4045;
+  width: 22.5rem;
+  font-family: Pretendard;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3125rem;
+  text-align: left;
+  color: #3F4045;
 
 `;
 
-const Image2 = styled.img`
-width: 19.75rem;
-height: 17.5rem;
-${theme.media.mobile`
-    display:flex;
-    flex-direction:column;
-    width: 338px;
-    height: 300px;
-    `}
-`;
 const ResultsSection = styled.div`
-display:flex;
-justify-content: center;
-align-items: center;
-color:black;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  color:black;
     
 ${theme.media.mobile`
-flex-direction: column-reverse; // 모바일에서는 열 방향으로 변경하고 순서 반전
+  flex-direction: column-reverse; // 모바일에서는 열 방향으로 변경하고 순서 반전
+  width: 100%;
+  height: 100%;
 `}
 `;
 
 const ResultsContent = styled.div`
   padding:1.25rem;
   ${theme.media.mobile`
-  padding: 35.12px 43.64px 35.12px 43.64px;
+  padding: 2rem 3rem;
   
 `}
 `;
@@ -222,16 +227,6 @@ ${theme.media.mobile`
 
 `}
 `;
-const Image3 = styled.img`
-    width: 19.75rem;
-    height: 17.5rem;
-    ${theme.media.mobile`
-    display:flex;
-    flex-direction:column;
-    width: 338px;
-    height: 300px;
-    `}
-`;
 
 const Footer = styled.footer`
   width: 100%;
@@ -243,6 +238,8 @@ const Footer = styled.footer`
 
 const FooterBox = styled.footer`
   padding:4.375rem;
+  ${theme.media.mobile`
+`}
 `;
 const FooterTitle = styled.div`
 
@@ -252,6 +249,9 @@ line-height: 2.0625rem;
 text-align: center;
 color:white;
 margin-bottom:1.25rem;
+
+${theme.media.mobile`
+`}
 `;
 const FooterContent = styled.div`
 font-size: 0.875rem;
@@ -259,5 +259,18 @@ font-weight: 600;
 line-height: 1.3125rem;
 text-align: center;
 color:white;
+${theme.media.mobile`
+`}
+
+`;
+
+const ImgBox = styled.div`
+
+display: flex;
+width: 100%;
+height: 100%;
+justify-content: center;
+align-items: center;
+
 
 `;
