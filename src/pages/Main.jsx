@@ -6,7 +6,7 @@ import { ReactComponent as Main3 } from  '../assets/Main/Main3.svg';
 import { theme } from '../theme';
 
 const StyledMain1 = styled(Main1)`
-  width: ${props => props.width || '100%'};
+  width: ${props => props.width || '90%'};
   height: ${props => props.height || '22.4475rem'};
 
 `;
@@ -76,13 +76,14 @@ export default Main;
 
 const MainContainer = styled.div`
 overflow: hidden;
+
 `;
 const InspectionSection = styled.div`
 display: flex;
-align-items: center;
 background: #f3f3f6;
-width: 100%;
 flex-direction:row;
+align-items: center;
+justify-content: center;
 ${theme.media.mobile`
 flex-direction:column;
   `}
@@ -90,7 +91,7 @@ flex-direction:column;
 
 const InspectionContent = styled.div`
     margin : 4rem;
-    width:60%;
+    align-items: center;
 ${theme.media.mobile`
 text-align: center;
   `}
@@ -226,6 +227,7 @@ text-align: left;
 color: #3F4045;
 ${theme.media.mobile`
   width:100%;
+  
 `}
 `;
 
@@ -266,10 +268,7 @@ ${theme.media.mobile`
 `;
 
 const ImgBox = styled.div`
-width: 100%;
-height: 100%;
-justify-content: center;
-align-items: center;
+
 
 
 `;
