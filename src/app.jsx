@@ -4,11 +4,11 @@ import './index.css';
 import PrepareDraw from './components/Draw/PrepareDraw';
 import Draw from './components/Draw/Draw';
 import Loading from './components/Draw/Loading';
-import styled from 'styled-components';
+//import styled from 'styled-components';
 import './assets/font/font.css';
 import PreparePicture from './components/Draw/PreparePic';
 import NavbarMember from './components/NavbarMember';
-import NavbarNoMember from './components/NavbarNoMember'
+//import NavbarNoMember from './components/NavbarNoMember'
 import Sidebar from './components/Sidebar';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -46,7 +46,7 @@ function App() {
 
 export default App;
 
-const Background = styled.div`
-  height: 100vh;
-  color : gray;
-`;
+// const Background = styled.div`
+//   height: 100vh;
+//   color : gray;
+// `;
