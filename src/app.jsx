@@ -16,6 +16,7 @@ import MyPage from './pages/MyPage';
 import Result from './pages/Result';
 import Main from './pages/Main';
 import Camera from './components/Draw/Camera';
+
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () =>{
