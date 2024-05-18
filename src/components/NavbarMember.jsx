@@ -19,11 +19,15 @@ const NavbarMember = ({toggleSidebar}) => {
     navigate('/mypage');
   }
   // 로그아웃 처리하기
+  // 로고 클릭 시 메인으로 이동
+  const moveToMain = () => {
+    navigate('/main');
+  }
   return (
     <Container>
       <HeaderWrapper>
         <Header>
-          <LogoContainer>
+          <LogoContainer onClick={moveToMain}>
             <Logo2/>
             <Logo1/>
           </LogoContainer>

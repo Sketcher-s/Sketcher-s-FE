@@ -13,6 +13,7 @@ position: fixed;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: ${(props) => (props.show ? 'block' : 'none')};
+  z-index: 9;
 `;
 
 const SideContainer = styled.div`
@@ -25,6 +26,7 @@ position: fixed;
   transition: right 0.3s ease; // 부드러운 전환 효과
   gap: 0.625rem;
   box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+  z-index: 10;
 `
 const InnerContainer = styled.div`
 width: 100%;

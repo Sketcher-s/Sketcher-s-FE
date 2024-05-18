@@ -140,6 +140,9 @@ function Draw() {
 
   return (
     <Wrap>
+
+      <OutContainer>
+
       <MobileBtn>
         {!isDescriptionVisible && (
         <Container>
@@ -163,13 +166,6 @@ function Draw() {
         )}
         {isDescriptionVisible && <Ver3 onClick={toggleBarBox} />}
       </MobileBtn>
-
-      
-      <OutContainer>
-
-          {/* <MobileContainer>
-          <MBar/>
-          </MobileContainer> */}
 
           <DrawingArea>
 

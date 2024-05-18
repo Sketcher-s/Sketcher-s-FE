@@ -5,6 +5,8 @@ export const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  height: 100vh;
 
   ${theme.media.mobile`
   
@@ -36,8 +38,7 @@ export const LoginWrapper = styled.div`
 `}
 `;
 export const JoinWrapper = styled.form`
-  height: 50%;
-  padding: 7rem 0;
+  padding: 3rem 0;
   background: white;
   border-radius: 0.625rem;
   overflow: hidden;
@@ -46,7 +47,7 @@ export const JoinWrapper = styled.form`
   justify-content: center;
   align-items: center;
   gap: 2.5rem;
-  margin-top: 5rem;
+  
 
   ${theme.media.mobile`
   width: 80%;
