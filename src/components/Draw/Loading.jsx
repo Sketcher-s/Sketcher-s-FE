@@ -107,7 +107,7 @@ const Spinner = styled.img`
 `;
 
 const Text = styled.div`
-  width: 20.5rem; //296px;
+  width: 21.5rem; //296px;
   height: 2.4375rem; //39px;
   color: #3F4045;
   font-size: 1.625rem; //26px;
