@@ -3,10 +3,11 @@ import { theme } from '../../theme';
 
 export const Wrap = styled.div`
   display: flex;
-  justify-content: space-between; /* 컨테이너 사이의 여백을 최대로 확보하여 내부 요소를 양쪽으로 분산 배치 */
+   /* 컨테이너 사이의 여백을 최대로 확보하여 내부 요소를 양쪽으로 분산 배치 */
   ${theme.media.mobile`
   position: relative;
   flex-direction: column;
+  width: 100%;
   `}
 
 `;
@@ -14,19 +15,21 @@ export const Wrap = styled.div`
 export const OutContainer = styled.div`
   width: 100%;
   //height: 100%;
-  padding-top: 2.5rem; //40px;
+padding-top: 2.5rem;
   padding-bottom: 2.5rem; //40px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   gap: 1.875rem; // 30px;
-  display: inline-flex;
+  display: flex;
   background: #f3f3f6;
   border-radius: 10px;
   overflow: hidden;
+
   
   ${theme.media.mobile`
-  padding-top: 1rem;
+
+  padding-top: 0rem;
   `}
 `;
 
@@ -48,11 +51,9 @@ export const DrawingArea = styled.div`
   left: 13.1875rem; //211px;
   top: 7.25rem; //116px;
   display: flex;
-  flex-direction: row;
 
   ${theme.media.mobile`
   flex-direction: column-reverse;
-  display: flex;
 `}
 `;
 

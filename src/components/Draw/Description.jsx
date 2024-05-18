@@ -12,8 +12,8 @@ import { theme } from '../../theme';
 // Container 컴포넌트
 export const Container = styled.div`
   display: flex; 
-  z-index: 10;
-  position: fixed;
+  z-index: 5;
+  position: relative;
 
 
   ${theme.media.mobile`
@@ -280,8 +280,7 @@ ${theme.media.desktop`
 
 export const MobileBtn = styled.div`
 ${theme.media.mobile`
-    width: auto;
-    height: auto;
+    width: 100%;
     display: flex;
     flex-direction: column;
 `}
