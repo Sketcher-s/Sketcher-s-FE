@@ -115,8 +115,7 @@ const InnerContainer = styled.div`
 
   ${theme.media.mobile`
 
-  //width: 21.125rem;
-  width: 75%;
+  width: 21.125rem;
   height: 37.875rem;
 `}
 `;
@@ -162,7 +161,7 @@ const Text = styled.div`
 
 const NoteContainer = styled.div`
   //width: 30.25rem; //484px;
-  height: 14.625rem; //266px;
+  height: 16.625rem; //266px;
   padding: 1.875rem; //30px;
   background: white;
   border-radius: 0.625rem; //10px;
@@ -174,8 +173,7 @@ const NoteContainer = styled.div`
   display: flex;
 
   ${theme.media.mobile`
-  //width:18rem;
-  width: 75%;
+  width:18rem;
   border: none;
   padding: 0;
   //align-items: center;
@@ -206,7 +204,6 @@ const ButtonBox = styled.div`
   gap: 1.25rem; //20px; /* 버튼 간격 */
 
   ${theme.media.mobile`
-  width: auto;
   height: 3rem;
   display: block;
   gap: 2.5rem;
@@ -227,11 +224,10 @@ const PicButtonBox = styled.div`
   align-items: center;
 
   ${theme.media.mobile`
-  //margin-top: 3.5rem;
-  margin-top: 25%;
+  margin-top: 2.5rem;
   width: 15.625rem;
   height: 3rem;
-  //padding: 0 1.25rem;
+  padding: 0 1.25rem;
 `}
 
 
@@ -239,7 +235,6 @@ const PicButtonBox = styled.div`
 
 const PicButton = styled.button`
   width: 7.5rem; //120px;
-  width: 10rem;
   text-align: center;
   color: #6487e2;
   font-size: 1rem; //16px;
@@ -254,7 +249,6 @@ const PicButton = styled.button`
 
 const DraButton = styled.button`
   width: 7.5rem; //120px;
-  width: 10rem;
   text-align: center;
   color: white;
   font-size: 1rem; //16px;
