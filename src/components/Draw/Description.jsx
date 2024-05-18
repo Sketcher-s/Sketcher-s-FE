@@ -12,7 +12,7 @@ import { theme } from '../../theme';
 // Container 컴포넌트
 export const Container = styled.div`
   display: flex; 
-  z-index: 5;
+  z-index: 999;
   position: relative;
 
 
@@ -22,6 +22,11 @@ export const Container = styled.div`
     align-items: center;
     flex-direction: column;
     overflow: hidden;
+
+    position: fixed;
+    z-index: 999;
+    margin-top: -10rem;
+
   `}
   ${theme.media.desktop`
     right: 0;
@@ -114,12 +119,15 @@ export const StyledContainer = styled.div`
   align-items: flex-start;
   gap:  1.25rem; //20px;
   display: flex;
-  height: 42.625rem;
+  // height: 42.625rem;
+  height: 100vh;
   box-shadow: 0px 0px 10px rgba(39, 40, 43, 0.05);
 
   ${theme.media.mobile`
   width: 100%;
   height: 20%;
+  z-index:1;
+
   `}
 
 `;
@@ -222,19 +230,23 @@ export const StyledContent = styled.div`
 
 export const BarContainer = styled.div`
 display: flex;
-
+position: relative;
 
 ${theme.media.mobile`
 width: 100%;
 justify-content: center;
 `}
 ${theme.media.desktop`
-height: 100%;
+display: flex;
 align-items: center;
+position: relative;
+
+
 `}
 `
 export const BarBox = styled.div`
 align-items: center; /* 수직 중앙 정렬 */
+justify-content: center;
 
 ${theme.media.mobile`
 width: auto;
@@ -246,6 +258,7 @@ ${theme.media.desktop`
 width: 1.25rem; //20px;
 height: 4.375rem; //70px;
 justify-content: center; /* 수평 중앙 정렬 */
+padding-top: 10%;
 `}
 `;
 
@@ -275,6 +288,7 @@ ${theme.media.mobile`
 `}
 ${theme.media.desktop`
     display: flex;
+    z-index: 99;
 `}
 `;
 

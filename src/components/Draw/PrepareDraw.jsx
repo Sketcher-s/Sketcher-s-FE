@@ -5,6 +5,11 @@ import { ReactComponent as Check } from '../../assets/Draw/Check.svg';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '../../theme';
 
+const StyledPrepareDraw1 = styled(PrepareDraw1)`
+  width: ${props => props.width || '2.5rem'};
+  height: ${props => props.height || '2.5rem'};
+`;
+
 function PrepareDraw() {
   const Navigate = useNavigate();
 
@@ -19,7 +24,7 @@ function PrepareDraw() {
   return (
     <OuterContainer>
       <InnerContainer>
-        <PrepareDraw1 />
+        <StyledPrepareDraw1 />
         <Text>HTP 테스트를 위한 참고 사항</Text>
 
         <NoteContainer>
@@ -110,7 +115,8 @@ const InnerContainer = styled.div`
 
   ${theme.media.mobile`
 
-  width: 21.125rem;
+  //width: 21.125rem;
+  width: 75%;
   height: 37.875rem;
 `}
 `;
@@ -156,7 +162,7 @@ const Text = styled.div`
 
 const NoteContainer = styled.div`
   //width: 30.25rem; //484px;
-  height: 16.625rem; //266px;
+  height: 14.625rem; //266px;
   padding: 1.875rem; //30px;
   background: white;
   border-radius: 0.625rem; //10px;
@@ -168,7 +174,8 @@ const NoteContainer = styled.div`
   display: flex;
 
   ${theme.media.mobile`
-  width:18rem;
+  //width:18rem;
+  width: 75%;
   border: none;
   padding: 0;
   //align-items: center;
@@ -185,6 +192,7 @@ const NoteText = styled.div`
 
   ${theme.media.mobile`
   font-size: 0.875rem; 
+  margin-top: -1%;
 `}
 
 `;
@@ -198,6 +206,7 @@ const ButtonBox = styled.div`
   gap: 1.25rem; //20px; /* 버튼 간격 */
 
   ${theme.media.mobile`
+  width: auto;
   height: 3rem;
   display: block;
   gap: 2.5rem;
@@ -218,10 +227,11 @@ const PicButtonBox = styled.div`
   align-items: center;
 
   ${theme.media.mobile`
-  margin-top: 2.5rem;
+  //margin-top: 3.5rem;
+  margin-top: 25%;
   width: 15.625rem;
   height: 3rem;
-  padding: 0 1.25rem;
+  //padding: 0 1.25rem;
 `}
 
 
@@ -229,6 +239,7 @@ const PicButtonBox = styled.div`
 
 const PicButton = styled.button`
   width: 7.5rem; //120px;
+  width: 10rem;
   text-align: center;
   color: #6487e2;
   font-size: 1rem; //16px;
@@ -243,6 +254,7 @@ const PicButton = styled.button`
 
 const DraButton = styled.button`
   width: 7.5rem; //120px;
+  width: 10rem;
   text-align: center;
   color: white;
   font-size: 1rem; //16px;

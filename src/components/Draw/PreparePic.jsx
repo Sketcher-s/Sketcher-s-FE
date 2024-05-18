@@ -149,7 +149,7 @@ export default PreparePicture;
 
 const Container = styled.div`
 
-  height: 100vh;
+  height: 100%;
   padding-top: 2.5rem; //40px;
   padding-bottom: 2.5rem; //40px;
   flex-direction: column;
@@ -158,10 +158,10 @@ const Container = styled.div`
   gap: 1.875rem; //30px;
   display: flex;
   background: white;
-  overflow: hidden;
+  //overflow: hidden;
   ${theme.media.mobile`
     padding-top: 1rem; //40px;
-    padding-bottom: 1rem; //40px;
+    //padding-bottom: 1rem; //40px;
   `}
 `;
 
@@ -242,9 +242,9 @@ const Text = styled.div`
 `;
 
 const PreContainer = styled.div`
-justify-content: flex-start;
-gap: 1.25rem; //20px;
-display: flex;
+  justify-content: flex-start;
+  gap: 1.25rem; //20px;
+  display: flex;
 
   ${theme.media.mobile`
   align-items: flex-start;
@@ -258,7 +258,7 @@ const NoteContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 0.875rem;
+  gap: 0.5rem;
   display: flex;
 
   ${theme.media.mobile`
