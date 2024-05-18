@@ -102,8 +102,8 @@ display: inline-flex;
 `;
 
 const Spinner = styled.img`
-  width: 1.375rem; //22px;
-  height: 1.375rem; //22px;
+  width: 1.375rem; 
+  height: 1.375rem; 
 `;
 
 const Text = styled.div`
@@ -115,7 +115,6 @@ const Text = styled.div`
   font-weight: 700;
   line-height: 2.4375rem; //39px;
   word-wrap: break-word;
-
 
   ${theme.media.mobile`
     font-size: 1.125rem;
