@@ -25,10 +25,9 @@ const StyledMain3 = styled(Main3)`
 `;
 
 function Main (){
-  const navigate = useNavigate(); // 올바르게 위치한 useNavigate 훅
-
+  const navigate = useNavigate(); 
   function handleDrawPageClick() {
-    navigate('/draw'); // 올바른 navigate 사용
+    navigate('/draw'); 
   }  
   return (
     <MainContainer>
