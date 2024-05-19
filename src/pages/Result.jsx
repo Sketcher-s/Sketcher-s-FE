@@ -22,7 +22,7 @@ export default Result;
 
 const Wrapper = styled.div`
   width: 100%;
-  position: relative;
+  overflow: hidden;
   background: #f3f3f6;
   display: flex;
   flex-direction: column;
@@ -39,10 +39,11 @@ const DrawingSection = styled.div`
   height: auto;
   justify-content: center;
   background: white;
-  border-radius: 10px;
-  padding: 50px 80px; // 데스크탑에서의 패딩
+  border-radius: 0.8rem;
+  margin-top:2rem;
+  padding: 3rem 5rem; // 데스크탑에서의 패딩
   ${theme.media.mobile`  
-    width: 95%; // 모바일에서 너비 조정
+ 
     padding: 30px 20px; // 모바일에서 패딩 조정
     margin-bottom: 30px; // 하단 마진 추가
   `}

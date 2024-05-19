@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Main1 } from '../assets/Main/Main1.svg';
 import { ReactComponent as Main2 } from  '../assets/Main/Main2.svg';
 import { ReactComponent as Main3 } from  '../assets/Main/Main3.svg';
 import { theme } from '../theme';
+
+
 
 const StyledMain1 = styled(Main1)`
   width: ${props => props.width || '90%'};
@@ -21,14 +24,19 @@ const StyledMain3 = styled(Main3)`
   height: ${props => props.height || 'auto'};
 `;
 
-function Main() {
+function Main (){
+  const navigate = useNavigate(); // 올바르게 위치한 useNavigate 훅
+
+  function handleDrawPageClick() {
+    navigate('/draw'); // 올바른 navigate 사용
+  }  
   return (
     <MainContainer>
          <InspectionSection>
          <InspectionContent>
           <InspectionTitle>HTP 그림 검사 결과</InspectionTitle>
           <InspectionDescription>아이의 내면을 탐험하고,<br/> 건강한 정신 발달을 지원하세요!</InspectionDescription>
-          <DetailButton>검사하기</DetailButton>
+          <DetailButton onClick={handleDrawPageClick()}>검사하기</DetailButton>
         </InspectionContent>
         <ImgBox>
           <StyledMain1 />
@@ -71,7 +79,6 @@ function Main() {
     </MainContainer>
   );
 }
-
 export default Main;
 
 const MainContainer = styled.div`
@@ -241,8 +248,7 @@ const Footer = styled.footer`
 
 const FooterBox = styled.footer`
   padding:4.375rem;
-  ${theme.media.mobile`
-`}
+
 `;
 const FooterTitle = styled.div`
 
@@ -253,8 +259,6 @@ text-align: center;
 color:white;
 margin-bottom:1.25rem;
 
-${theme.media.mobile`
-`}
 `;
 const FooterContent = styled.div`
 font-size: 0.875rem;
@@ -262,9 +266,6 @@ font-weight: 600;
 line-height: 1.3125rem;
 text-align: center;
 color:white;
-${theme.media.mobile`
-`}
-
 `;
 
 const ImgBox = styled.div`
