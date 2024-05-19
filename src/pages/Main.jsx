@@ -273,12 +273,15 @@ const FooterBox = styled.footer`
 `;
 const FooterTitle = styled.div`
 
-font-size: 1.375rem;
+font-size: 1.275rem;
 font-weight: 700;
 line-height: 2.0625rem;
 text-align: center;
 color:white;
 margin-bottom:1.25rem;
+${theme.media.mobile`
+font-size: 1rem;
+`}
 
 `;
 const FooterContent = styled.div`
@@ -287,5 +290,8 @@ font-weight: 600;
 line-height: 1.3125rem;
 text-align: center;
 color:white;
+${theme.media.mobile`
+font-size: 0.7rem;
+`}
 `;
 

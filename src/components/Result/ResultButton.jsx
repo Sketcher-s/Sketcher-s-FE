@@ -60,7 +60,7 @@ const MyPageButton = styled.div`
   width: 7.5rem;
   text-align: center;
   color: #6487e2;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: Pretendard-Regular;
   font-weight: 700;
   line-height: 1.5rem;
@@ -73,7 +73,7 @@ const MainButton = styled.div`
   width: 7.5rem;
   text-align: center;
   color: white;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: Pretendard-Regular;
   font-weight: 700;
   line-height: 1.5rem;
