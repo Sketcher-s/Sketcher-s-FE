@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Main1 } from '../assets/Main/Main1.svg';
 import { ReactComponent as Main2 } from  '../assets/Main/Main2.svg';
 import { ReactComponent as Main3 } from  '../assets/Main/Main3.svg';
 import { theme } from '../theme';
+
+
 
 const StyledMain1 = styled(Main1)`
   width: ${props => props.width || '90%'};
@@ -81,7 +84,6 @@ function Main() {
     </MainContainer>
   );
 }
-
 export default Main;
 
 const MainContainer = styled.div`
@@ -254,8 +256,7 @@ const Footer = styled.footer`
 
 const FooterBox = styled.footer`
   padding:4.375rem;
-  ${theme.media.mobile`
-`}
+
 `;
 const FooterTitle = styled.div`
 
@@ -266,8 +267,6 @@ const FooterTitle = styled.div`
   color:white;
   margin-bottom:1.25rem;
 
-${theme.media.mobile`
-`}
 `;
 const FooterContent = styled.div`
   font-size: 0.875rem;

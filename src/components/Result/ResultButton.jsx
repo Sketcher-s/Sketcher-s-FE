@@ -7,7 +7,7 @@ import {theme} from '../../theme';
 function ResultButton() {
   const Navigate = useNavigate();
   function handleMyPageClick() {
-    Navigate('/MyPage');
+    Navigate('/mypage');
   }
   function handleMainClick() {
     Navigate('/Main');
@@ -34,10 +34,9 @@ const ButtonBox = styled.div`
   gap: 3.125rem; /* 버튼 간격 */
   justify-content: center;
   align-items: center;
-  margin-top: 1.25rem;
+  margin-top: 3.25rem;
   margin-bottom:2.5rem;
   ${theme.media.mobile`
-
   flex-direction:column;
   `}
 `;
@@ -87,6 +86,7 @@ const MainButtonBox = styled.div`
   padding: 0 1.25rem;
   background: #6487e2;
   border-radius: 0.25rem;
+  border: 0.0625rem solid #6487e2;
   display: flex;
   justify-content: center;
   align-items: center;

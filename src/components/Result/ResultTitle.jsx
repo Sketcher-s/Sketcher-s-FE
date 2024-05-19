@@ -67,17 +67,20 @@ export default ResultTitle;
 
 const ResultSection = styled.div`
   width: 100%;
+  
 `;
 
 const TitleInput = styled.input`
-  width: 100%;
-  height: 1.875rem;
-  font-size: 1.625rem;
-  font-family: 'Pretendard-Regular';
-  font-weight: bold;
-  border: none;
-  border-bottom: 0.125rem solid transparent;
-  &:focus {
+width: 100%;
+height: 1.875rem;
+font-size: 1.625rem;
+font-family: 'Pretendard-Regular';
+font-weight: bold;
+border: none;
+border-bottom: 0.125rem solid transparent;
+  
+&:focus {
+  outline: none;  // 포커스 시 외곽선 제거
     border-bottom: 0.125rem solid #6487e2;
   }
   border-bottom-color: ${props => props.isError ? 'red' : 'transparent'};
