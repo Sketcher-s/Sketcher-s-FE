@@ -51,7 +51,7 @@ const MyPageButtonBox = styled.div`
   justify-content: center;
   align-items: center;
   ${theme.media.mobile`
-  width:16.75rem;
+  width:80%;
   margin-top:-1.875rem;
   `}
 `;
@@ -65,6 +65,7 @@ const MyPageButton = styled.div`
   font-weight: 700;
   line-height: 1.5rem;
   word-wrap: break-word;
+  
 
 `;
 
@@ -91,6 +92,6 @@ const MainButtonBox = styled.div`
   justify-content: center;
   align-items: center;
   ${theme.media.mobile`
-  width:16.75rem;
+  width:80%;
   `}
 `;

@@ -55,7 +55,7 @@ function ResultTitle() {
           {error && <ErrorMessage>{error}</ErrorMessage>}
           <DrawResult>
             {image && (
-              <img src={image} alt="Drawing for Analysis" style={{ width: '320px', height: '320px' }} />
+              <img src={image} alt="Drawing for Analysis" style={{ width: '40%', height: '40%' }} />
             )}
           </DrawResult>
         </ResultSection>
@@ -74,11 +74,10 @@ const TitleInput = styled.input`
 width: 100%;
 height: 1.875rem;
 font-size: 1.625rem;
-font-family: 'Pretendard-Regular';
 font-weight: bold;
 border: none;
 border-bottom: 0.125rem solid transparent;
-  
+
 &:focus {
   outline: none;  // 포커스 시 외곽선 제거
     border-bottom: 0.125rem solid #6487e2;
@@ -86,7 +85,13 @@ border-bottom: 0.125rem solid transparent;
   border-bottom-color: ${props => props.isError ? 'red' : 'transparent'};
   &::placeholder {
     color: rgb(177, 178, 184);
+    ${theme.media.mobile`
+    font-size: 1rem;
+  `}
   }
+  ${theme.media.mobile`
+    width:90%;
+  `}
 `;
 
 const ErrorMessage = styled.p`
@@ -101,4 +106,7 @@ const DrawResult = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  ${theme.media.mobile`
+    width:90%;
+  `}
 `;
