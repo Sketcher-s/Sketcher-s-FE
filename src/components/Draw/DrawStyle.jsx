@@ -31,7 +31,7 @@ padding-top: 2.5rem;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  //gap: 1.875rem; // 30px;
+  gap: 1.875rem; // 30px;
   display: flex;
   background: #f3f3f6;
   border-radius: 10px;
