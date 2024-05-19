@@ -43,7 +43,7 @@ const DrawingSection = styled.div`
   margin-top:2rem;
   padding: 3rem 5rem; // 데스크탑에서의 패딩
   ${theme.media.mobile`  
- 
+  width: 60%; // 기본 화면에서의 너비
     padding: 30px 20px; // 모바일에서 패딩 조정
     margin-bottom: 30px; // 하단 마진 추가
   `}
