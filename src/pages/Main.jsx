@@ -25,9 +25,11 @@ const StyledMain3 = styled(Main3)`
 `;
 
 function Main (){
-  const navigate = useNavigate(); 
-  function handleDrawPageClick() {
-    navigate('/draw'); 
+
+
+  const Navigate = useNavigate(); 
+  function handleDrawClick() {
+    Navigate('/draw'); 
   }  
   return (
     <MainContainer>
@@ -35,7 +37,7 @@ function Main (){
          <InspectionContent>
           <InspectionTitle>HTP 그림 검사 결과</InspectionTitle>
           <InspectionDescription>아이의 내면을 탐험하고,<br/> 건강한 정신 발달을 지원하세요!</InspectionDescription>
-          <DetailButton onClick={handleDrawPageClick()}>검사하기</DetailButton>
+          <DrawButton onClick={handleDrawClick}>검사하기</DrawButton>
         </InspectionContent>
         <ImgBox>
           <StyledMain1 />
@@ -125,7 +127,7 @@ text-align: center;
   `}
 `;
 
-const DetailButton = styled.button`
+const DrawButton = styled.button`
 width: 10rem;
 height: 2.75rem;
 border-radius: 0.25rem;
@@ -134,6 +136,7 @@ color: white;
 border:none;
 font-weight:700;
 margin-top:20px;
+justify-content: center;
 ${theme.media.mobile`
 
 `}
