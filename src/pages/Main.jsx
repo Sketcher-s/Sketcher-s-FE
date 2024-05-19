@@ -11,8 +11,11 @@ import { theme } from '../theme';
 const StyledMain1 = styled(Main1)`
   width: ${props => props.width || '90%'};
   height: ${props => props.height || '22.4475rem'};
+  
   ${theme.media.mobile`
-    margin-top: -2rem;  // 모바일에서 이미지를 더 위로 올림
+    margin-top: -2rem; 
+    display: flex;
+    justify-content: center;
   `}
 
 `;
@@ -226,9 +229,9 @@ ${theme.media.mobile`
 `;
 
 const ResultsContent = styled.div`
-  padding:1.25rem;
+  padding:2.5rem;
   ${theme.media.mobile`
-  padding: 2rem 3rem;
+  padding: 0.5rem 1rem;
   
 `}
 `;
@@ -244,7 +247,6 @@ ${theme.media.mobile`
 `;
 const ResultsDescription = styled.p`
 //styleName: body1/SB;
-width: 22.5rem;
 font-family: Pretendard;
 font-size: 0.875rem;
 font-weight: 600;
@@ -252,7 +254,6 @@ line-height: 1.3125rem;
 text-align: left;
 color: #3F4045;
 ${theme.media.mobile`
-  width:100%;
   
 `}
 `;
@@ -260,6 +261,7 @@ ${theme.media.mobile`
 const Footer = styled.footer`
   width: 100%;
   background: #27282B;
+  text-align:center
   ${theme.media.mobile`
   padding: 3.125rem 1.35rem;
 `}
@@ -267,7 +269,7 @@ const Footer = styled.footer`
 
 const FooterBox = styled.footer`
   padding:4.375rem;
-
+  text-align:center
 `;
 const FooterTitle = styled.div`
 
