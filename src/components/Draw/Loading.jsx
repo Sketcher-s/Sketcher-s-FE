@@ -134,12 +134,6 @@ const CanvasContainer = styled.div`
   `}
 `;
 
-
-const EXImage = styled.img`
-  // width: 20rem; //482px;
-  // height: 24.625rem; //482px;
-`;
-
 const TexDiv = styled.div`
   // width: 20rem; //482px;
   // height: 24.625rem; //482px;

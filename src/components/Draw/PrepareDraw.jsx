@@ -234,7 +234,7 @@ const PicButtonBox = styled.div`
 `;
 
 const PicButton = styled.button`
-  width: 7.5rem; //120px;
+  width: 10rem; //120px;
   text-align: center;
   color: #6487e2;
   font-size: 1rem; //16px;
