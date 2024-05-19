@@ -11,6 +11,9 @@ import { theme } from '../theme';
 const StyledMain1 = styled(Main1)`
   width: ${props => props.width || '90%'};
   height: ${props => props.height || '22.4475rem'};
+  ${theme.media.mobile`
+    margin-top: -2rem;  // 모바일에서 이미지를 더 위로 올림
+  `}
 
 `;
 
@@ -94,14 +97,17 @@ align-items: center;
 justify-content: center;
 ${theme.media.mobile`
 flex-direction:column;
+position:relative;
+margin-bottom:5rem;
   `}
 `;
 
 const InspectionContent = styled.div`
-    margin : 4rem;
+    margin : 3rem;
     align-items: center;
 ${theme.media.mobile`
 text-align: center;
+
   `}
 `;
 
@@ -137,11 +143,22 @@ border:none;
 font-weight:700;
 margin-top:20px;
 justify-content: center;
+margin-top:20px;
+cursor:pointer;
 ${theme.media.mobile`
-
-`}
+position: absolute;
+bottom:-50px;
+left: 50%;
+transform: translateX(-50%);
+  `}
 `;
 
+const ImgBox = styled.div`
+
+
+
+
+`;
 const Section = styled.div`
     display:flex;
     flex-direction:column;
@@ -270,8 +287,3 @@ text-align: center;
 color:white;
 `;
 
-const ImgBox = styled.div`
-
-
-
-`;
