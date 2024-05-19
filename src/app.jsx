@@ -4,11 +4,11 @@ import './index.css';
 import PrepareDraw from './components/Draw/PrepareDraw';
 import Draw from './components/Draw/Draw';
 import Loading from './components/Draw/Loading';
-import styled from 'styled-components';
+//import styled from 'styled-components';
 import './assets/font/font.css';
 import PreparePicture from './components/Draw/PreparePic';
 import NavbarMember from './components/NavbarMember';
-import NavbarNoMember from './components/NavbarNoMember'
+//import NavbarNoMember from './components/NavbarNoMember'
 import Sidebar from './components/Sidebar';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -16,6 +16,7 @@ import MyPage from './pages/MyPage';
 import Result from './pages/Result';
 import Main from './pages/Main';
 import Camera from './components/Draw/Camera';
+
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const toggleSidebar = () =>{
@@ -27,10 +28,10 @@ function App() {
             <NavbarMember toggleSidebar={toggleSidebar}/>
             <Sidebar isOpen={isSidebarOpen} toggle={() => setIsSidebarOpen(false)}/>
             <Routes>
-              <Route path="/login" element={<Login/>} />
+              <Route path="/" element={<Login/>} />
               <Route path="/register" element={<Register/>} />
               <Route path="/mypage" element={<MyPage/>} />
-              <Route path="/" element={<PrepareDraw/>} />
+              <Route path="/preparedraw" element={<PrepareDraw/>} />
               <Route path="/draw" element={<Draw/>} />
               <Route path="/preparepicture" element={<PreparePicture/>} />
               <Route path="/loading" element={<Loading/>} />
@@ -46,7 +47,7 @@ function App() {
 
 export default App;
 
-const Background = styled.div`
-  height: 100vh;
-  color : gray;
-`;
+// const Background = styled.div`
+//   height: 100vh;
+//   color : gray;
+// `;

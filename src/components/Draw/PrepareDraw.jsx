@@ -5,6 +5,11 @@ import { ReactComponent as Check } from '../../assets/Draw/Check.svg';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '../../theme';
 
+const StyledPrepareDraw1 = styled(PrepareDraw1)`
+  width: ${props => props.width || '2.5rem'};
+  height: ${props => props.height || '2.5rem'};
+`;
+
 function PrepareDraw() {
   const Navigate = useNavigate();
 
@@ -19,7 +24,7 @@ function PrepareDraw() {
   return (
     <OuterContainer>
       <InnerContainer>
-        <PrepareDraw1 />
+        <StyledPrepareDraw1 />
         <Text>HTP 테스트를 위한 참고 사항</Text>
 
         <NoteContainer>
@@ -185,6 +190,7 @@ const NoteText = styled.div`
 
   ${theme.media.mobile`
   font-size: 0.875rem; 
+  margin-top: -1%;
 `}
 
 `;
@@ -228,7 +234,7 @@ const PicButtonBox = styled.div`
 `;
 
 const PicButton = styled.button`
-  width: 7.5rem; //120px;
+  width: 10rem; //120px;
   text-align: center;
   color: #6487e2;
   font-size: 1rem; //16px;

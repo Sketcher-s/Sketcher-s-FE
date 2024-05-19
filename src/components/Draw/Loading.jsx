@@ -6,7 +6,7 @@ import Modal from '../Modal';
 import Scan from './Scan';
 import { theme } from '../../theme';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 
@@ -18,8 +18,11 @@ export default function Loading() {
     setModalOpen(true); // 모달을 열기 위해 상태를 변경하는 함수
   };
 
+  const navigate = useNavigate();
+  
   const handleModalClose = () => {
     setModalOpen(false);
+    navigate('/result'); // 화면 이동 테스트를 위한 코드. 연동 후 삭제하기
   }
 
   const location = useLocation();
@@ -99,12 +102,12 @@ display: inline-flex;
 `;
 
 const Spinner = styled.img`
-  width: 1.375rem; //22px;
-  height: 1.375rem; //22px;
+  width: 1.375rem; 
+  height: 1.375rem; 
 `;
 
 const Text = styled.div`
-  width: 18.5rem; //296px;
+  width: 21.5rem; //296px;
   height: 2.4375rem; //39px;
   color: #3F4045;
   font-size: 1.625rem; //26px;
@@ -112,7 +115,6 @@ const Text = styled.div`
   font-weight: 700;
   line-height: 2.4375rem; //39px;
   word-wrap: break-word;
-
 
   ${theme.media.mobile`
     font-size: 1.125rem;
@@ -130,12 +132,6 @@ const CanvasContainer = styled.div`
   width: 18.625rem;
   height: 23.375rem;
   `}
-`;
-
-
-const EXImage = styled.img`
-  // width: 20rem; //482px;
-  // height: 24.625rem; //482px;
 `;
 
 const TexDiv = styled.div`

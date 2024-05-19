@@ -3,26 +3,53 @@ import { theme } from '../../theme';
 
 export const Wrap = styled.div`
   display: flex;
-  justify-content: space-between; /* 컨테이너 사이의 여백을 최대로 확보하여 내부 요소를 양쪽으로 분산 배치 */
+   /* 컨테이너 사이의 여백을 최대로 확보하여 내부 요소를 양쪽으로 분산 배치 */
+
+  ${theme.media.mobile`
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  `}
+
+  ${theme.media.desktop`
+  display: flex;
+  justify-content: flex-end;
+  // margin-top: 15rem;
+  //padding-top: 15rem;
+  position: relative;
+  z-index: 99;
+
+  `}
 
 `;
 
 export const OutContainer = styled.div`
   width: 100%;
-  //height: 100%;
-  padding-top: 2.5rem; //40px;
+  height: 100%;
+padding-top: 2.5rem;
   padding-bottom: 2.5rem; //40px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   gap: 1.875rem; // 30px;
-  display: inline-flex;
+  display: flex;
   background: #f3f3f6;
   border-radius: 10px;
   overflow: hidden;
+
+  //하 여기부분 ..
+  // position: fixed;
+  // left: 0;
+  z-index: 0;
+
+
   
   ${theme.media.mobile`
-  padding-top: 1rem;
+
+  //padding-top: 0rem;
+  padding-top: 10rem;
+  //position:fixed;
+  z-index: 0;
   `}
 `;
 
@@ -44,12 +71,13 @@ export const DrawingArea = styled.div`
   left: 13.1875rem; //211px;
   top: 7.25rem; //116px;
   display: flex;
-  flex-direction: row;
+
 
   ${theme.media.mobile`
   flex-direction: column-reverse;
-  display: flex;
+  display: fixed;
 `}
+
 `;
 
 
@@ -60,6 +88,8 @@ export const CanvasContainer = styled.div`
   //height: 60vh; /* 높이를 화면 높이의 60%로 설정 */
   background: white;
   box-shadow: 0.3125rem 0.3125rem 0.625rem rgba(0, 0, 0, 0.04);
+
+
 
   ${theme.media.mobile`
 
@@ -140,67 +170,4 @@ export const BStyledWrapper = styled.div`
 
   ${theme.media.mobile`
   `}
-`;
-
-export const BarBox = styled.div`
-  width: 1.25rem; //20px;
-  height: 4.375rem; //70px;
-  position: absolute;
-  top: 50%; /* 상단 위치를 중앙으로 조정 */
-  transform: translateY(-50%); /* 세로 중앙 정렬을 위한 변환 */
-  right: 0; /* 오른쪽 정렬 */
-  display: flex;
-  justify-content: center; /* 수평 중앙 정렬 */
-  align-items: center; /* 수직 중앙 정렬 */
-  boarder-radius: none;
-  
-  display: flex;
-
-  ${theme.media.mobile`
-
-    display: none;
-  `}
-
-`;
-
-export const StyledShape = styled.div`
-position: absolute;
-z-index: 2;
-`;
-
-export const StyledRectangle = styled.div`
-position: relative;
-z-index: 1;
-`;
-
-export const MobileContainer = styled.div`
-
-  display: none;  
-
-  ${theme.media.mobile`
-    display: flex;
-    justify-content: center; /* 중앙 정렬 */
-    align-items: center; /* 중앙 정렬 */
-    width: 100%; /* 화면 너비에 맞게 설정 */
-    margin-left: 1.625rem;
-    margin-right: 1.625rem;
-  `}
-
-`;
-
-
-export const DMobileContainer = styled.div`
-
-display: none;  
-
-${theme.media.mobile`
-display: flex;
-justify-content: center; /* 중앙 정렬 */
-align-items: center; /* 중앙 정렬 */
-width: 100%; /* 화면 너비에 맞게 설정 */
-margin-left: 1.625rem;
-margin-right: 1.625rem;
-
-`}
-
 `;

@@ -24,23 +24,23 @@ const StyledMain3 = styled(Main3)`
   height: ${props => props.height || 'auto'};
 `;
 
-function Main (){
-  const navigate = useNavigate(); 
-  function handleDrawPageClick() {
-    navigate('/draw'); 
-  }  
+function Main() {
   return (
     <MainContainer>
-         <InspectionSection>
+
+        <InspectionSection>
          <InspectionContent>
           <InspectionTitle>HTP 그림 검사 결과</InspectionTitle>
           <InspectionDescription>아이의 내면을 탐험하고,<br/> 건강한 정신 발달을 지원하세요!</InspectionDescription>
-          <DetailButton onClick={handleDrawPageClick()}>검사하기</DetailButton>
+          <DetailButton>검사하기</DetailButton>
         </InspectionContent>
         <ImgBox>
           <StyledMain1 />
         </ImgBox>
         </InspectionSection>
+
+
+
         <Section>
         <MindSection>
         <ImgBox>
@@ -98,6 +98,7 @@ flex-direction:column;
 const InspectionContent = styled.div`
     margin : 4rem;
     align-items: center;
+    
 ${theme.media.mobile`
 text-align: center;
   `}
@@ -135,8 +136,9 @@ border:none;
 font-weight:700;
 margin-top:20px;
 ${theme.media.mobile`
-
-`}
+    margin-top: 0; /* Remove the top margin for mobile view */
+    margin-bottom: 1rem;
+  `}
 `;
 
 const Section = styled.div`
@@ -154,9 +156,10 @@ const MindSection = styled.div`
     display:flex;
     ${theme.media.mobile`
     display:flex;
-    flex-direction:column;
+    flex-direction:column-reverse;
     width: 100%;
     height: 100%;
+    flex-direction: column ;// 모바일에서는 열 방향으로 변경하고 순서 반전
     
     `}
 `;
@@ -165,7 +168,7 @@ const MindContent = styled.div`
 
   padding: 2.125rem;
   justify-content: center;
-    align-items: center;
+  align-items: center;
 
 `;
 
@@ -199,7 +202,7 @@ const ResultsSection = styled.div`
   color:black;
     
 ${theme.media.mobile`
-  flex-direction: column-reverse; // 모바일에서는 열 방향으로 변경하고 순서 반전
+  flex-direction: column ;// 모바일에서는 열 방향으로 변경하고 순서 반전
   width: 100%;
   height: 100%;
 `}
@@ -251,12 +254,12 @@ const FooterBox = styled.footer`
 `;
 const FooterTitle = styled.div`
 
-font-size: 1.375rem;
-font-weight: 700;
-line-height: 2.0625rem;
-text-align: center;
-color:white;
-margin-bottom:1.25rem;
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 2.0625rem;
+  text-align: center;
+  color:white;
+  margin-bottom:1.25rem;
 
 `;
 const FooterContent = styled.div`
@@ -265,10 +268,33 @@ font-weight: 600;
 line-height: 1.3125rem;
 text-align: center;
 color:white;
+${theme.media.mobile`
+`}
+
 `;
 
 const ImgBox = styled.div`
 
+${theme.media.mobile`
+`}
 
+`;
 
+const ButtonContainer = styled.div`
+
+${theme.media.mobile`
+  order: 3; /* Ensure this container comes last on mobile */
+  margin-top: 20px; /* Add top margin on mobile */
+  padding-top: 0;
+  position: relative; /* Reset position */
+  top: 1rem; /* Reset top */
+  left: 0.5rem; /* Reset left */
+  padding-bottom: 3rem;
+`}
+  padding-top: 15rem;
+  position: relative; /* Reset position */
+  bottom: 1rem;
+  left: -12rem;
+
+  
 `;

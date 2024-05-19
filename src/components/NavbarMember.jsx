@@ -12,18 +12,22 @@ const NavbarMember = ({toggleSidebar}) => {
   const navigate= useNavigate();
   // 검사하기 이동
   const moveToReady = () => {
-    navigate('/');
+    navigate('/preparedraw');
   }
   // 마이페이지 이동
   const moveToMy = () => {
     navigate('/mypage');
   }
   // 로그아웃 처리하기
+  // 로고 클릭 시 메인으로 이동
+  const moveToMain = () => {
+    navigate('/main');
+  }
   return (
     <Container>
       <HeaderWrapper>
         <Header>
-          <LogoContainer>
+          <LogoContainer onClick={moveToMain}>
             <Logo2/>
             <Logo1/>
           </LogoContainer>

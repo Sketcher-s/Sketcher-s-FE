@@ -7,16 +7,19 @@ import {ReactComponent as Logo2} from '../assets/Navbar/logo2.svg';
 const NavbarNoMember = () => {
   const navigate = useNavigate();
   const moveToLogin = () => {
-    navigate('/login');
+    navigate('/');
   };
   const moveToRegister = () => {
     navigate('/register');
+  }
+  const moveToMain = () => {
+    navigate('/main');
   }
   return (
     <Container>
       <HeaderWrapper>
         <Header>
-          <LogoContainer>
+          <LogoContainer onClick={moveToMain}>
             <Logo2/>
             <Logo1/>
           </LogoContainer>
