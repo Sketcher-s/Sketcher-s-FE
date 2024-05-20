@@ -14,8 +14,8 @@ const StyledMain1 = styled(Main1)`
   
   ${theme.media.mobile`
     margin-top: -2rem; 
-    display: flex;
-    justify-content: center;
+    margin-left:1rem;
+  
   `}
 
 `;
