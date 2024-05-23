@@ -6,6 +6,7 @@ import { ReactComponent as User } from '../assets/images/user.svg';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { SidebarState } from '../recoil/recoilState';
+import { LoginState } from '../recoil/recoilState';
 
 const Background = styled.div`
 position: fixed;
@@ -132,6 +133,8 @@ top: 3rem;
 const Sidebar = () => {
   // sidebar 상태
   const [isSidebarOpen, setIsSidebarOpen] = useRecoilState(SidebarState);
+  // 로그인 상태
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
 
   const navigate = useNavigate();
     // 검사하기 이동
@@ -142,13 +145,20 @@ const Sidebar = () => {
   const moveToMy = () => {
     navigate('/mypage');
   }
+
   // 로그아웃 처리하기
+  const handleLogout = () => {
+    localStorage.removeItem('jwtToken'); // 토큰 삭제
+    setIsSidebarOpen(false);
+    setIsLoggedIn(false); // 로그인 상태(로그아웃)
+    navigate('/'); // main 화면으로 이동
+  }
     return (
       <>
-      <Background show={isSidebarOpen} onClick={(setIsSidebarOpen(false))}/>
+      <Background show={isSidebarOpen} onClick={() => (setIsSidebarOpen(false))}/>
         <SideContainer show={isSidebarOpen}>
         <InnerContainer>
-          <CloseContainer onClick={(setIsSidebarOpen(false))}>
+          <CloseContainer onClick={() => (setIsSidebarOpen(false))}>
               <IoCloseOutline size='30' color='#97999F'/>
           </CloseContainer>
           <Content>
@@ -162,7 +172,7 @@ const Sidebar = () => {
           <LinkContainer>
             <MoveBtn color="#6487E2" onClick={moveToReady}>검사하기</MoveBtn>
             <MoveBtn onClick={moveToMy}>마이페이지</MoveBtn>
-            <MoveBtn>로그아웃</MoveBtn>
+            <MoveBtn onClick={handleLogout}>로그아웃</MoveBtn>
           </LinkContainer>
         </InnerContainer>
       </SideContainer>
