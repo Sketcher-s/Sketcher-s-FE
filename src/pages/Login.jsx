@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { ReactComponent as PwdIcon } from '../assets/images/pwdIcon.svg';
 import { ReactComponent as NonPwdIcon } from '../assets/images/nonpwdIcon.svg';
@@ -13,6 +13,9 @@ import { Divider } from '../components/LoginStyle.jsx';
 import { ButtonWrapper } from '../components/LoginStyle.jsx';
 import { Button } from '../components/LoginStyle.jsx';
 import { useNavigate } from 'react-router-dom';
+import CheckLogin from '../components/CheckLogin.jsx';
+import { LoginState } from '../recoil/recoilState.js';
+import { useRecoilState } from 'recoil';
 
 const Login = () => {
   const {
@@ -29,19 +32,39 @@ const Login = () => {
     navigate('/register');
   }
 
-  // 테스트를 위한 임시 main으로 이동
+  // main으로 이동
   const moveToMain = () => {
-    navigate('/main');
+    navigate('/');
   }
 
-  const onSubmit = (data) => {
-    console.log(data);
+  // 로그인 에러 메시지
+  const [errorMsg, setErrorMsg] = useState(null);
+  // 로그인 상태 관리
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+
+  // 페이지 재접속 시 로그인 상태 유지
+  useEffect(() => {
+    const jwtToken = localStorage.getItem('jwtToken');
+    if (jwtToken) {
+      setIsLoggedIn(true);
+    }
+  }, [setIsLoggedIn]);
+
+  const onSubmit = async (data) => {
     if (isValid) {
       // 유효한 경우 폼 제출
-      console.log('제출 성공');
+      try {
+        const result = await CheckLogin(data.email, data.password);
+        console.log('제출 성공', result);
+        setIsLoggedIn(true); // 로그인 상태
+        moveToMain();
+      } catch (error) {
+        setErrorMsg('error');
+        console.error('로그인 실패', error);
+      }
     } else {
       // 유효하지 않음
-      console.log('제출 실패');
+      console.log('폼 유효하지 않음');
     }
   };
 
@@ -69,10 +92,6 @@ const Login = () => {
   // 비밀번호 숨기기/보이기
   const [hidePwd, setHidePwd] = useState(true);
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
-  // 로그인 처리
-  //};
 
   // 비밀번호 보기/숨기기 핸들러
   const togglePasswordVisibility = () => {
@@ -85,13 +104,12 @@ const Login = () => {
         <LoginTitle>로그인</LoginTitle>
         <InputWrapper>
           <InputContainer>
-            <InputField isFocused={focus.name}>
+            <InputField isFocused={focus.email}>
               <InputValue
                 {...emailRegister}
                 type="email"
                 id="email"
                 placeholder="이메일을 입력해 주세요"
-            
                 onFocus={() => handleFocus('email')}
                 onBlur={() => handleBlur('email')}
               />
@@ -111,6 +129,7 @@ const Login = () => {
               <PasswordIcon onClick={togglePasswordVisibility}>{hidePwd ? <PwdIcon /> : <NonPwdIcon />}</PasswordIcon>
             </InputField>
             {errors.password && <ErrorText>{errors.password.message}</ErrorText>}
+            {errorMsg === 'error' && <ErrorText>이메일 및 비밀번호를 다시 확인해주세요.</ErrorText>}
           </InputContainer>
         </InputWrapper>
         <Divider />
@@ -120,7 +139,7 @@ const Login = () => {
             back={isValid}
             color="white"
             type="submit"
-            onClick={moveToMain}
+            //onClick={moveToMain}
           >
             <div>로그인</div>
           </Button>

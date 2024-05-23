@@ -1,4 +1,5 @@
 import {atom} from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 
 export const countState = atom({
 key: 'countState',
@@ -15,6 +16,22 @@ export const canvasContentState = atom({
     key: 'canvasContentState',
     default: null,
   });
+
+// 로그인 지속
+const {persistAtom} = recoilPersist();
+
+// 로그인
+export const LoginState = atom({
+  key: 'LoginState',
+  default: false,
+  effects_UNSTABLE: [persistAtom]
+});
+
+// 사이드바
+export const SidebarState = atom({
+  key: 'SidebarState',
+  default: false,
+});
   
 // 이제 이걸 Counter라는 컴포넌트에서 useRecoilState(countState)로 사용
 // useRecoilValue는 상태의 값을 가져오기

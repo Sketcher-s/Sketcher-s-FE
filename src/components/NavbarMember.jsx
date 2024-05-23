@@ -6,8 +6,12 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import {ReactComponent as Logo1} from '../assets/Navbar/logo1.svg';
 import {ReactComponent as Logo2} from '../assets/Navbar/logo2.svg';
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../recoil/recoilState';
 
 const NavbarMember = ({toggleSidebar}) => {
+  // 로그인 상태
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
   const isMobile = useMediaQuery({maxWidth: 767});
   const navigate= useNavigate();
   // 검사하기 이동
@@ -19,9 +23,14 @@ const NavbarMember = ({toggleSidebar}) => {
     navigate('/mypage');
   }
   // 로그아웃 처리하기
+  const handleLogout = () => {
+    localStorage.removeItem('jwtToken'); // 토큰 삭제
+    setIsLoggedIn(false); // 로그인 상태(로그아웃)
+    moveToMain(); // main 화면으로 이동
+  }
   // 로고 클릭 시 메인으로 이동
   const moveToMain = () => {
-    navigate('/main');
+    navigate('/');
   }
   return (
     <Container>
@@ -41,7 +50,7 @@ const NavbarMember = ({toggleSidebar}) => {
             <Button width={72} background="white" border="1px #6487E2 solid" noMember onClick={moveToMy}>
               <Text color="#6487E2">마이페이지</Text>
             </Button>
-            <Button width={62} background="white" noMember>
+            <Button width={62} background="white" noMember onClick={handleLogout}> 
               <Text color="#6487E2">로그아웃</Text>
             </Button>
           </HeaderButtons>

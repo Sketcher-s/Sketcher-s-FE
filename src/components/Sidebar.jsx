@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import {IoCloseOutline} from 'react-icons/io5';
 import { ReactComponent as User } from '../assets/images/user.svg';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { SidebarState } from '../recoil/recoilState';
 
 const Background = styled.div`
 position: fixed;
@@ -127,7 +129,10 @@ right: 1rem;
 top: 3rem;
 `;
 
-const Sidebar = ({isOpen, toggle}) => {
+const Sidebar = () => {
+  // sidebar 상태
+  const [isSidebarOpen, setIsSidebarOpen] = useRecoilState(SidebarState);
+
   const navigate = useNavigate();
     // 검사하기 이동
   const moveToReady = () => {
@@ -140,10 +145,10 @@ const Sidebar = ({isOpen, toggle}) => {
   // 로그아웃 처리하기
     return (
       <>
-      <Background show={isOpen} onClick={toggle}/>
-        <SideContainer show={isOpen}>
+      <Background show={isSidebarOpen} onClick={(setIsSidebarOpen(false))}/>
+        <SideContainer show={isSidebarOpen}>
         <InnerContainer>
-          <CloseContainer onClick={toggle}>
+          <CloseContainer onClick={(setIsSidebarOpen(false))}>
               <IoCloseOutline size='30' color='#97999F'/>
           </CloseContainer>
           <Content>
