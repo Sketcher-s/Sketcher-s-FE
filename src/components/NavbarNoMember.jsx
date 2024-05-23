@@ -7,13 +7,13 @@ import {ReactComponent as Logo2} from '../assets/Navbar/logo2.svg';
 const NavbarNoMember = () => {
   const navigate = useNavigate();
   const moveToLogin = () => {
-    navigate('/');
+    navigate('/login');
   };
   const moveToRegister = () => {
     navigate('/register');
   }
   const moveToMain = () => {
-    navigate('/main');
+    navigate('/');
   }
   return (
     <Container>
