@@ -13,6 +13,7 @@ import Result from './pages/Result';
 import Main from './pages/Main';
 import Camera from './components/Draw/Camera';
 import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 import { RecoilRoot } from 'recoil';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <RecoilRoot>
           <BrowserRouter>
               <Navbar/>
+              <Sidebar/>
               <Routes>
                 <Route path="/login" element={<Login/>} />
                 <Route path="/register" element={<Register/>} />
