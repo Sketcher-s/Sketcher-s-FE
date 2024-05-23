@@ -35,7 +35,7 @@ function Main (){
          <InspectionContent>
           <InspectionTitle>HTP 그림 검사 결과</InspectionTitle>
           <InspectionDescription>아이의 내면을 탐험하고,<br/> 건강한 정신 발달을 지원하세요!</InspectionDescription>
-          <DetailButton onClick={handleDrawPageClick()}>검사하기</DetailButton>
+          <DetailButton onClick={handleDrawPageClick}>검사하기</DetailButton>
         </InspectionContent>
         <ImgBox>
           <StyledMain1 />
