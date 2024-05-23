@@ -7,6 +7,8 @@ import { JoinWrapper, LoginContainer, LoginTitle, InputWrapper,
 import { ReactComponent as PwdIcon } from '../assets/images/pwdIcon.svg';
 import { ReactComponent as NonPwdIcon } from '../assets/images/nonpwdIcon.svg';
 import { useNavigate } from 'react-router-dom';
+import CheckEmail from '../components/CheckEmail.jsx';
+import CheckRegister from '../components/CheckRegister.jsx';
 
 const Register = () => {
   const {
@@ -36,20 +38,29 @@ const Register = () => {
   };
 
   const navigate = useNavigate();
-  // 테스트를 위한 임시 main으로 이동
+  // main으로 이동
   const moveToMain = () => {
     setOpen(false); // 모달 닫기
-    navigate('/main');
+    navigate('/');
 
   }
-  // 로그인 페이지 이동
-  // const navigate = useNavigate();
 
-  // const moveToLogin = () => {
-  //   navigate('/login');
-  // }
+  // 이메일 중복 체크 버튼 클릭 이벤트 핸들러
+  const handleCheckEmail = async () => {
+    const email = getValues('email');
+    console.log(email);
+    try {
+      const result = await CheckEmail(email);
+      if(!result.isExisted){
+        setModalStatus('check'); // 사용 가능 모달
+      } else {
+        setModalStatus('dupli'); // 중복 모달
+      }
+    } catch (error) {
+      //console.error('이메일 중복 검사 중 오류 발생', error);
+    }
+  }
 
-  // 이메일 중복 체크하기
 
   // 비밀번호 숨기기/보이기
   const [hidePwd, setHidePwd] = useState(true);
@@ -65,11 +76,10 @@ const Register = () => {
   }
 
   // 중복 체크 모달 상태
-  const [checkOpen, setCheckOpen] = useState(false);
+  const [modalStatus, setModalStatus] = useState(null);
 
-  // 중복 체크 모달 닫기
-  const handleCheckClose = () => {
-    setCheckOpen(false);
+  const handleClose = () => {
+    setModalStatus(null);
   }
 
   // 모달 상태
@@ -80,15 +90,19 @@ const Register = () => {
     setOpen(false);
   }
 
-  const onSubmit = (data) => {
-    console.log(data);
+  // 폼 제출
+  const onSubmit = async (data) => {
+    //console.log(data);
     if (isValid) {
-      // 유효한 경우 폼 제출
-
-      console.log('제출 성공');
+      // 유효한 경우 회원가입 요청 보내기
+      try {
+        const result = await CheckRegister(data.name, data.email, data.password);
+        console.log('제출 성공', result);
+        setOpen(true);
+      } catch (error) {
+        console.error('회원가입 실패', error);
+      }
     } else {
-      // 유효하지 않음
-
       console.log('제출 실패');
     }
   };
@@ -145,7 +159,7 @@ const Register = () => {
             <InputField isError={!!errors.email} isFocused={focus.email}>
               <InputValue type="email" id="email" placeholder="이메일을 입력해 주세요" {...emailRegister} onFocus={() => handleFocus('email')} 
                             onBlur={() => handleBlur('email')} /> 
-              <CheckButton isError={!!errors.email} disabled={!!errors.email || !emailWatch} width={62} background="white" border='1px #6487E2 solid' onClick = {() => {setCheckOpen(true)}}><Text>중복체크</Text></CheckButton>
+              <CheckButton isError={!!errors.email} disabled={!!errors.email || !emailWatch} width={62} background="white" border='1px #6487E2 solid' onClick = {handleCheckEmail}><Text>중복체크</Text></CheckButton>
             </InputField>
             {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
           </InputContainer>
@@ -179,15 +193,15 @@ const Register = () => {
             back={isValid}
             color={'white'}
             type="submit"
-            onClick={() => {isValid && setOpen(true)}}
+            //onClick={() => {isValid && setOpen(true)}}
           >
             <div>회원가입 완료</div>
           </Button>
         </ButtonWrapper>
         {/* 이메일 중복체크 통과 */}
-        {checkOpen && <Modal title="사용 가능한 이메일입니다." message="" close={handleCheckClose} />}
+        {modalStatus === 'check' && <Modal title="사용 가능한 이메일입니다." message="" close={handleClose} />}
         {/* 이메일 중복체크 불통과 */}
-        {/* {checkOpen && <Modal title="이미 가입된 이메일입니다." message="" close={handleCheckClose} />} */}
+        {modalStatus === 'dupli' && <Modal title="이미 가입된 이메일입니다." message="" close={handleClose} />}
         {open && <Modal title="환영합니다!" message={`${userName}님, 회원가입이 완료되었습니다. Catch Mind에서 그림 심리 검사를 진행해보세요!`} close={moveToMain} />}
       </JoinWrapper>
     </LoginContainer>
