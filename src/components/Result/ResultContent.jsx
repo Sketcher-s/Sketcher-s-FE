@@ -66,15 +66,13 @@ export default ResultContent;
 
 const Resultcontent = styled.div`
 ${theme.media.mobile`
-    width: 18.625rem;
+
     margin: 0 auto; // 가운데 정렬 추가
 
 `}
 `;
 const ContentTitle = styled.p`
   padding-bottom:1.25rem;
-  //styleName: title2/B;
-font-family: Pretendard;
 font-size: 1rem;
 font-weight: 700;
 line-height: 1.5rem;
@@ -106,7 +104,7 @@ const Accordion = styled.div`
   border-radius:0.625rem;
   margin-bottom:1.25rem;
   ${theme.media.mobile`
-    width:298px;
+   
 
 
   `}
@@ -118,7 +116,7 @@ const AccordionHeader = styled.div`
   padding: 1.25rem 1.625rem 1.25rem 1.625rem;
   color:#4D4F56;
   font-family: Pretendard;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
   line-height: 1.5rem;
   text-align: left;

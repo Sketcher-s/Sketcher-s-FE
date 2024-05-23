@@ -11,6 +11,12 @@ import { theme } from '../theme';
 const StyledMain1 = styled(Main1)`
   width: ${props => props.width || '90%'};
   height: ${props => props.height || '22.4475rem'};
+  
+  ${theme.media.mobile`
+    margin-top: -2rem; 
+    margin-left:1rem;
+  
+  `}
 
 `;
 
@@ -25,9 +31,11 @@ const StyledMain3 = styled(Main3)`
 `;
 
 function Main (){
-  const navigate = useNavigate(); 
-  function handleDrawPageClick() {
-    navigate('/draw'); 
+
+
+  const Navigate = useNavigate(); 
+  function handleDrawClick() {
+    Navigate('/draw'); 
   }  
   return (
     <MainContainer>
@@ -35,7 +43,7 @@ function Main (){
          <InspectionContent>
           <InspectionTitle>HTP 그림 검사 결과</InspectionTitle>
           <InspectionDescription>아이의 내면을 탐험하고,<br/> 건강한 정신 발달을 지원하세요!</InspectionDescription>
-          <DetailButton onClick={handleDrawPageClick}>검사하기</DetailButton>
+          <DrawButton onClick={handleDrawClick}>검사하기</DrawButton>
         </InspectionContent>
         <ImgBox>
           <StyledMain1 />
@@ -92,14 +100,17 @@ align-items: center;
 justify-content: center;
 ${theme.media.mobile`
 flex-direction:column;
+position:relative;
+margin-bottom:5rem;
   `}
 `;
 
 const InspectionContent = styled.div`
-    margin : 4rem;
+    margin : 3rem;
     align-items: center;
 ${theme.media.mobile`
 text-align: center;
+
   `}
 `;
 
@@ -125,7 +136,7 @@ text-align: center;
   `}
 `;
 
-const DetailButton = styled.button`
+const DrawButton = styled.button`
 width: 10rem;
 height: 2.75rem;
 border-radius: 0.25rem;
@@ -134,11 +145,23 @@ color: white;
 border:none;
 font-weight:700;
 margin-top:20px;
+justify-content: center;
+margin-top:20px;
+cursor:pointer;
 ${theme.media.mobile`
-
-`}
+position: absolute;
+bottom:-50px;
+left: 50%;
+transform: translateX(-50%);
+  `}
 `;
 
+const ImgBox = styled.div`
+
+
+
+
+`;
 const Section = styled.div`
     display:flex;
     flex-direction:column;
@@ -206,9 +229,9 @@ ${theme.media.mobile`
 `;
 
 const ResultsContent = styled.div`
-  padding:1.25rem;
+  padding:2.5rem;
   ${theme.media.mobile`
-  padding: 2rem 3rem;
+  padding: 0.5rem 1rem;
   
 `}
 `;
@@ -224,7 +247,6 @@ ${theme.media.mobile`
 `;
 const ResultsDescription = styled.p`
 //styleName: body1/SB;
-width: 22.5rem;
 font-family: Pretendard;
 font-size: 0.875rem;
 font-weight: 600;
@@ -232,7 +254,6 @@ line-height: 1.3125rem;
 text-align: left;
 color: #3F4045;
 ${theme.media.mobile`
-  width:100%;
   
 `}
 `;
@@ -240,6 +261,7 @@ ${theme.media.mobile`
 const Footer = styled.footer`
   width: 100%;
   background: #27282B;
+  text-align:center
   ${theme.media.mobile`
   padding: 3.125rem 1.35rem;
 `}
@@ -247,16 +269,19 @@ const Footer = styled.footer`
 
 const FooterBox = styled.footer`
   padding:4.375rem;
-
+  text-align:center
 `;
 const FooterTitle = styled.div`
 
-font-size: 1.375rem;
+font-size: 1.275rem;
 font-weight: 700;
 line-height: 2.0625rem;
 text-align: center;
 color:white;
 margin-bottom:1.25rem;
+${theme.media.mobile`
+font-size: 1rem;
+`}
 
 `;
 const FooterContent = styled.div`
@@ -265,10 +290,8 @@ font-weight: 600;
 line-height: 1.3125rem;
 text-align: center;
 color:white;
+${theme.media.mobile`
+font-size: 0.7rem;
+`}
 `;
 
-const ImgBox = styled.div`
-
-
-
-`;

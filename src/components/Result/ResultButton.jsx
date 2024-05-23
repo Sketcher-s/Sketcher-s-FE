@@ -51,7 +51,7 @@ const MyPageButtonBox = styled.div`
   justify-content: center;
   align-items: center;
   ${theme.media.mobile`
-  width:16.75rem;
+  width:80%;
   margin-top:-1.875rem;
   `}
 `;
@@ -60,11 +60,12 @@ const MyPageButton = styled.div`
   width: 7.5rem;
   text-align: center;
   color: #6487e2;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: Pretendard-Regular;
   font-weight: 700;
   line-height: 1.5rem;
   word-wrap: break-word;
+  
 
 `;
 
@@ -72,7 +73,7 @@ const MainButton = styled.div`
   width: 7.5rem;
   text-align: center;
   color: white;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: Pretendard-Regular;
   font-weight: 700;
   line-height: 1.5rem;
@@ -91,6 +92,6 @@ const MainButtonBox = styled.div`
   justify-content: center;
   align-items: center;
   ${theme.media.mobile`
-  width:16.75rem;
+  width:80%;
   `}
 `;
