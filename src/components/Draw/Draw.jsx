@@ -79,15 +79,6 @@ function Draw() {
     setPenSize(maxPenSize);
   };
 
-  // const changePenSize = () => {
-  //   if (signatureCanvasRef.current) {
-  //     signatureCanvasRef.current.penSize = { // 펜의 최소 두께와 최대 두께 설정
-  //       minWidth: minPenSize,
-  //       maxWidth: maxPenSize,
-  //     };
-  //   }
-  // };
-
   const handleClick = (buttonName) => {
     setIsButtonClicked(buttonName === isButtonClicked ? null : buttonName); // 현재 클릭된 버튼이면 상태를 null로 변경하고 아니면 버튼 이름으로 변경
     if (buttonName === 'WTrash') {
