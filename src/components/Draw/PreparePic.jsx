@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Check } from '../../assets/Draw/Check.svg';
@@ -12,10 +12,6 @@ function PreparePicture() {
   //모달 부분
   const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
 
-  // const handleModalOpen = () => {
-  //   setModalOpen(true); // 모달을 열기 위해 상태를 변경하는 함수
-  // };
-
   const handleModalClose = () => {
     setModalOpen(false);
   }
@@ -28,25 +24,21 @@ function PreparePicture() {
   }
 
   //파일 첨부 기능 -> command key를 이용하여 4개의 파일을 한번에 첨부함
-  const [imgFile, setImgFile] = useState([]); // 이미지 배열
+  const [imgFile, setImgFile] = useState(null); // 이미지 배열
   const fileInputRef = useRef(); 
+
+  useEffect(() => {
+    if (imgFile) {
+      Navigate('/loading', { state: { imageData: URL.createObjectURL(imgFile) } });
+    }
+  }, [imgFile, Navigate]);
+
 
   const handleFileChange = () => {
     console.log(fileInputRef.current.files); //파일 잘 들어갔는지 확인
 
-    const files = Array.from(fileInputRef.current.files);
-    const remainingSpace = 4 - imgFile.length; // 남은 공간 계산
-  
-    // 최대 개수를 초과하지 않도록 파일 추가
-    const newFiles = files.slice(0, remainingSpace);
-
-    // 기존 파일과 새로운 파일 합치기
-    const updatedFiles = [...imgFile, ...newFiles.map(file => URL.createObjectURL(file))];
-    setImgFile(updatedFiles);
-
-    if(updatedFiles.length !== 4){
-      setModalOpen(true);
-    }
+    const file = fileInputRef.current.files[0]; // 첫 번째 파일만 선택
+    setImgFile(file);
 
   };
 
@@ -128,15 +120,22 @@ function PreparePicture() {
             ref={fileInputRef}
           />
         </ButtonText>
-    
+
       </ButtonContainer>
+
+      {/* 첨부한 이미지 파일을 보여줌 */}
+      {/* {imgFile && (
+        <div>
+          <img src={URL.createObjectURL(imgFile)} alt="Selected Image" width="200" height="200" />
+        </div>
+      )} */}
 
       </Section>
       {/* 모달을 열기 위한 버튼 */}
       {modalOpen && (
         <Modal
           title="사진 확인이 필요해요 !"
-          message="사진이 4장이 적절하게 첨부되었는지 다시 확인해주세요."
+          message="사진이 적절하게 첨부되었는지 다시 확인해주세요."
           close={handleModalClose} // 모달을 닫는 핸들러를 전달합니다.
         />
       )}

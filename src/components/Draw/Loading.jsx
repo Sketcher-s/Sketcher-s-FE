@@ -1,5 +1,5 @@
 //import React from 'react';
-import React, {useState,} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import spinner from '../../assets/Draw/spinner.gif';
 import Modal from '../Modal';
@@ -25,8 +25,18 @@ export default function Loading() {
     navigate('/result'); // 화면 이동 테스트를 위한 코드. 연동 후 삭제하기
   }
 
+  //사진첨부에서 받아온 이미지 불러오기
   const location = useLocation();
-  const imageData = location.state?.imageData;
+  const imageData = location?.state?.imageData;
+
+  useEffect(() => {
+    if (imageData) {
+      const imgElement = document.getElementById('loadedImage');
+      if (imgElement) {
+        imgElement.src = imageData;
+      }
+    }
+  }, [imageData]);
 
 
   return (
@@ -39,13 +49,18 @@ export default function Loading() {
     <TexDiv>
     <Text>검사 결과를 기다리고 있어요!</Text>
     </TexDiv>
+    {/* <ImageData>
+    </ImageData> */}
     </TContainer>
 
     <DrawingArea>
 
     <CanvasContainer>
-      {/* <EXImage src={`${process.env.PUBLIC_URL}/assets/ExPic.png`} alt="사진예시"/> */}
-      {imageData && <img src={imageData} alt="그림" />}
+      {imageData && (
+        <ImageData>
+          <img id="loadedImage" style={{ maxWidth: '20rem', maxHeight: '20rem', }} />
+        </ImageData>
+      )}
       </CanvasContainer>
 
     </DrawingArea>
@@ -86,8 +101,15 @@ const OutContainer = styled.div`
 const DrawingArea = styled.div`
   left: 13.1875rem; //211px;
   top: 7.25rem; //116px;
+  width: 20rem;
+  height: 20rem;
   display: flex;
   flex-direction: row;
+
+  ${theme.media.mobile`
+  width: 18.625rem;
+  height: 23.375rem;
+`}
 `;
 
 const TContainer = styled.div`
@@ -129,14 +151,23 @@ const CanvasContainer = styled.div`
   height: 24.625rem; //482px;
 
   ${theme.media.mobile`
-  width: 18.625rem;
-  height: 23.375rem;
+    width: 18.625rem;
+    height: 23.375rem;
   `}
 `;
 
 const TexDiv = styled.div`
   // width: 20rem; //482px;
   // height: 24.625rem; //482px;
+
+  ${theme.media.mobile`
+  text-align: center;
+`}
+`;
+
+const ImageData = styled.div`
+  width: 20rem; //482px;
+  height: 24.625rem; //482px;
 
   ${theme.media.mobile`
   text-align: center;
