@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { ReactComponent as PwdIcon } from '../assets/images/pwdIcon.svg';
-import { ReactComponent as NonPwdIcon } from '../assets/images/nonpwdIcon.svg';
-import { ErrorText, JoinWrapper } from '../components/LoginStyle.jsx';
-import { LoginContainer } from '../components/LoginStyle.jsx';
-import { LoginTitle } from '../components/LoginStyle.jsx';
-import { InputWrapper } from '../components/LoginStyle.jsx';
-import { InputField } from '../components/LoginStyle.jsx';
-import { InputValue, InputContainer } from '../components/LoginStyle.jsx';
-import { PasswordIcon } from '../components/LoginStyle.jsx';
-import { Divider } from '../components/LoginStyle.jsx';
-import { ButtonWrapper } from '../components/LoginStyle.jsx';
-import { Button } from '../components/LoginStyle.jsx';
+import { ReactComponent as PwdIcon } from '../assets/Login/pwdIcon.svg';
+import { ReactComponent as NonPwdIcon } from '../assets/Login/nonpwdIcon.svg';
+import { ErrorText, JoinWrapper, LoginContainer, LoginTitle,
+  InputWrapper, InputField, InputValue, InputContainer,
+  PasswordIcon, Divider, ButtonWrapper, Button
+ } from '../components/Login/LoginStyle.jsx';
+
 import { useNavigate } from 'react-router-dom';
-import CheckLogin from '../components/CheckLogin.jsx';
+import CheckLogin from '../components/Login/CheckLogin.jsx';
 import { LoginState } from '../recoil/recoilState.js';
 import { useRecoilState } from 'recoil';
 

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { theme } from '../theme';
+import { theme } from '../../theme';
 
 export const LoginContainer = styled.div`
   display: flex;

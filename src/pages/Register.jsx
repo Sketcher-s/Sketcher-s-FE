@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form';
 import Modal from '../components/Modal.jsx';
 import { JoinWrapper, LoginContainer, LoginTitle, InputWrapper,
   InputField, InputValue, PasswordIcon, Divider, ButtonWrapper,
-  Button, CheckButton, Text, InputContainer, ErrorText } from '../components/LoginStyle.jsx';
-import { ReactComponent as PwdIcon } from '../assets/images/pwdIcon.svg';
-import { ReactComponent as NonPwdIcon } from '../assets/images/nonpwdIcon.svg';
+  Button, CheckButton, Text, InputContainer, ErrorText } from '../components/Login/LoginStyle.jsx';
+import { ReactComponent as PwdIcon } from '../assets/Login/pwdIcon.svg';
+import { ReactComponent as NonPwdIcon } from '../assets/Login/nonpwdIcon.svg';
 import { useNavigate } from 'react-router-dom';
-import CheckEmail from '../components/CheckEmail.jsx';
-import CheckRegister from '../components/CheckRegister.jsx';
+import CheckEmail from '../components/Register/CheckEmail.jsx';
+import CheckRegister from '../components/Register/CheckRegister.jsx';
 
 const Register = () => {
   const {
