@@ -72,6 +72,13 @@ export const DrawingArea = styled.div`
   top: 7.25rem; //116px;
   display: flex;
 
+  //다시 설정
+  // width: 100%; /* 너비를 부모 요소에 맞게 설정 */
+  // height: 60vh; /* 높이를 화면 높이의 60%로 설정 */
+
+  width: ${({ canvasWidth }) => canvasWidth}px;
+  height: ${({ canvasHeight }) => canvasHeight}px;
+
 
   ${theme.media.mobile`
   flex-direction: column-reverse;
@@ -84,16 +91,18 @@ export const DrawingArea = styled.div`
 export const CanvasContainer = styled.div`
   width: ${({ canvasWidth }) => canvasWidth}px;
   height: ${({ canvasHeight }) => canvasHeight}px;
-  //width: 100%; /* 너비를 부모 요소에 맞게 설정 */
-  //height: 60vh; /* 높이를 화면 높이의 60%로 설정 */
+  // width: 100%; /* 너비를 부모 요소에 맞게 설정 */
+  // height: 100%; /* 높이를 화면 높이의 60%로 설정 */
   background: white;
   box-shadow: 0.3125rem 0.3125rem 0.625rem rgba(0, 0, 0, 0.04);
 
+  /* DrawingArea 내에서 공간을 균등하게 분배하여 CanvasContainer가 DrawingArea 크기에 따라 변하도록 함 */
+  // flex: 1;
 
 
-  ${theme.media.mobile`
 
-`}
+    ${theme.media.mobile`
+  `}
 
 `;
 

@@ -16,9 +16,11 @@ import { Container } from './Description';
 import { ReactComponent as RectangleH } from '../../assets/Draw/RectangleH.svg';
 import {} from 'recoil';
 //import { useRecoilValue } from 'recoil';
-//import { useRecoilState } from 'recoil';
-import { atom, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
+import { atom } from 'recoil';
 import Ver3 from './Description';
+//import { calculatedCanvasSizeState } from './atoms'
+//import { canvasContentState } from './atoms';
 
 // Recoil을 사용하여 캔버스의 내용을 상태로 관리합니다.
 const canvasContentState = atom({
@@ -27,6 +29,9 @@ const canvasContentState = atom({
 });
 
 function Draw() {
+  //const { width, height } = useRecoilValue(calculatedCanvasSizeState);
+
+
   const [canvasContent, setCanvasContent] = useRecoilState(canvasContentState);
 
   // Ref를 사용하여 Signaturecanvas 컴포넌트에 접근한다.
@@ -34,13 +39,39 @@ function Draw() {
   //그림 저장 상태
   const [savedSignatures, setSavedSignatures] = useState([]);
 
+  const [canvasData, setCanvasData] = useState('');
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 로컬 스토리지에서 저장된 그림 데이터를 복원한다.
+    const savedData = localStorage.getItem('canvasData');
+    if(savedData){
+      setCanvasData(savedData);
+      signatureRef.current.fromDataURL(savedData);
+    }
+}, []);
+
+  useEffect(() => {
+    //컴포넌트가 언마운트 되거나 창 크기가 변경 되기 전에 로컬 스토리지에 저장
+    const saveCanvasData = () => {
+      if(signatureRef.current){
+        const dataUrl = signatureRef.current.toDataURL();
+        localStorage.setItem('canvasData', dataUrl);
+      }
+    };
+
+    window.addEventListener('beforeunload', saveCanvasData);
+    window.addEventListener('resize', saveCanvasData);
+
+    return () => {
+      window.removeEventListener('beforeunload', saveCanvasData);
+      window.removeEventListener('resize', saveCanvasData);
+    };
+  }, []);
+
 
   // 버튼 클릭했을 때 화면 이동
   const Navigate = useNavigate();
 
-  // function handleDoneClick() {
-  //   Navigate('/loading');
-  // }
 
   //토글 구현
   const [isDescriptionVisible, setDescriptionVisible] = useState(false);
@@ -88,7 +119,8 @@ function Draw() {
 
     //그림판 구현
     const signatureRef = useRef(null);
-    const [canvasSize, setCanvasSize] = useState({ width: '21.125rem', height: '21.125rem' });
+    // const [canvasSize, setCanvasSize] = useState({ width: '21.125rem', height: '21.125rem' });
+    const [canvasSize, setCanvasSize] = useState({ width: 931, height: 662 });
     const [color, setColor] = useState("black");
   
     useEffect(() => {
@@ -96,9 +128,27 @@ function Draw() {
         // 화면 크기에 따라 canvas 크기를 조정
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
-        const newSize = Math.min(screenWidth, screenHeight) * 0.657; // 캔버스 크기를 화면의 80%로 설정
-  
-        setCanvasSize({ width: newSize, height: newSize });
+        //const newSize = Math.min(screenWidth, screenHeight) * 0.657; // 캔버스 크기를 화면의 80%로 설정
+        //setCanvasSize({ width: newSize, height: newSize });
+        let newWidth, newHeight;
+
+      if (screenWidth < screenHeight) {
+        // 모바일 세로 화면일 때 (A4 세로 비율)
+        newWidth = screenWidth * 0.8;
+        newHeight = newWidth * 1.414;
+      } else {
+        // 데스크탑 가로 화면일 때 (A4 가로 비율)
+        newWidth = screenWidth * 0.8;
+        newHeight = newWidth / 1.414;
+
+        // 높이가 화면을 초과할 경우, 높이 기준으로 너비를 계산
+        if (newHeight > screenHeight * 0.8) {
+          newHeight = screenHeight * 0.8;
+          newWidth = newHeight * 1.414;
+        }
+      }
+
+      setCanvasSize({ width: newWidth, height: newHeight });
 
         if (canvasContent && signatureCanvasRef.current) {
           const ctx = signatureCanvasRef.current.getContext('2d');
@@ -126,6 +176,15 @@ function Draw() {
         Navigate('/loading', { state: { imageData: dataURL } });
       }
     };
+
+    // Draw 컴포넌트
+// const handleDoneClick = () => {
+//   if (signatureCanvasRef.current) {
+//     const dataURL = signatureCanvasRef.current.toDataURL("image/png");
+//     setSavedSignatures(prevSignatures => [...prevSignatures, dataURL]);
+//     Navigate('/loading', { state: { imageData: dataURL } }); // 그림 데이터를 로딩 페이지로 전달
+//   }
+// };
 
     //화면 크기가 변경될때마다 상태관리 필요 -> 연동후 예정
 
@@ -197,7 +256,8 @@ function Draw() {
 
         </Icon>
 
-            <CanvasContainer>
+            <CanvasContainer style={{ width: `${canvasSize.width}px`, height: `${canvasSize.height}px` }}>
+            {/* <CanvasContainer> */}
             <SignatureCanvas
                 ref={signatureRef}
                 penColor={color}
@@ -207,6 +267,7 @@ function Draw() {
                 onEnd={() => {
                   // 자동으로 저장됩니다.
                   const dataURL = signatureRef.current.toDataURL();
+                  setCanvasData(dataURL);
                   setSavedSignatures([...savedSignatures, dataURL])
                 }}
                 onMouseDown={() => {
