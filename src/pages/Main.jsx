@@ -6,84 +6,67 @@ import { ReactComponent as Main2 } from  '../assets/Main/Main2.svg';
 import { ReactComponent as Main3 } from  '../assets/Main/Main3.svg';
 import { theme } from '../theme';
 
-
-
 const StyledMain1 = styled(Main1)`
   width: ${props => props.width || '90%'};
   height: ${props => props.height || '22.4475rem'};
-  
   ${theme.media.mobile`
     margin-top: -2rem; 
     margin-left:1rem;
-  
   `}
-
 `;
-
 const StyledMain2 = styled(Main2)`
   width: ${props => props.width || '100%'};
   height: ${props => props.height || 'auto'};
 `;
-
 const StyledMain3 = styled(Main3)`
   width: ${props => props.width || '100%'};
   height: ${props => props.height || 'auto'};
 `;
 
 function Main (){
-
-
   const Navigate = useNavigate(); 
   function handleDrawClick() {
     Navigate('/draw'); 
   }  
   return (
     <MainContainer>
-         <InspectionSection>
-         <InspectionContent>
+      <InspectionSection>
+        <InspectionContent>
           <InspectionTitle>HTP 그림 검사 결과</InspectionTitle>
           <InspectionDescription>아이의 내면을 탐험하고,<br/> 건강한 정신 발달을 지원하세요!</InspectionDescription>
           <DrawButton onClick={handleDrawClick}>검사하기</DrawButton>
         </InspectionContent>
-        <ImgBox>
-          <StyledMain1 />
-        </ImgBox>
-        </InspectionSection>
+        <ImgBox><StyledMain1 /></ImgBox>
+      </InspectionSection>
         <Section>
-        <MindSection>
-        <ImgBox>
-        <StyledMain2/>
-        </ImgBox>
+          <MindSection>
+            <ImgBox><StyledMain2/></ImgBox>
             <MindContent>
                 <MindTitle>아이의 마음, <Highlighted>그림</Highlighted>으로 알아보아요</MindTitle>
                 <MindDescription>HTP 그림 심리 검사를 통해<br/> 
                 아이의 심리 상태를 파악하는데 도움을 받아보세요.</MindDescription>
             </MindContent>
-        </MindSection>
-        <ResultsSection>
-        <ResultsContent>
-            <ResultsTitle>HTP 그림 심리 검사란?</ResultsTitle>
-            <ResultsDescription>사용자가 집, 나무, 사람을 그리는 것을 통해 <br/>그들의 심리 상태를 분석하는 방법입니다.</ResultsDescription>
-            <ResultsDescription>사용자의 그림을 통해 형식 분석과 내용 분석을 진행하여, <br/>그림의 크기, 위치, 세밀함 등 다양한 요소를 평가하고, <br/>이를 통해 사용자의 자신감, 감정 상태, 대인 관계 태도 등을 <br/>파악할 수 있습니다.</ResultsDescription>
-        </ResultsContent>
-        <ImgBox>
-        <StyledMain3/>
-        </ImgBox>
-      </ResultsSection>
-      </Section>
-      <Footer>
-        <FooterBox>
-          <FooterTitle>
-            CatchMind에서는 이렇게 검사해요!
-          </FooterTitle>
-          <FooterContent>
-            예상 검사 소요 시간은 20분이며,
-            <br/>만 18세 미만의 청소년 및 아동의 그림으로 심리 검사가 진행됩니다.
-            <br/>비용은 발생하지 않습니다. 
-          </FooterContent>
-        </FooterBox>
-      </Footer>
-    </MainContainer>
+          </MindSection>
+          <ResultsSection>
+            <ResultsContent>
+              <ResultsTitle>HTP 그림 심리 검사란?</ResultsTitle>
+              <ResultsDescription>사용자가 집, 나무, 사람을 그리는 것을 통해 <br/>그들의 심리 상태를 분석하는 방법입니다.</ResultsDescription>
+              <ResultsDescription>사용자의 그림을 통해 형식 분석과 내용 분석을 진행하여, <br/>그림의 크기, 위치, 세밀함 등 다양한 요소를 평가하고, <br/>이를 통해   사용자의 자신감, 감정 상태, 대인 관계 태도 등을 <br/>파악할 수 있습니다.</ResultsDescription>
+            </ResultsContent>
+            <ImgBox><StyledMain3/></ImgBox>
+          </ResultsSection>
+          </Section>  
+          <Footer>
+          <FooterBox>
+            <FooterTitle>
+              CatchMind에서는 이렇게 검사해요!
+            </FooterTitle>
+            <FooterContent>
+              예상 검사 소요 시간은 20분이며,<br/>만 18세 미만의 청소년 및 아동의 그림으로 심리 검사가 진행됩니다.<br/>비용은 발생하지 않습니다. 
+            </FooterContent>
+          </FooterBox>
+        </Footer>
+      </MainContainer>
   );
 }
 export default Main;
