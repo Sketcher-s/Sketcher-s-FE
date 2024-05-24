@@ -12,7 +12,7 @@ import MyPage from './pages/MyPage';
 import Result from './pages/Result';
 import Main from './pages/Main';
 import Camera from './components/Draw/Camera';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar/Navbar';
 import Sidebar from './components/Sidebar';
 import { RecoilRoot } from 'recoil';
 

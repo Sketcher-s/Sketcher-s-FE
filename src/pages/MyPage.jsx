@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, {useState, useEffect} from 'react';
-import { ReactComponent as User } from '../assets/images/user.svg';
+import { ReactComponent as User } from '../assets/User/user.svg';
 import { theme } from '../theme';
 
 // 주요 컨테이너
@@ -176,16 +176,9 @@ const EntryDate = styled.div`
 
 // MyPage 함수형 컴포넌트
 const MyPage = () => {
-    // 목록 데이터를 상태로 관리
-    // const [entries, setEntries] = useState([]);
+  // 로그인한 사용자의 이메일 가져오기
 
-    // 컴포넌트가 마운트되면 실행될 useEffect
-//   useEffect(() => {
-//     fetch() // API로부터 데이터 불러오기
-//       .then(response => response.json()) // 응답을 JSON으로 변환
-//       .then(data => setEntries(data)) // 데이터를 상태에 저장
-//       .catch(error => console.error('Error fetching data: ', error)); // 에러 처리
-//   }, []); // 빈 의존성 배열을 넣어 마운트될 때만 실행되게 함
+  // 목록 조회 api 연동
     
   return (
     <MyPageContainer>
@@ -196,7 +189,7 @@ const MyPage = () => {
               <ProfileContainer>
                 <ProfileCircle><User/></ProfileCircle>
               </ProfileContainer>
-              <UserEmail>qwer@naver.com</UserEmail>
+              <UserEmail>qwe@naver.com</UserEmail>
             </UserInfoContainer>
             <Divider />
             <div>

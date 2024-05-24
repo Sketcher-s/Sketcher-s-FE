@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
 import React from "react";
-import { LoginState, SidebarState } from "../recoil/recoilState";
+import { LoginState, SidebarState } from "../../recoil/recoilState";
 import NavbarMember from './NavbarMember';
 import NavbarNoMember from './NavbarNoMember';
 
