@@ -18,7 +18,7 @@ const Navbar = () => {
     return(
         <>
             {isLoggedIn ? 
-            <NavbarMember toggleSidebar={toggleSidebar}/> : <NavbarNoMember toggleSidebar={toggleSidebar}/>
+            <NavbarMember toggleSidebar={toggleSidebar}/> : <NavbarNoMember/>
             }
         </>
         

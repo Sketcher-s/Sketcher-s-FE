@@ -51,6 +51,8 @@ const Login = () => {
       try {
         const result = await CheckLogin(data.email, data.password);
         console.log('제출 성공', result);
+        const jwtToken = localStorage.getItem('jwtToken');
+        console.log(jwtToken);
         setIsLoggedIn(true); // 로그인 상태
         moveToMain();
       } catch (error) {
@@ -107,6 +109,10 @@ const Login = () => {
                 placeholder="이메일을 입력해 주세요"
                 onFocus={() => handleFocus('email')}
                 onBlur={() => handleBlur('email')}
+                onChange={(e) => {
+                  errorMsg && setErrorMsg(null); // 사용자 입력 시 errorMsg 초기화
+                  emailRegister.onChange(e);
+                }}
               />
             </InputField>
             {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
@@ -120,6 +126,10 @@ const Login = () => {
                 placeholder="비밀번호를 입력해 주세요"
                 onFocus={() => handleFocus('password')}
                 onBlur={() => handleBlur('password')}
+                onChange={(e) => {
+                  errorMsg && setErrorMsg(null); // 사용자 입력 시 errorMsg 초기화
+                  pwdRegister.onChange(e);
+                }}
               />
               <PasswordIcon onClick={togglePasswordVisibility}>{hidePwd ? <PwdIcon /> : <NonPwdIcon />}</PasswordIcon>
             </InputField>
