@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { theme } from '../../theme';
@@ -9,7 +7,7 @@ function ResultTitle() {
   const [image, setImage] = useState(null);
   const [analysisResult, setAnalysisResult] = useState("이미지 분석 결과가 여기에 표시됩니다. 이미지의 세부 사항, 색상 분포, 감정 분석 등 다양한 정보를 제공할 수 있습니다.");
   const [error, setError] = useState('');
-
+  const pictureId = '1';
   const handleTitleChange = (event) => {
     const inputTitle = event.target.value;
     setTitle(inputTitle);
@@ -24,24 +22,23 @@ function ResultTitle() {
   };
 
 
-
   useEffect(() => {
-    fetch('https://source.unsplash.com/random')
-    .then(response => {
-      setImage(response.url);  // 서버로부터 받은 이미지 URL 상태에 저장
-    })
-    .catch(error => console.error('Failed to load image:', error));
-
-
-    // 이미지 분석 결과 로드
-    fetch('https://api.example.com/analyze-image') // 분석 결과를 제공하는 API
-      .then(response => response.json())
-      .then(data => {
-        setAnalysisResult(data.result);  // 분석 결과를 상태에 저장
-      })
-      .catch(error => console.error('Failed to load analysis result:', error));
+    const loadImage = async () => {
+      try {
+        const response = await fetch(`https://dev.catchmind.shop/api/picture/${pictureId}`); // 이미지 가져오기
+        if (response.ok) {
+          const data = await response.json();
+          setImage(data.imageUrl);
+        } else {
+          throw new Error('Failed to fetch image');
+        }
+      } catch (error) {
+        console.error('Failed to load image:', error);
+      }
+    };
+    loadImage();
   }, []);
-
+  
   return (
     <div>
         <ResultSection>
@@ -85,9 +82,9 @@ border-bottom: 0.125rem solid transparent;
   border-bottom-color: ${props => props.isError ? 'red' : 'transparent'};
   &::placeholder {
     color: rgb(177, 178, 184);
-    ${theme.media.mobile`
-    font-size: 1rem;
-  `}
+   ${theme.media.mobile`
+      font-size: 1rem;
+    `}
   }
   ${theme.media.mobile`
     width:90%;

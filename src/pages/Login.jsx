@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { ReactComponent as PwdIcon } from '../assets/images/pwdIcon.svg';
-import { ReactComponent as NonPwdIcon } from '../assets/images/nonpwdIcon.svg';
-import { ErrorText, JoinWrapper } from '../components/LoginStyle.jsx';
-import { LoginContainer } from '../components/LoginStyle.jsx';
-import { LoginTitle } from '../components/LoginStyle.jsx';
-import { InputWrapper } from '../components/LoginStyle.jsx';
-import { InputField } from '../components/LoginStyle.jsx';
-import { InputValue, InputContainer } from '../components/LoginStyle.jsx';
-import { PasswordIcon } from '../components/LoginStyle.jsx';
-import { Divider } from '../components/LoginStyle.jsx';
-import { ButtonWrapper } from '../components/LoginStyle.jsx';
-import { Button } from '../components/LoginStyle.jsx';
+import { ReactComponent as PwdIcon } from '../assets/Login/pwdIcon.svg';
+import { ReactComponent as NonPwdIcon } from '../assets/Login/nonpwdIcon.svg';
+import { ErrorText, JoinWrapper, LoginContainer, LoginTitle,
+  InputWrapper, InputField, InputValue, InputContainer,
+  PasswordIcon, Divider, ButtonWrapper, Button
+ } from '../components/Login/LoginStyle.jsx';
+
 import { useNavigate } from 'react-router-dom';
-import CheckLogin from '../components/CheckLogin.jsx';
+import CheckLogin from '../components/Login/CheckLogin.jsx';
 import { LoginState } from '../recoil/recoilState.js';
 import { useRecoilState } from 'recoil';
 
@@ -56,6 +51,8 @@ const Login = () => {
       try {
         const result = await CheckLogin(data.email, data.password);
         console.log('제출 성공', result);
+        const jwtToken = localStorage.getItem('jwtToken');
+        console.log(jwtToken);
         setIsLoggedIn(true); // 로그인 상태
         moveToMain();
       } catch (error) {
@@ -112,6 +109,10 @@ const Login = () => {
                 placeholder="이메일을 입력해 주세요"
                 onFocus={() => handleFocus('email')}
                 onBlur={() => handleBlur('email')}
+                onChange={(e) => {
+                  errorMsg && setErrorMsg(null); // 사용자 입력 시 errorMsg 초기화
+                  emailRegister.onChange(e);
+                }}
               />
             </InputField>
             {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
@@ -125,6 +126,10 @@ const Login = () => {
                 placeholder="비밀번호를 입력해 주세요"
                 onFocus={() => handleFocus('password')}
                 onBlur={() => handleBlur('password')}
+                onChange={(e) => {
+                  errorMsg && setErrorMsg(null); // 사용자 입력 시 errorMsg 초기화
+                  pwdRegister.onChange(e);
+                }}
               />
               <PasswordIcon onClick={togglePasswordVisibility}>{hidePwd ? <PwdIcon /> : <NonPwdIcon />}</PasswordIcon>
             </InputField>

@@ -17,14 +17,6 @@ function ResultContent() {
   };
   
   useEffect(() => {
-    fetch('https://source.unsplash.com/random')
-    .then(response => {
-      setImage(response.url);  // 서버로부터 받은 이미지 URL 상태에 저장
-    })
-    .catch(error => console.error('Failed to load image:', error));
-
-
-    // 이미지 분석 결과 로드
     fetch('https://api.example.com/analyze-image') // 분석 결과를 제공하는 API
       .then(response => response.json())
       .then(data => {
@@ -116,7 +108,7 @@ const AccordionHeader = styled.div`
   padding: 1.25rem 1.625rem 1.25rem 1.625rem;
   color:#4D4F56;
   font-family: Pretendard;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 700;
   line-height: 1.5rem;
   text-align: left;

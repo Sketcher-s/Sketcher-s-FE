@@ -1,5 +1,5 @@
 import styled, {keyframes} from "styled-components";
-import { ReactComponent as SpinnerImg } from "../../assets/images/line_shadow.svg";
+import { ReactComponent as SpinnerImg } from "../../assets/Login/line_shadow.svg";
 import React from "react";
 import { theme } from "../../theme";
 

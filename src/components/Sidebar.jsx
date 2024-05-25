@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {IoCloseOutline} from 'react-icons/io5';
-import { ReactComponent as User } from '../assets/images/user.svg';
+import { ReactComponent as User } from '../assets/User/user.svg';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { SidebarState } from '../recoil/recoilState';
