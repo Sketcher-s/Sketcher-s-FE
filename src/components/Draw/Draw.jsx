@@ -22,6 +22,9 @@ import Ver3 from './Description';
 //import { calculatedCanvasSizeState } from './atoms'
 //import { canvasContentState } from './atoms';
 
+
+
+
 // Recoil을 사용하여 캔버스의 내용을 상태로 관리합니다.
 const canvasContentState = atom({
   key: 'canvasContentState',
@@ -29,8 +32,7 @@ const canvasContentState = atom({
 });
 
 function Draw() {
-  //const { width, height } = useRecoilValue(calculatedCanvasSizeState);
-
+  
 
   const [canvasContent, setCanvasContent] = useRecoilState(canvasContentState);
 
@@ -119,7 +121,6 @@ function Draw() {
 
     //그림판 구현
     const signatureRef = useRef(null);
-    // const [canvasSize, setCanvasSize] = useState({ width: '21.125rem', height: '21.125rem' });
     const [canvasSize, setCanvasSize] = useState({ width: 931, height: 662 });
     const [color, setColor] = useState("black");
   
@@ -128,8 +129,6 @@ function Draw() {
         // 화면 크기에 따라 canvas 크기를 조정
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
-        //const newSize = Math.min(screenWidth, screenHeight) * 0.657; // 캔버스 크기를 화면의 80%로 설정
-        //setCanvasSize({ width: newSize, height: newSize });
         let newWidth, newHeight;
 
       if (screenWidth < screenHeight) {

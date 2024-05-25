@@ -6,8 +6,18 @@ import { ReactComponent as Back } from '../../assets/Draw/Back.svg';
 import Modal from '../Modal';
 //import Camera from './Camera';
 import { theme } from '../../theme';
+//import DrawHook from '../../hooks/DrawHooks';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 
-function PreparePicture() {
+// imgFile props에 대한 유효성 검사를 추가한다.
+PreparePicture.propTypes = {
+  // imgFile은 object 타입으로 전달되어야 한다.
+  //실제로는 파일 객체일 것임
+  imgFile: PropTypes.object,
+};
+
+function PreparePicture({ imgFile }) {
 
   //모달 부분
   const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
@@ -23,9 +33,18 @@ function PreparePicture() {
     Navigate('/PrepareDraw');
   }
 
-  //파일 첨부 기능 -> command key를 이용하여 4개의 파일을 한번에 첨부함
-  const [imgFile, setImgFile] = useState(null); // 이미지 배열
-  const fileInputRef = useRef(); 
+  //파일 첨부 기능
+  //const [imgFile, setImgFile] = useState(null); // imgFile 상태를 관리합니다.
+  //파일 input 참조
+  const fileInputRef = useRef(null); 
+
+  const [authToken, setAuthToken] = useState('');
+
+  useEffect(() => {
+    // 로그인 후 토큰을 로컬 스토리지에서 가져옵니다.
+    const token = localStorage.getItem('authToken');
+    setAuthToken(token);
+  }, []);
 
   useEffect(() => {
     if (imgFile) {
@@ -34,13 +53,62 @@ function PreparePicture() {
   }, [imgFile, Navigate]);
 
 
-  const handleFileChange = () => {
-    console.log(fileInputRef.current.files); //파일 잘 들어갔는지 확인
+  // const handleFileChange = () => {
+  //   console.log(fileInputRef.current.files); //파일 잘 들어갔는지 확인
 
-    const file = fileInputRef.current.files[0]; // 첫 번째 파일만 선택
-    setImgFile(file);
+  //   const file = fileInputRef.current.files[0]; // 첫 번째 파일만 선택
+  //   setImgFile(file);
 
+  // };
+
+  // 파일 첨부 기능
+  const handleFileChange = (file) => {
+    if (file) {
+      // 파일 확인
+      console.log('Selected file:', file);
+
+      // 이미지 파일인지 확인
+      if (file.type.startsWith('image/')) {
+        // 서버로 파일 전송
+        uploadFile(file);
+      } else {
+        // 이미지 파일이 아닌 경우 경고 메시지 출력
+        console.error('Selected file is not an image.');
+      }
+    } else {
+      console.error('No file selected.');
+    }
   };
+
+    // 서버로 파일 전송 함수
+    const uploadFile = async (file) => {
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+  
+        // 서버로 POST 요청 보내기
+        const response = await axios.post('https://dev.catchmind.shop/api/picture', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${authToken}`, 
+          },
+        });
+
+
+        if (response.status === 200) {
+          console.log('File uploaded successfully:', response.data);
+        } else {
+          console.error('File upload failed');
+        }
+      
+  
+        // 응답 확인
+        console.log('File uploaded successfully:', response.data);
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
+    };
+
 
   const handleButtonClick = () => {
     // 파일을 선택하기 위해 input 요소 클릭
@@ -114,21 +182,15 @@ function PreparePicture() {
           <input
             type="file"
             accept="image/*"
-            multiple
-            onChange={handleFileChange}
+            //multiple
+            // onChange={handleFileChange}
+            onChange={(e) => handleFileChange(e.target.files[0])}
             style={{ display: 'none' }}
             ref={fileInputRef}
           />
         </ButtonText>
 
       </ButtonContainer>
-
-      {/* 첨부한 이미지 파일을 보여줌 */}
-      {/* {imgFile && (
-        <div>
-          <img src={URL.createObjectURL(imgFile)} alt="Selected Image" width="200" height="200" />
-        </div>
-      )} */}
 
       </Section>
       {/* 모달을 열기 위한 버튼 */}
@@ -139,6 +201,9 @@ function PreparePicture() {
           close={handleModalClose} // 모달을 닫는 핸들러를 전달합니다.
         />
       )}
+
+
+      
     </Container>
 
   );
