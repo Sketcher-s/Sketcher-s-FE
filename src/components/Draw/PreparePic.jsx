@@ -14,15 +14,19 @@ import axios from 'axios';
 PreparePicture.propTypes = {
   // imgFile은 object 타입으로 전달되어야 한다.
   //실제로는 파일 객체일 것임
-  imgFile: PropTypes.object,
+  //imgFile: PropTypes.object,
+
+  // imgFile은 File 객체로 전달되어야 합니다.
+  imgFile: PropTypes.instanceOf(File),
+  
 };
 
 function PreparePicture({ imgFile }) {
 
   // useEffect를 사용하여 컴포넌트가 마운트될 때 토큰을 가져옵니다.
   useEffect(() => {
-    const token = localStorage.getItem('authorization');
-    setAuthToken(token);
+    const token = localStorage.getItem('jwtToken');
+    setjwtToken(token);
   }, []);
 
   //모달 부분
@@ -44,13 +48,26 @@ function PreparePicture({ imgFile }) {
   //파일 input 참조
   const fileInputRef = useRef(null); 
 
-  const [authorization, setAuthToken] = useState('');
+  const [jwtToken, setjwtToken] = useState('');
+
+  // useEffect(() => {
+  //   // 로그인 후 토큰을 로컬 스토리지에서 가져옵니다.
+  //   const token = localStorage.getItem('jwtToken');
+  //   setjwtToken(token);
+  // }, []);
+
 
   useEffect(() => {
-    // 로그인 후 토큰을 로컬 스토리지에서 가져옵니다.
-    const token = localStorage.getItem('authToken');
-    setAuthToken(token);
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      console.log('토큰 제대로 들어옴');
+
+      setjwtToken(token);
+    } else {
+      console.error("JWT token not found in local storage");
+    }
   }, []);
+
 
   useEffect(() => {
     if (imgFile) {
@@ -58,36 +75,6 @@ function PreparePicture({ imgFile }) {
     }
   }, [imgFile, Navigate]);
 
-
-  // const handleFileChange = () => {
-  //   console.log(fileInputRef.current.files); //파일 잘 들어갔는지 확인
-
-  //   const file = fileInputRef.current.files[0]; // 첫 번째 파일만 선택
-  //   setImgFile(file);
-
-  // };
-
-  // // 파일 첨부 기능
-  // const handleFileChange = (event) => {
-
-  //   const files = event.target.files[0];
-
-  //   if (files) {
-  //     // 파일 확인
-  //     console.log('Selected file:', files);
-
-  //     // 이미지 파일인지 확인
-  //     if (files.type.startsWith('image/')) {
-  //       // 서버로 파일 전송
-  //       uploadFile(files);
-  //     } else {
-  //       // 이미지 파일이 아닌 경우 경고 메시지 출력
-  //       console.error('Selected file is not an image.');
-  //     }
-  //   } else {
-  //     console.error('No file selected.');
-  //   }
-  // };
 
   const handleFileChange = (event) => {
 
@@ -102,8 +89,19 @@ function PreparePicture({ imgFile }) {
         
         // 이미지 파일인지 확인
         if (file.type.startsWith('image/')) {
+
+          //로그 찍어보려고 추가
+          const formData = new FormData();
+          formData.append('file', file);
+          // FormData에 추가된 파일 확인
+          for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value.name}`);
+          }
+
           // 서버로 파일 전송
-          uploadFile(file);
+          // uploadFile(file);
+          uploadFile();
+
         } else {
           // 이미지 파일이 아닌 경우 경고 메시지 출력
           console.error('Selected file is not an image.');
@@ -116,50 +114,117 @@ function PreparePicture({ imgFile }) {
     }
   };
   
+
+    //파일 업로드 함수
+    const uploadFile = async () => {
+
   
-
-    // 서버로 파일 전송 함수
-    const uploadFile = async (file) => {
-
+      if (!jwtToken) {
+          console.error("User not authenticated");
+          return;
+      }
+  
+  
+    
+      const fileInput = document.querySelector('input[type="file"]');
+      const file = fileInput.files[0];
+  
+      
       if (!file) {
-        console.error('No file selected');
+        console.error("No file selected");
         return;
       }
+  
+      // FormData 객체 생성
+      const formData = new FormData();
+      formData.append('file', file);
 
+      // 로그 추가: 요청 전송 직전
+      console.log('Sending POST request to server with form data:', formData);
+    
       try {
-        const formData = new FormData();
-        formData.append('file', file);
-
-
-        //const authToken = localStorage.getItem('authToken');
-
         // 서버로 POST 요청 보내기
-        const response = await axios.post('https://dev.catchmind.shop/api/picture', formData, {
+        const response = await fetch('https://dev.catchmind.shop/api/picture', {
+          method: 'POST',
           headers: {
-            //'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${authorization}`, 
+  
+          //'Accept': '*/*',
+          //'Content-Type': 'multipart/form-data', // 파일 업로드시에는 Content-Type을 multipart/form-data로 설정합니다.
+          'Authorization': `Bearer ${jwtToken}`, // 사용자 토큰을 헤더에 포함하여 서버로 전송
+  
           },
+          body: formData,
         });
-
-
-        if (response.status === 200) {
-          console.log('File uploaded successfully:', response.data);
-        } else {
-          console.error('File upload failed');
-        }
+    
         // 응답 확인
-        //console.log('File uploaded successfully:', response.data);
+        if (response.ok) {
+          const data = await response.json();
+          console.log('File uploaded successfully:', data);
+        } else {
+          console.error('File upload failed', await response.text());
+        }
       } catch (error) {
-        console.error('Error uploading file:', error);
+        console.error('Error uploading file:', error.response.status, error.response.statusText);
       }
     };
+    
+    //함수 호출
+    uploadFile();
+
+  // const handleFileChange = (event) => {
+  //   if (event.target && event.target.files) {
+  //     const file = event.target.files[0];
+  //     if (file) {
+  //       // 파일 처리 로직 추가
+  //       console.log('Selected file:', file);
+        
+  //       // FormData 객체 생성
+  //       const formData = new FormData();
+  //       formData.append('file', file); // FormData에 파일 추가
+  
+  //       // 서버로 파일 업로드 요청 보내기
+  //       uploadFile(formData);
+  //     } else {
+  //       console.error('No file selected.');
+  //     }
+  //   } else {
+  //     console.error('Event target or files not available.');
+  //   }
+  // };
+  
+  // const uploadFile = async (formData) => {
+  //   try {
+  //     const jwtToken = localStorage.getItem('jwtToken'); // 토큰 가져오기
+  //     if (!jwtToken) {
+  //       console.error("User not authenticated");
+  //       return;
+  //     }
+  
+  //     const response = await fetch('https://dev.catchmind.shop/api/picture', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Authorization': `Bearer ${jwtToken}`, // 인증 헤더 추가
+  //       },
+  //       body: formData, // FormData 전송
+  //     });
+  
+  //     // 응답 확인
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log('File uploaded successfully:', data);
+  //     } else {
+  //       console.error('File upload failed');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error uploading file:', error);
+  //   }
+  // };
+  
+  
+    
 
 
   const handleButtonClick = () => {
-
-    //console.log('handleButtonClick called'); // 디버깅용 로그
-    //console.log('fileInputRef.current', fileInputRef.current); // 디버깅용 로그
-
 
     // 파일을 선택하기 위해 input 요소 클릭
     fileInputRef.current.click();
