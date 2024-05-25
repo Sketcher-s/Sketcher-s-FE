@@ -19,6 +19,12 @@ PreparePicture.propTypes = {
 
 function PreparePicture({ imgFile }) {
 
+  // useEffect를 사용하여 컴포넌트가 마운트될 때 토큰을 가져옵니다.
+  useEffect(() => {
+    const token = localStorage.getItem('authorization');
+    setAuthToken(token);
+  }, []);
+
   //모달 부분
   const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
 
@@ -38,7 +44,7 @@ function PreparePicture({ imgFile }) {
   //파일 input 참조
   const fileInputRef = useRef(null); 
 
-  const [authToken, setAuthToken] = useState('');
+  const [authorization, setAuthToken] = useState('');
 
   useEffect(() => {
     // 로그인 후 토큰을 로컬 스토리지에서 가져옵니다.
@@ -61,36 +67,77 @@ function PreparePicture({ imgFile }) {
 
   // };
 
-  // 파일 첨부 기능
-  const handleFileChange = (file) => {
-    if (file) {
-      // 파일 확인
-      console.log('Selected file:', file);
+  // // 파일 첨부 기능
+  // const handleFileChange = (event) => {
 
-      // 이미지 파일인지 확인
-      if (file.type.startsWith('image/')) {
-        // 서버로 파일 전송
-        uploadFile(file);
+  //   const files = event.target.files[0];
+
+  //   if (files) {
+  //     // 파일 확인
+  //     console.log('Selected file:', files);
+
+  //     // 이미지 파일인지 확인
+  //     if (files.type.startsWith('image/')) {
+  //       // 서버로 파일 전송
+  //       uploadFile(files);
+  //     } else {
+  //       // 이미지 파일이 아닌 경우 경고 메시지 출력
+  //       console.error('Selected file is not an image.');
+  //     }
+  //   } else {
+  //     console.error('No file selected.');
+  //   }
+  // };
+
+  const handleFileChange = (event) => {
+
+    console.log('handleFileChange called', event); // 디버깅용 로그
+
+
+    if (event.target && event.target.files) {
+      const file = event.target.files[0];
+      if (file) {
+        // 파일 처리 로직 추가
+        console.log('Selected file:', file);
+        
+        // 이미지 파일인지 확인
+        if (file.type.startsWith('image/')) {
+          // 서버로 파일 전송
+          uploadFile(file);
+        } else {
+          // 이미지 파일이 아닌 경우 경고 메시지 출력
+          console.error('Selected file is not an image.');
+        }
       } else {
-        // 이미지 파일이 아닌 경우 경고 메시지 출력
-        console.error('Selected file is not an image.');
+        console.error('No file selected.');
       }
     } else {
-      console.error('No file selected.');
+      console.error('Event target or files not available.');
     }
   };
+  
+  
 
     // 서버로 파일 전송 함수
     const uploadFile = async (file) => {
+
+      if (!file) {
+        console.error('No file selected');
+        return;
+      }
+
       try {
         const formData = new FormData();
         formData.append('file', file);
-  
+
+
+        //const authToken = localStorage.getItem('authToken');
+
         // 서버로 POST 요청 보내기
         const response = await axios.post('https://dev.catchmind.shop/api/picture', formData, {
           headers: {
-            'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${authToken}`, 
+            //'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${authorization}`, 
           },
         });
 
@@ -100,10 +147,8 @@ function PreparePicture({ imgFile }) {
         } else {
           console.error('File upload failed');
         }
-      
-  
         // 응답 확인
-        console.log('File uploaded successfully:', response.data);
+        //console.log('File uploaded successfully:', response.data);
       } catch (error) {
         console.error('Error uploading file:', error);
       }
@@ -111,6 +156,11 @@ function PreparePicture({ imgFile }) {
 
 
   const handleButtonClick = () => {
+
+    //console.log('handleButtonClick called'); // 디버깅용 로그
+    //console.log('fileInputRef.current', fileInputRef.current); // 디버깅용 로그
+
+
     // 파일을 선택하기 위해 input 요소 클릭
     fileInputRef.current.click();
   };
@@ -184,7 +234,7 @@ function PreparePicture({ imgFile }) {
             accept="image/*"
             //multiple
             // onChange={handleFileChange}
-            onChange={(e) => handleFileChange(e.target.files[0])}
+            onChange={handleFileChange}
             style={{ display: 'none' }}
             ref={fileInputRef}
           />
