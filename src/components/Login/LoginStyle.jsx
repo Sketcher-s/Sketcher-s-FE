@@ -6,15 +6,7 @@ export const LoginContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
-
-  ${theme.media.mobile`
-  
-`}
-
-  ${theme.media.desktop`
-  
-`}
+  height: 93vh;
 `;
 
 export const LoginWrapper = styled.div`

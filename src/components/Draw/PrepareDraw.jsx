@@ -84,14 +84,12 @@ export default PrepareDraw;
 // 스타일 컴포넌트 정의
 const OuterContainer = styled.div`
   width: 100%;
-  height: 100%;
-  padding-top: 2.5rem; //40px;
-  padding-bottom: 2.5rem; //40px;
+  height: 93vh;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 1.875rem; //30px;
-  display: inline-flex;
+  display: flex;
   background: #f3f3f6;
   //border-radius: 0.625rem; //10px;
 
@@ -109,7 +107,7 @@ const InnerContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 1.875rem; //30px;
-  display: inline-flex;
+  display: flex;
   background: white;
   border-radius: 0.625rem; //10px;
 

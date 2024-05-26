@@ -106,22 +106,24 @@ function PreparePicture() {
               </PreContainer>
             </NoteContainer>
           
+            <ButtonContainer>
+              <ButtonWrapper>
+                <ButtonText onClick={handleButtonClick}>
+                  사진 첨부하기
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleFileChange}
+                    style={{ display: 'none' }}
+                    ref={fileInputRef}
+                  />
+                </ButtonText>
+              </ButtonWrapper>
+            </ButtonContainer>
         </Content>
 
-      <ButtonContainer>
-        <ButtonText onClick={handleButtonClick}>
-          사진 첨부하기
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={handleFileChange}
-            style={{ display: 'none' }}
-            ref={fileInputRef}
-          />
-        </ButtonText>
-
-      </ButtonContainer>
+      
 
       {/* 첨부한 이미지 파일을 보여줌 */}
       {/* {imgFile && (
@@ -148,20 +150,21 @@ export default PreparePicture;
 
 const Container = styled.div`
 
-  height: 100%;
-  padding-top: 2.5rem; //40px;
-  padding-bottom: 2.5rem; //40px;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 1.875rem; //30px;
   display: flex;
   background: white;
   //overflow: hidden;
   ${theme.media.mobile`
-    padding-top: 1rem; //40px;
-    //padding-bottom: 1rem; //40px;
-  `}
+  height: 92vh;
+`}
+
+  ${theme.media.desktop`
+  height: 93vh;
+
+`}
 `;
 
 const Section = styled.div`
@@ -169,20 +172,22 @@ const Section = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1.25rem; //20px;
+  height: 80%;
+  justify-content: flex-start;
 
   ${theme.media.mobile`
 
-  justify-content: center;
+  
 `}
 `;
 
 const PutSection = styled.div`
   width: 100%;
-  height: 100%;
+  
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.625rem; //10px;
-  display: inline-flex;
+  display: flex;
 
   ${theme.media.mobile`
     display: none;
@@ -220,7 +225,8 @@ const Content = styled.div`
   align-items: center;
   gap: 1rem; //16px;
   display: flex;
-
+  height: 80%;
+  
   ${theme.media.mobile`
     
 `}
@@ -259,6 +265,7 @@ const NoteContainer = styled.div`
   align-items: flex-start;
   gap: 0.5rem;
   display: flex;
+  
 
   ${theme.media.mobile`
     width: 75%;
@@ -281,7 +288,14 @@ const Preparation = styled.div`
 `}
 `;
 
-const ButtonContainer = styled.button`
+const ButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 1.5rem;
+`;
+
+const ButtonWrapper = styled.button`
   background: #6487e2;
   border-radius: 0.25rem; //4px;
   justify-content: center;

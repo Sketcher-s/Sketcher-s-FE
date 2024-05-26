@@ -5,15 +5,15 @@ import { theme } from '../theme';
 
 // 주요 컨테이너
 const MyPageContainer = styled.div`
- display: flex;
- justify-content: center;
- align-items: center;
- margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  widht: 100%;
+  height: 93vh;
 `;
 
 const MyPageWrapper = styled.div`
-height: 80%;
-  padding: 2.5rem 3.125rem;
+  height: 80%;
   background: white;
   border-radius: 0.625rem;
   display: flex;
@@ -21,16 +21,17 @@ height: 80%;
   justify-content: flex-start;
   align-items: center;
   overflow: hidden;
-  
 
   ${theme.media.mobile`
-  width: 60%;
+  width: 75%;
   gap: 1rem;
+  padding: 1.5rem;
 `}
 
   ${theme.media.desktop`
   width: 60%;
   gap: 2.5rem;
+  padding: 2.5rem 3.125rem;
 `}
 `;
 
@@ -56,10 +57,11 @@ const ContentContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  
+  height: 90%;
   ${theme.media.mobile`
   gap: 0.25rem;
   width: 100%;
+  
 `}
 
   ${theme.media.desktop`
@@ -121,7 +123,7 @@ export const UserEmail = styled.div`
   line-height: 2.0625rem;
   word-wrap: break-word;
   ${theme.media.mobile`
-  font-size: 0.8rem;
+  font-size: 1rem;
 `}
 
   ${theme.media.desktop`
@@ -135,6 +137,9 @@ export const Divider = styled.div`
   height: 0.0625rem;
   border: 1px solid #E0E1E9;
   margin: auto;
+  ${theme.media.mobile`
+    margin: 1rem 0;
+  `}
 `;
 
 // 섹션 타이틀
@@ -144,6 +149,38 @@ const SectionTitle = styled.div`
   font-weight: 700;
   line-height: 1.5rem;
   word-wrap: break-word;
+`;
+
+// 목록 컨테이너 -> 검사 일기 포함
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  height: 80%;
+`;
+
+// 목록 wrapper
+const ListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2rem;
+  overflow: auto;
+  height: 100%;
+
+  &::-webkit-scrollbar-track {
+    border-radius: 0.125rem;
+    background-color: lightgray;
+  }
+  &::-webkit-scrollbar {
+    width: 0.25rem;
+    border-radius: 0.125rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0.125rem;
+    background-color: #A7A9B0;};
+  }
 `;
 
 // 항목 컨테이너
@@ -157,7 +194,7 @@ const EntryContainer = styled.div`
 
 // 항목 텍스트
 const EntryText = styled.div`
-  width: 34rem;
+  width: 100%;
   color: #3F4045;
   font-size: 1rem;
   font-weight: 700;
@@ -192,14 +229,39 @@ const MyPage = () => {
               <UserEmail>qwe@naver.com</UserEmail>
             </UserInfoContainer>
             <Divider />
-            <div>
+            <ListContainer>
               <SectionTitle>검사 일기</SectionTitle>
-              <EntryContainer>
-                <EntryText>가나다라마바사</EntryText>
-                <EntryDate>2024년 5월 1일</EntryDate>
+              <ListWrapper>
+                <EntryContainer>
+                  <EntryText>가나다라마바사</EntryText>
+                  <EntryDate>2024년 5월 1일</EntryDate>
                 </EntryContainer>
-              {/* 추가 항목들 */}
-            </div>
+                <EntryContainer>
+                  <EntryText>가나다라마바사</EntryText>
+                  <EntryDate>2024년 5월 1일</EntryDate>
+                </EntryContainer>
+                <EntryContainer>
+                  <EntryText>가나다라마바사</EntryText>
+                  <EntryDate>2024년 5월 1일</EntryDate>
+                </EntryContainer>
+                <EntryContainer>
+                  <EntryText>가나다라마바사</EntryText>
+                  <EntryDate>2024년 5월 1일</EntryDate>
+                </EntryContainer>
+                <EntryContainer>
+                  <EntryText>가나다라마바사</EntryText>
+                  <EntryDate>2024년 5월 1일</EntryDate>
+                </EntryContainer>
+                <EntryContainer>
+                  <EntryText>가나다라마바사</EntryText>
+                  <EntryDate>2024년 5월 1일</EntryDate>
+                </EntryContainer>
+                <EntryContainer>
+                  <EntryText>가나다라마바사</EntryText>
+                  <EntryDate>2024년 5월 1일</EntryDate>
+                </EntryContainer>
+              </ListWrapper>
+            </ListContainer>
           </ContentContainer>
         </MyPageWrapper>
     </MyPageContainer>
