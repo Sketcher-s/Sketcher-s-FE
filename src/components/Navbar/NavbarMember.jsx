@@ -34,8 +34,7 @@ const NavbarMember = ({toggleSidebar}) => {
   }
   return (
     <Container>
-      <HeaderWrapper>
-        <Header>
+      <Header>
           <LogoContainer onClick={moveToMain}>
             <Logo2/>
             <Logo1/>
@@ -56,7 +55,6 @@ const NavbarMember = ({toggleSidebar}) => {
           </HeaderButtons>
           )}
         </Header>
-      </HeaderWrapper>
       <Divider />
     </Container>
   );
