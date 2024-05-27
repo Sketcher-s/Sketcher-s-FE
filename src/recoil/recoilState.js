@@ -7,10 +7,10 @@ default: 0,
 })
  
 //그림그리기 페이지 
-export const canvasSizeState = atom({
-    key: 'canvasSizeState',
-    default: { width: '21.125rem', height: '21.125rem' },
-  });
+// export const canvasSizeState = atom({
+//     key: 'canvasSizeState',
+//     default: { width: '21.125rem', height: '21.125rem' },
+//   });
 
 export const canvasContentState = atom({
     key: 'canvasContentState',

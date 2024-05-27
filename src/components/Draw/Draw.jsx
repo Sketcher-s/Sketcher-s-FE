@@ -19,11 +19,8 @@ import {} from 'recoil';
 import { useRecoilState } from 'recoil';
 import { atom } from 'recoil';
 import Ver3 from './Description';
-//import { calculatedCanvasSizeState } from './atoms'
+// import { calculatedCanvasSizeState } from './atoms'
 //import { canvasContentState } from './atoms';
-
-
-
 
 // Recoil을 사용하여 캔버스의 내용을 상태로 관리합니다.
 const canvasContentState = atom({
@@ -119,51 +116,113 @@ function Draw() {
     } 
   };
 
-    //그림판 구현
+
+    // //그림판 구현
     const signatureRef = useRef(null);
-    const [canvasSize, setCanvasSize] = useState({ width: 931, height: 662 });
+    const [canvasSize, setCanvasSize] = useState({ width: 250, height: 300 });
     const [color, setColor] = useState("black");
+
+
+    
+    //그림판 : 그림판의 크기가 화면에 따라 크기 조정되지만 크기 조정될때마다 그림이 날라가는 코드
+    // useEffect(() => {
+    //   const handleResize = () => {
+    //     // 화면 크기에 따라 canvas 크기를 조정
+    //     const screenWidth = window.innerWidth;
+    //     const screenHeight = window.innerHeight;
+    //     let newWidth, newHeight;
+
+    //   if (screenWidth < screenHeight) {
+    //     // 모바일 세로 화면일 때 (A4 세로 비율)
+    //     newWidth = screenWidth * 0.7;
+    //     newHeight = newWidth * 1.414;
+    //   } else {
+    //     // 데스크탑 가로 화면일 때 (A4 가로 비율)
+    //     newWidth = screenWidth * 0.6;
+    //     newHeight = newWidth / 1.414;
+
+    //     // 높이가 화면을 초과할 경우, 높이 기준으로 너비를 계산
+    //     if (newHeight > screenHeight * 0.7) {
+    //       newHeight = screenHeight * 0.7;
+    //       newWidth = newHeight * 1.414;
+    //     }
+    //   }
+
+    //   setCanvasSize({ width: newWidth, height: newHeight });
+
+    //     if (canvasContent && signatureCanvasRef.current) {
+    //       const ctx = signatureCanvasRef.current.getContext('2d');
+    //       const img = new Image();
+    //       img.onload = function () {
+    //         ctx.drawImage(img, 0, 0);
+    //       };
+    //       img.src = canvasContent;
+    //     }
+    //   };
+      
   
+    //   // 컴포넌트가 마운트될 때와 화면 크기가 변경될 때마다 크기를 업데이트
+    //   handleResize();
+    //   window.addEventListener('resize', handleResize);
+    //   return () => window.removeEventListener('resize', handleResize);
+    // }, [canvasContent]);
+
+
+
+    //그림판 : 그림판의 크기가 고정되지만 그림은 날라가지 않는 코드(데스크탑규격과 모바일 규격 두개로 나눠서 작성)
     useEffect(() => {
       const handleResize = () => {
-        // 화면 크기에 따라 canvas 크기를 조정
-        const screenWidth = window.innerWidth;
-        const screenHeight = window.innerHeight;
-        let newWidth, newHeight;
-
-      if (screenWidth < screenHeight) {
-        // 모바일 세로 화면일 때 (A4 세로 비율)
-        newWidth = screenWidth * 0.7;
-        newHeight = newWidth * 1.414;
-      } else {
-        // 데스크탑 가로 화면일 때 (A4 가로 비율)
-        newWidth = screenWidth * 0.5;
-        newHeight = newWidth / 1.414;
-
-        // 높이가 화면을 초과할 경우, 높이 기준으로 너비를 계산
-        if (newHeight > screenHeight * 0.7) {
-          newHeight = screenHeight * 0.7;
-          newWidth = newHeight * 1.414;
-        }
-      }
-
-      setCanvasSize({ width: newWidth, height: newHeight });
-
-        if (canvasContent && signatureCanvasRef.current) {
+        if (signatureCanvasRef.current) {
           const ctx = signatureCanvasRef.current.getContext('2d');
-          const img = new Image();
-          img.onload = function () {
-            ctx.drawImage(img, 0, 0);
-          };
-          img.src = canvasContent;
+          const tempCanvas = document.createElement('canvas');
+          const tempCtx = tempCanvas.getContext('2d');
+          tempCanvas.width = signatureCanvasRef.current.width;
+          tempCanvas.height = signatureCanvasRef.current.height;
+          tempCtx.drawImage(signatureCanvasRef.current, 0, 0);
+  
+          const screenWidth = window.innerWidth;
+          const screenHeight = window.innerHeight;
+          let newWidth, newHeight;
+  
+          if (screenWidth < screenHeight) {
+            newWidth = screenWidth * 0.5;
+            newHeight = newWidth * 1;
+          } else {
+            newWidth = screenWidth * 0.5;
+            newHeight = newWidth / 1;
+            if (newHeight > screenHeight * 0.5) {
+              newHeight = screenHeight * 0.5;
+              newWidth = newHeight * 1;
+            }
+          }
+  
+          setCanvasSize({ width: newWidth, height: newHeight });
+  
+          signatureCanvasRef.current.width = newWidth;
+          signatureCanvasRef.current.height = newHeight;
+          ctx.drawImage(tempCanvas, 0, 0, newWidth, newHeight); // 새로운 크기로 이미지 데이터를 다시 그림
         }
       };
   
-      // 컴포넌트가 마운트될 때와 화면 크기가 변경될 때마다 크기를 업데이트
-      handleResize();
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
-    }, [canvasContent]);
+    }, []);
+
+    // 창 크기에 따라 캔버스 크기 조정
+  useEffect(() => {
+    const checkSize = () => {
+      if (window.innerWidth < 768) { // 가정: 768px 미만은 모바일로 간주
+        setCanvasSize({ width: 250, height: 300 });
+      } else {
+        setCanvasSize({ width: 750, height: 425 });
+      }
+    };
+    checkSize(); // 컴포넌트 마운트 시 실행
+    window.addEventListener('resize', checkSize); // 창 크기 변경 시 실행
+
+    return () => window.removeEventListener('resize', checkSize); // 클린업
+  }, []);
+
 
     //연동 후 그림 서버에 저장하고 loading, result page에 다시 불러오기
     const handleDoneClick = () => {
@@ -175,15 +234,6 @@ function Draw() {
         Navigate('/loading', { state: { imageData: dataURL } });
       }
     };
-
-    // Draw 컴포넌트
-// const handleDoneClick = () => {
-//   if (signatureCanvasRef.current) {
-//     const dataURL = signatureCanvasRef.current.toDataURL("image/png");
-//     setSavedSignatures(prevSignatures => [...prevSignatures, dataURL]);
-//     Navigate('/loading', { state: { imageData: dataURL } }); // 그림 데이터를 로딩 페이지로 전달
-//   }
-// };
 
     //화면 크기가 변경될때마다 상태관리 필요 -> 연동후 예정
 
