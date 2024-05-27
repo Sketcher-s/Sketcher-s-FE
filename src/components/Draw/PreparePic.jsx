@@ -238,7 +238,21 @@ function PreparePicture({ imgFile }) {
               </PreContainer>
             </NoteContainer>
 
-
+            <ButtonContainer>
+              <ButtonWrapper>
+                <ButtonText onClick={handleButtonClick}>
+                  사진 첨부하기
+                  <input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleFileChange}
+                    style={{ display: 'none' }}
+                    ref={fileInputRef}
+                  />
+                </ButtonText>
+              </ButtonWrapper>
+            </ButtonContainer>
         </Content>
 
 
@@ -432,4 +446,21 @@ const ButtonText = styled.h1`
   font-weight: 700;
   line-height: 1.5rem; //24px;
   word-wrap: break-word;
+`;
+
+const ButtonWrapper = styled.button`
+  background: #6487e2;
+  border-radius: 0.25rem; //4px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border: none;
+
+  ${theme.media.mobile`
+    width: 75%;
+`}
+
+  ${theme.media.desktop`
+   width: 30%;
+  `}
 `;
