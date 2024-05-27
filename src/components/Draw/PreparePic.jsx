@@ -257,22 +257,6 @@ function PreparePicture({ imgFile }) {
           
         </Content>
 
-      {/* <ButtonContainer>
-        <ButtonText onClick={handleButtonClick}>
-          사진 첨부하기
-          <input
-            type="file"
-            accept="image/*"
-            //multiple
-            // onChange={handleFileChange}
-            onChange={handleFileChange}
-            style={{ display: 'none' }}
-            ref={fileInputRef}
-          />
-        </ButtonText>
-
-      </ButtonContainer> */}
-
       </Section>
 
       {/* 모달을 열기 위한 버튼 */}
