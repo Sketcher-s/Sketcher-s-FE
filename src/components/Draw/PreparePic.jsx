@@ -239,22 +239,6 @@ function PreparePicture({ imgFile }) {
             </NoteContainer>
 
 
-            <ButtonContainer>
-        <ButtonText onClick={handleButtonClick}>
-          사진 첨부하기
-          <input
-            type="file"
-            accept="image/*"
-            //multiple
-            // onChange={handleFileChange}
-            onChange={handleFileChange}
-            style={{ display: 'none' }}
-            ref={fileInputRef}
-          />
-        </ButtonText>
-
-      </ButtonContainer>
-          
         </Content>
 
 
