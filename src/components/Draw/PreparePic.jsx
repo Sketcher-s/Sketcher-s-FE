@@ -174,13 +174,12 @@ function PreparePicture({ imgFile }) {
   };
 
   return (
-    <Container>
-
+    <>
     {isLoading ? (
-        <Loading/>
-        
-      ) : (
-
+      <Loading/>
+      
+    ) : (
+    <Container>
 
       <Section>
         <PutSection onClick={handleDrawClick}>
@@ -258,7 +257,6 @@ function PreparePicture({ imgFile }) {
       </ButtonContainer>
 
       </Section>
-      )}
 
       {/* 모달을 열기 위한 버튼 */}
       {modalOpen && (
@@ -272,6 +270,8 @@ function PreparePicture({ imgFile }) {
 
       
     </Container>
+          )}
+    </>
 
   );
 }
