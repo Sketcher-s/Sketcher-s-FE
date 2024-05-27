@@ -8,13 +8,10 @@ import Modal from '../Modal';
 import { theme } from '../../theme';
 //import DrawHook from '../../hooks/DrawHooks';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import Loading from '../Draw/Loading'
 
-// imgFile props에 대한 유효성 검사를 추가한다.
+// imgFile props에 대한 유효성 검사를 추가
 PreparePicture.propTypes = {
-  // imgFile은 object 타입으로 전달되어야 한다.
-  //실제로는 파일 객체일 것임
-  //imgFile: PropTypes.object,
 
   // imgFile은 File 객체로 전달되어야 합니다.
   imgFile: PropTypes.instanceOf(File),
@@ -44,23 +41,18 @@ function PreparePicture({ imgFile }) {
   }
 
   //파일 첨부 기능
-  //const [imgFile, setImgFile] = useState(null); // imgFile 상태를 관리합니다.
   //파일 input 참조
   const fileInputRef = useRef(null); 
 
   const [jwtToken, setjwtToken] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  // useEffect(() => {
-  //   // 로그인 후 토큰을 로컬 스토리지에서 가져옵니다.
-  //   const token = localStorage.getItem('jwtToken');
-  //   setjwtToken(token);
-  // }, []);
 
 
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
     if (token) {
-      console.log('토큰 제대로 들어옴');
+      console.log('사용자 인증 완료');
 
       setjwtToken(token);
     } else {
@@ -74,6 +66,8 @@ function PreparePicture({ imgFile }) {
       Navigate('/loading', { state: { imageData: URL.createObjectURL(imgFile) } });
     }
   }, [imgFile, Navigate]);
+
+  
 
 
   const handleFileChange = (event) => {
@@ -99,8 +93,7 @@ function PreparePicture({ imgFile }) {
           }
 
           // 서버로 파일 전송
-          // uploadFile(file);
-          uploadFile();
+           uploadFile(); // 파일을 함수의 인자로 전달
 
         } else {
           // 이미지 파일이 아닌 경우 경고 메시지 출력
@@ -123,8 +116,6 @@ function PreparePicture({ imgFile }) {
           console.error("User not authenticated");
           return;
       }
-  
-  
     
       const fileInput = document.querySelector('input[type="file"]');
       const file = fileInput.files[0];
@@ -138,6 +129,9 @@ function PreparePicture({ imgFile }) {
       // FormData 객체 생성
       const formData = new FormData();
       formData.append('file', file);
+
+        
+      setIsLoading(true);
 
       // 로그 추가: 요청 전송 직전
       console.log('Sending POST request to server with form data:', formData);
@@ -165,64 +159,13 @@ function PreparePicture({ imgFile }) {
         }
       } catch (error) {
         console.error('Error uploading file:', error.response.status, error.response.statusText);
+      } finally {
+        setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
       }
     };
     
     //함수 호출
-    uploadFile();
-
-  // const handleFileChange = (event) => {
-  //   if (event.target && event.target.files) {
-  //     const file = event.target.files[0];
-  //     if (file) {
-  //       // 파일 처리 로직 추가
-  //       console.log('Selected file:', file);
-        
-  //       // FormData 객체 생성
-  //       const formData = new FormData();
-  //       formData.append('file', file); // FormData에 파일 추가
-  
-  //       // 서버로 파일 업로드 요청 보내기
-  //       uploadFile(formData);
-  //     } else {
-  //       console.error('No file selected.');
-  //     }
-  //   } else {
-  //     console.error('Event target or files not available.');
-  //   }
-  // };
-  
-  // const uploadFile = async (formData) => {
-  //   try {
-  //     const jwtToken = localStorage.getItem('jwtToken'); // 토큰 가져오기
-  //     if (!jwtToken) {
-  //       console.error("User not authenticated");
-  //       return;
-  //     }
-  
-  //     const response = await fetch('https://dev.catchmind.shop/api/picture', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Authorization': `Bearer ${jwtToken}`, // 인증 헤더 추가
-  //       },
-  //       body: formData, // FormData 전송
-  //     });
-  
-  //     // 응답 확인
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       console.log('File uploaded successfully:', data);
-  //     } else {
-  //       console.error('File upload failed');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error uploading file:', error);
-  //   }
-  // };
-  
-  
-    
-
+    //uploadFile();
 
   const handleButtonClick = () => {
 
@@ -232,6 +175,13 @@ function PreparePicture({ imgFile }) {
 
   return (
     <Container>
+
+    {isLoading ? (
+        <Loading/>
+        
+      ) : (
+
+
       <Section>
         <PutSection onClick={handleDrawClick}>
           <Back />
@@ -308,6 +258,8 @@ function PreparePicture({ imgFile }) {
       </ButtonContainer>
 
       </Section>
+      )}
+
       {/* 모달을 열기 위한 버튼 */}
       {modalOpen && (
         <Modal

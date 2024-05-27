@@ -238,7 +238,7 @@ justify-content: center;
 `}
 ${theme.media.desktop`
 display: flex;
-align-items: center;
+//align-items: center;
 position: relative;
 
 
@@ -258,7 +258,10 @@ ${theme.media.desktop`
 width: 1.25rem; //20px;
 height: 4.375rem; //70px;
 justify-content: center; /* 수평 중앙 정렬 */
-padding-top: 10%;
+//padding-top: 10%;
+
+padding-top: 1000%;
+
 `}
 `;
 
@@ -289,6 +292,10 @@ ${theme.media.mobile`
 ${theme.media.desktop`
     display: flex;
     z-index: 99;
+
+    // position: relative;
+    // left: 98.5%;
+    
 `}
 `;
 

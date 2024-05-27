@@ -31,8 +31,7 @@ const canvasContentState = atom({
   default: null,
 });
 
-function Draw() {
-  
+function Draw() {  
 
   const [canvasContent, setCanvasContent] = useRecoilState(canvasContentState);
 
@@ -76,7 +75,8 @@ function Draw() {
 
 
   //토글 구현
-  const [isDescriptionVisible, setDescriptionVisible] = useState(false);
+  const [isDescriptionVisible, setDescriptionVisible] = useState(false)
+
 
   //Description <-> Bar 토글 버튼 클릭 시 상태 변경
   const toggleDescription = () => {
@@ -133,16 +133,16 @@ function Draw() {
 
       if (screenWidth < screenHeight) {
         // 모바일 세로 화면일 때 (A4 세로 비율)
-        newWidth = screenWidth * 0.8;
+        newWidth = screenWidth * 0.7;
         newHeight = newWidth * 1.414;
       } else {
         // 데스크탑 가로 화면일 때 (A4 가로 비율)
-        newWidth = screenWidth * 0.8;
+        newWidth = screenWidth * 0.5;
         newHeight = newWidth / 1.414;
 
         // 높이가 화면을 초과할 경우, 높이 기준으로 너비를 계산
-        if (newHeight > screenHeight * 0.8) {
-          newHeight = screenHeight * 0.8;
+        if (newHeight > screenHeight * 0.7) {
+          newHeight = screenHeight * 0.7;
           newWidth = newHeight * 1.414;
         }
       }
