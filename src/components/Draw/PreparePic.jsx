@@ -257,6 +257,14 @@ function PreparePicture({ imgFile }) {
           
         </Content>
 
+
+      {/* 첨부한 이미지 파일을 보여줌 */}
+      {/* {imgFile && (
+        <div>
+          <img src={URL.createObjectURL(imgFile)} alt="Selected Image" width="200" height="200" />
+        </div>
+      )} */}
+
       </Section>
 
       {/* 모달을 열기 위한 버튼 */}
