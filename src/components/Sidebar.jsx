@@ -139,10 +139,12 @@ const Sidebar = () => {
   const navigate = useNavigate();
     // 검사하기 이동
   const moveToReady = () => {
+    setIsSidebarOpen(false);
     navigate('/preparedraw');
   }
   // 마이페이지 이동
   const moveToMy = () => {
+    setIsSidebarOpen(false);
     navigate('/mypage');
   }
 
