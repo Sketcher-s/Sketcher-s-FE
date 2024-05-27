@@ -24,56 +24,52 @@ function PrepareDraw() {
   return (
     <OuterContainer>
       <InnerContainer>
-        <StyledPrepareDraw1 />
-        <Text>HTP 테스트를 위한 참고 사항</Text>
-
-        <NoteContainer>
-
-          <SubContainer>
-            <TextContainer>
-              <Check />
-            </TextContainer>
-              <NoteText>
-                아동이 HTP (House-Tree-Person) 테스트를 수행할 때,
-                <br />
-                가능한 한 집, 나무, 사람을 포함하여 그릴 수 있도록 지도해 주세요.
-              </NoteText>
-          </SubContainer>
-
-          <SubContainer>
-            <TextContainer>
-              <Check />
-            </TextContainer>
-              <NoteText>아동이 정서적으로 안정된 상태에서 테스트를 진행하도록 해주세요.</NoteText>
-          </SubContainer>
-
-          <SubContainer>
-            <TextContainer>
-              <Check />
-            </TextContainer>
-              <NoteText>정확한 검사를 위해 예시 그림은 제공되지 않습니다.</NoteText>
-          </SubContainer>
-
-          <SubContainer>
-            <TextContainer>
-              <Check />
-            </TextContainer>
-              <NoteText>
-                위 사항을 준수하지 않을 경우 테스트의 진행이 제한되거나
-                <br />
-                결과가 부정확할 수 있습니다.
-              </NoteText>
-          </SubContainer>
-        </NoteContainer>
-
-        <ButtonBox>
-          <PicButtonBox onClick={handlePicClick}>
-            <PicButton>사진 첨부하기</PicButton>
-          </PicButtonBox>
-          <DraButtonBox onClick={handleDrawClick}>
-            <DraButton>그림 그리기</DraButton>
-          </DraButtonBox>
-        </ButtonBox>
+        <InnerWrapper>
+          <StyledPrepareDraw1 />
+          <Text>HTP 테스트를 위한 참고 사항</Text>
+          <NoteContainer>
+            <SubContainer>
+              <TextContainer>
+                <Check />
+              </TextContainer>
+                <NoteText>
+                  아동이 HTP (House-Tree-Person) 테스트를 수행할 때,
+                  <br />
+                  가능한 한 집, 나무, 사람을 포함하여 그릴 수 있도록 지도해 주세요.
+                </NoteText>
+            </SubContainer>
+            <SubContainer>
+              <TextContainer>
+                <Check />
+              </TextContainer>
+                <NoteText>아동이 정서적으로 안정된 상태에서 테스트를 진행하도록 해주세요.</NoteText>
+            </SubContainer>
+            <SubContainer>
+              <TextContainer>
+                <Check />
+              </TextContainer>
+                <NoteText>정확한 검사를 위해 예시 그림은 제공되지 않습니다.</NoteText>
+            </SubContainer>
+            <SubContainer>
+              <TextContainer>
+                <Check />
+              </TextContainer>
+                <NoteText>
+                  위 사항을 준수하지 않을 경우 테스트의 진행이 제한되거나
+                  <br />
+                  결과가 부정확할 수 있습니다.
+                </NoteText>
+            </SubContainer>
+          </NoteContainer>
+          <ButtonBox>
+            <PicButtonBox onClick={handlePicClick}>
+              <PicButton>사진 첨부하기</PicButton>
+            </PicButtonBox>
+            <DraButtonBox onClick={handleDrawClick}>
+              <DraButton>그림 그리기</DraButton>
+            </DraButtonBox>
+          </ButtonBox>
+        </InnerWrapper>
       </InnerContainer>
     </OuterContainer>
   );
@@ -106,15 +102,30 @@ const InnerContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 1.875rem; //30px;
+  
   display: flex;
   background: white;
   border-radius: 0.625rem; //10px;
 
   ${theme.media.mobile`
+  padding: 2rem 1rem;
+  width: 80%;
+  height: 80%;
+`}
+`;
 
-  width: 21.125rem;
-  height: 37.875rem;
+const InnerWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1.5rem; //30px;
+  ${theme.media.mobile`
+  justify-content: flex-start;
+  align-items: center;
+  
 `}
 `;
 
@@ -159,22 +170,26 @@ const Text = styled.div`
 
 const NoteContainer = styled.div`
   //width: 30.25rem; //484px;
-  height: 16.625rem; //266px;
-  padding: 1.875rem; //30px;
+  height: 40%; //266px;
+  padding: 1.8rem; //30px;
   background: white;
   border-radius: 0.625rem; //10px;
   border: 0.0625rem #e0e1e9 solid;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
   gap: 0.875rem; //14px;
   display: flex;
 
   ${theme.media.mobile`
-  width:18rem;
+  width: 90%;
+  height: 50%;
   border: none;
   padding: 0;
   //align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+
 `}
 `;
 
@@ -222,9 +237,9 @@ const PicButtonBox = styled.div`
   align-items: center;
 
   ${theme.media.mobile`
-  margin-top: 2.5rem;
+ 
   width: 15.625rem;
-  height: 3rem;
+  height: 2.5rem;
   padding: 0 1.25rem;
 `}
 
@@ -272,7 +287,7 @@ const DraButtonBox = styled.div`
   ${theme.media.mobile`
   margin-top: 1.25rem;
   width: 15.625rem;
-  height: 3rem;
+  height: 2.5rem;
   padding: 0 1.25rem;
 `}
 

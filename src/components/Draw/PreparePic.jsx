@@ -158,7 +158,7 @@ const Container = styled.div`
   background: white;
   //overflow: hidden;
   ${theme.media.mobile`
-  height: 92vh;
+  height: 93vh;
 `}
 
   ${theme.media.desktop`
@@ -172,7 +172,7 @@ const Section = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1.25rem; //20px;
-  height: 80%;
+  height: 100%;
   justify-content: flex-start;
 
   ${theme.media.mobile`
