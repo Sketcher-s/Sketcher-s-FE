@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation} from "react-router-dom";
 import './index.css';
 import PrepareDraw from './components/Draw/PrepareDraw';
 import Draw from './components/Draw/Draw';
@@ -15,36 +15,49 @@ import Camera from './components/Draw/Camera';
 import Navbar from './components/Navbar/Navbar';
 import Sidebar from './components/Sidebar';
 import { RecoilRoot } from 'recoil';
+import styled from 'styled-components';
+
+// 스크롤 생기는 여부
+const PageLayout = () => {
+  const location = useLocation();
+  const isMainPage = location.pathname === '/';
+
+  return (
+    <Container isMainPage={isMainPage}>
+      <RecoilRoot>
+        <Navbar/>
+            <Sidebar/>
+            <Routes>
+              <Route path="/login" element={<Login/>} />
+              <Route path="/register" element={<Register/>} />
+              <Route path="/mypage" element={<MyPage/>} />
+              <Route path="/preparedraw" element={<PrepareDraw/>} />
+              <Route path="/draw" element={<Draw/>} />
+              <Route path="/preparepicture" element={<PreparePicture/>} />
+              <Route path="/loading" element={<Loading/>} />
+              <Route path="/" element={<Main/>} />
+              <Route path="/result" element={<Result/>} />
+              <Route path="/camera" element={<Camera/>} />
+            </Routes>
+      </RecoilRoot>
+    </Container>
+  );
+}
 
 function App() {
-    return (
-      <div>
-        <RecoilRoot>
-          <BrowserRouter>
-              <Navbar/>
-              <Sidebar/>
-              <Routes>
-                <Route path="/login" element={<Login/>} />
-                <Route path="/register" element={<Register/>} />
-                <Route path="/mypage" element={<MyPage/>} />
-                <Route path="/preparedraw" element={<PrepareDraw/>} />
-                <Route path="/draw" element={<Draw/>} />
-                <Route path="/preparepicture" element={<PreparePicture/>} />
-                <Route path="/loading" element={<Loading/>} />
-                <Route path="/" element={<Main/>} />
-                <Route path="/result" element={<Result/>} />
-                <Route path="/camera" element={<Camera/>} />
-              </Routes>
-            </BrowserRouter>
-        </RecoilRoot>
-      </div>
-    );
+  return(
+    <BrowserRouter>
+      <PageLayout/>
+    </BrowserRouter>
+  )
+
+    
 
 }
 
 export default App;
 
-// const Background = styled.div`
-//   height: 100vh;
-//   color : gray;
-// `;
+const Container = styled.div`
+  height: ${(props) => (props.isMainPage ? 'auto' : '100vh')};
+  overflow: ${(props) => (props.isMainPage ? 'auto' : 'hidden')};
+`;

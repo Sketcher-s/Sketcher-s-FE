@@ -2,7 +2,9 @@ import styled from 'styled-components';
 import { theme } from '../../theme';
 
 
-export const Container = styled.div``;
+export const Container = styled.div`
+
+`;
 
 export const HeaderWrapper = styled.div`
 height: 100%
@@ -14,6 +16,7 @@ height: 100%
   margin: 0;
   overflow: hidden;
 `;
+
 export const Header = styled.div`
   max-width: 100%;
   margin: 0;
@@ -22,9 +25,15 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
+  height: 7vh;
 
   ${theme.media.mobile`
-  padding: 1rem;
+  
+`}
+${theme.media.desktop`
+ 
+
 `}
 `;
 
