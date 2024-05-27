@@ -22,7 +22,7 @@ import Ver3 from './Description';
 // import { calculatedCanvasSizeState } from './atoms'
 //import { canvasContentState } from './atoms';
 
-// Recoil을 사용하여 캔버스의 내용을 상태로 관리합니다.
+// Recoil을 사용하여 캔버스의 내용을 상태로 관리
 const canvasContentState = atom({
   key: 'canvasContentState',
   default: null,
@@ -30,13 +30,13 @@ const canvasContentState = atom({
 
 function Draw() {  
 
+  //상태관리
   const [canvasContent, setCanvasContent] = useRecoilState(canvasContentState);
 
   // Ref를 사용하여 Signaturecanvas 컴포넌트에 접근한다.
   const signatureCanvasRef = useRef(null);
   //그림 저장 상태
   const [savedSignatures, setSavedSignatures] = useState([]);
-
   const [canvasData, setCanvasData] = useState('');
 
   useEffect(() => {
@@ -209,7 +209,7 @@ function Draw() {
     }, []);
 
     // 창 크기에 따라 캔버스 크기 조정
-  useEffect(() => {
+    useEffect(() => {
     const checkSize = () => {
       if (window.innerWidth < 768) { // 가정: 768px 미만은 모바일로 간주
         setCanvasSize({ width: 250, height: 300 });
