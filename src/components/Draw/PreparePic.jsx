@@ -256,6 +256,7 @@ function PreparePicture({ imgFile }) {
         </Content>
 
 
+
       {/* 첨부한 이미지 파일을 보여줌 */}
       {/* {imgFile && (
         <div>
