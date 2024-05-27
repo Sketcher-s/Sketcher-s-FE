@@ -237,10 +237,9 @@ function PreparePicture({ imgFile }) {
               <Text>A4 용지에 딱 맞춰서 촬영하고, 그림자가 생기지 않도록 주의해주세요.</Text>
               </PreContainer>
             </NoteContainer>
-          
-        </Content>
 
-      <ButtonContainer>
+
+            <ButtonContainer>
         <ButtonText onClick={handleButtonClick}>
           사진 첨부하기
           <input
@@ -255,6 +254,24 @@ function PreparePicture({ imgFile }) {
         </ButtonText>
 
       </ButtonContainer>
+          
+        </Content>
+
+      {/* <ButtonContainer>
+        <ButtonText onClick={handleButtonClick}>
+          사진 첨부하기
+          <input
+            type="file"
+            accept="image/*"
+            //multiple
+            // onChange={handleFileChange}
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+            ref={fileInputRef}
+          />
+        </ButtonText>
+
+      </ButtonContainer> */}
 
       </Section>
 
