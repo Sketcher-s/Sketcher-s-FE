@@ -58,7 +58,7 @@ export default function Loading() {
     <CanvasContainer>
       {imageData && (
         <ImageData>
-          <img id="loadedImage" style={{ maxWidth: '20rem', maxHeight: '20rem', }} />
+          <img id="loadedImage" style={{ maxWidth: '20rem', maxHeight: '20rem'}} />
         </ImageData>
       )}
       </CanvasContainer>
@@ -72,10 +72,10 @@ export default function Loading() {
         <Modal
           title="그림 확인이 필요해요 !"
           message="집, 나무, 사람이 제대로 그려졌는지 확인해주세요."
-          close={handleModalClose} // 모달을 닫는 핸들러를 전달합니다.
+          close={handleModalClose} // 모달을 닫는 핸들러를 전달
         />
       )}
-</div>
+  </div>
   );
 }
 

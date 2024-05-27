@@ -19,6 +19,10 @@ export const Wrap = styled.div`
   position: relative;
   z-index: 99;
 
+
+  //여기 변경
+  flex-direction: row-reverse;
+  justify-content: flex-start;
   `}
 
 `;
@@ -26,7 +30,7 @@ export const Wrap = styled.div`
 export const OutContainer = styled.div`
   width: 100%;
   height: 100%;
-padding-top: 2.5rem;
+  padding-top: 2.5rem;
   padding-bottom: 2.5rem; //40px;
   flex-direction: column;
   justify-content: flex-start;
@@ -39,8 +43,11 @@ padding-top: 2.5rem;
 
   //하 여기부분 ..
   // position: fixed;
-  // left: 0;
+  left: 0;
   z-index: 0;
+
+
+  position: fixed;
 
 
   
@@ -78,6 +85,7 @@ export const DrawingArea = styled.div`
 
   width: ${({ canvasWidth }) => canvasWidth}px;
   height: ${({ canvasHeight }) => canvasHeight}px;
+
 
 
   ${theme.media.mobile`
