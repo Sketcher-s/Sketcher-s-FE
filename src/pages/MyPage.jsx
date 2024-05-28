@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { ReactComponent as User } from '../assets/User/user.svg';
 import { theme } from '../theme';
+import InquiryMypage from '../components/MyPage/InquiryMypage';
 
 // 주요 컨테이너
 const MyPageContainer = styled.div`
@@ -102,8 +103,8 @@ export const ProfileCircle = styled.div`
   justify-content: center;
   align-items: center;
   ${theme.media.mobile`
-  width: 1.3rem;
-    height: 1.3rem;
+    width: 2rem;
+    height: 2rem;
     border: 0.1874rem solid #F3F3F6;
 `}
 
@@ -114,16 +115,16 @@ export const ProfileCircle = styled.div`
 `}
 `;
 
-// 사용자 이메일
-export const UserEmail = styled.div`
-  text-align: right;
+
+// 사용자 정보
+export const UserText = styled.div`
   color: #3F4045;
-  
   font-weight: 700;
   line-height: 2.0625rem;
   word-wrap: break-word;
   ${theme.media.mobile`
   font-size: 1rem;
+  line-height: 1.5rem;
 `}
 
   ${theme.media.desktop`
@@ -184,7 +185,7 @@ const ListWrapper = styled.div`
 `;
 
 // 항목 컨테이너
-const EntryContainer = styled.div`
+export const EntryContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -193,7 +194,7 @@ const EntryContainer = styled.div`
 `;
 
 // 항목 텍스트
-const EntryText = styled.div`
+export const EntryText = styled.div`
   width: 100%;
   color: #3F4045;
   font-size: 1rem;
@@ -203,7 +204,7 @@ const EntryText = styled.div`
 `;
 
 // 날짜 텍스트
-const EntryDate = styled.div`
+export const EntryDate = styled.div`
   color: #97999F;
   font-size: 0.75rem;
   font-weight: 600;
@@ -213,9 +214,54 @@ const EntryDate = styled.div`
 
 // MyPage 함수형 컴포넌트
 const MyPage = () => {
-  // 로그인한 사용자의 이메일 가져오기
+    const [data, setData] = useState([]);
+    const [page, setPage] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [userInfo,setUserInfo] = useState({name: '', email: ''});
+    const size = 8;
 
-  // 목록 조회 api 연동
+    const loadMoreData = useCallback(async () => {
+      if(loading) return;
+      setLoading(true);
+      try {
+        const response = await InquiryMypage(page, size);
+        
+        // 응답 구조를 확인
+        console.log('API Response:', response);
+
+        const {simpleMemberDto, simplePictureDtoList} = response;
+    
+        if(page === 0){
+          setUserInfo({
+            name: simpleMemberDto.name,
+            email: simpleMemberDto.email
+          });
+        }
+
+        setData(prevData => [...prevData, ...simplePictureDtoList]);
+        setPage(prevPage => prevPage + 1);
+      } catch (error) {
+        console.error('Error loading more data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }, [page, loading]);
+  
+    useEffect(() => {
+      const handleScroll = () => {
+        if (window.innerHeight + document.documentElement.scrollTop + 50 >= document.documentElement.scrollHeight && !loading) {
+          loadMoreData();
+        }
+      };
+  
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, [loadMoreData, loading]);
+
+    useEffect(() => {
+      loadMoreData(); // 초기 데이터 로드
+    }, []);
+  
     
   return (
     <MyPageContainer>
@@ -226,40 +272,23 @@ const MyPage = () => {
               <ProfileContainer>
                 <ProfileCircle><User/></ProfileCircle>
               </ProfileContainer>
-              <UserEmail>qwe@naver.com</UserEmail>
+              <UserInfo>
+                <UserText>{userInfo.name}</UserText>
+                <UserText>{userInfo.email}</UserText>
+              </UserInfo>
             </UserInfoContainer>
             <Divider />
             <ListContainer>
               <SectionTitle>검사 일기</SectionTitle>
               <ListWrapper>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
+              {data.map((item, index) => (
+              <EntryContainer key={index}>
+                <EntryText>{item.title}</EntryText>
+                <EntryDate>{item.createdAt}</EntryDate>
+              </EntryContainer>
+              ))}
+              {loading && <div>Loading...</div>}
+              {data?.length === 0 && <BeforeList>검사를 진행해보세요!</BeforeList>}
               </ListWrapper>
             </ListContainer>
           </ContentContainer>
@@ -270,11 +299,11 @@ const MyPage = () => {
 
 export default MyPage;
 
- {/* 임의로 text와 data라고 해 둔 것임 !!! */}
-//  {entries.map((entry) => ( // entries를 순회하며 각 항목 렌더링
-//                 <EntryContainer key={entry.id}>
-//                 <EntryText>{entry.text}</EntryText>
-//                 <EntryDate>{entry.data}</EntryDate>
-               
-//               </EntryContainer>
-//               ))} 
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const BeforeList = styled(EntryText)`
+  text-align: center;
+`
