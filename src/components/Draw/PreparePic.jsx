@@ -462,8 +462,4 @@ const ButtonText = styled.h1`
   font-weight: 700;
   line-height: 1.5rem; //24px;
   word-wrap: break-word;
-<<<<<<< HEAD
 `;
-=======
-`;
->>>>>>> 0de3333a5f901d2b1ebb2214eb8a1c9a9fba88ad
