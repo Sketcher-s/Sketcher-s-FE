@@ -37,6 +37,7 @@ const PageLayout = () => {
               <Route path="/loading" element={<Loading/>} />
               <Route path="/" element={<Main/>} />
               <Route path="/result" element={<Result/>} />
+    
               <Route path="/camera" element={<Camera/>} />
             </Routes>
       </RecoilRoot>

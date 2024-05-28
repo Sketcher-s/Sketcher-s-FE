@@ -1,102 +1,98 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useLocation } from 'react-router-dom';
 import { theme } from '../../theme';
+import axios from 'axios';
+
 
 function ResultTitle() {
-  const [title, setTitle] = useState('');
-  const [image, setImage] = useState(null);
-  const [error, setError] = useState('');
-  const [isEditing, setIsEditing] = useState(true);
-  const pictureId = '1';
+    const location = useLocation();
+    const [title, setTitle] = useState('');
+    const [id,setId]= useState(0);
+    const [image, setImage] = useState('');
+    const [analysisResult, setAnalysisResult] = useState('');
+    const [error, setError] = useState('');
+    const [isEditing, setIsEditing] = useState(true);
 
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-    validateTitle(event.target.value);
-  };
-
-  const validateTitle = (inputTitle) => {
-    if (inputTitle.length > 15) {
-      setError('제목은 15자를 넘지 말아주세요.');
-    } else if (!inputTitle) {
-      setError('제목을 입력해주세요.');
-    } else {
-      setError('');
-    }
-  };
-
-  const handleSave = async () => {
-    if (!error) {
-      try {
-        const token = 'your-authentication-token'; // 실제 인증 토큰을 사용하세요
-        const response = await fetch('https://dev.catchmind.shop/api/picture/title', {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({ id: pictureId, title }),
-        });
-        if (response.ok) {
-          console.log('Saved:', title);
-          setIsEditing(false);
-        } else {
-          const responseBody = await response.json();
-          console.error('Failed to save title:', responseBody);
-          throw new Error(`Failed to save title, status: ${response.status}`);
-        }
-      } catch (error) {
-        console.error('Failed to save title:', error);
+    useEffect(() => {
+      console.log("location.state:", location.state);
+      if (location.state && location.state.response) {
+        const { imageUrl } = location.state.response;
+        setImage(imageUrl);
       }
-      setIsEditing(false);
-    }
-  };
+    }, [location]);
+    
+    useEffect(() => {
+      const fetchPictureDetails = async () => {
+        try {
+          const pictureId = location.state?.id; // pictureId를 location.state에서 받아오거나 다른 방식으로 설정
+          if (!pictureId) {
+            console.error("id값 없음");
+            return;
+          }
+          const response = await axios.get(`https://dev.catchmind.shop/api/picture/${pictureId}`);
+          if (response.data) {
+            setImage(response.data.pictureDto.imageUrl);
 
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  useEffect(() => {
-    const loadImage = async () => {
-      try {
-        const response = await fetch(`https://dev.catchmind.shop/api/picture/${pictureId}`);
-        if (response.ok) {
-          const data = await response.json();
-          setImage(data.imageUrl);
-        } else {
-          throw new Error(`Failed to fetch image, status: ${response.status}`);
+          }
+        } catch (error) {
+          console.error("오류다 임마", error);
         }
-      } catch (error) {
-        console.error('Failed to load image:', error);
-      }
+      };
+    
+      fetchPictureDetails();
+    }, []);
+    
+    const handleTitleChange = (event) => {
+        setTitle(event.target.value);
+        validateTitle(event.target.value);
     };
-    loadImage();
-  }, []);
 
-  return (
-    <div>
-      <ResultSection>
-        <TitleInput
-          type="text"
-          value={title}
-          onChange={handleTitleChange}
-          placeholder="그림의 제목을 입력하세요"
-          readOnly={!isEditing}
-          isError={error.length > 0}
-        />
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-        {!isEditing ? (
-          <Button onClick={handleEdit}>수정</Button>
-        ) : (
-          <Button onClick={handleSave}>저장</Button>
-        )}
-        <DrawResult>
-          {image && (
-            <img src={image} alt="Drawing for Analysis" style={{ width: '40%', height: '40%' }} />
-          )}
-        </DrawResult>
-      </ResultSection>
-    </div>
-  );
+    const validateTitle = (inputTitle) => {
+        if (inputTitle.length > 15) {
+            setError('제목은 15자를 넘지 말아주세요.');
+        } else if (!inputTitle) {
+            setError('제목을 입력해주세요.');
+        } else {
+            setError('');
+        }
+    };
+
+    const handleSave = async () => {
+        setIsEditing(false);
+    };
+
+    const handleEdit = async () => {
+
+      setIsEditing(false);  // 편집 모드 종료
+    };
+  
+    return (
+        <div>
+            <ResultSection>
+                <TitleInput
+                    type="text"
+                    value={title}
+                    onChange={handleTitleChange}
+                    placeholder="그림의 제목을 입력하세요"
+                    readOnly={!isEditing}
+                    isError={error.length > 0}
+                />
+                {error && <ErrorMessage>{error}</ErrorMessage>}
+                {!isEditing ? (
+                    <Button onClick={handleEdit}>수정</Button>
+                ) : (
+                    <Button onClick={handleSave}>저장</Button>
+                )}
+                <DrawResult>
+                    {image && (
+                        <img src={image} alt="Drawing for Analysis" style={{ width: '40%', height: '40%' }} />
+                    )}
+                </DrawResult>
+                <AnalysisResult>{analysisResult}</AnalysisResult>
+            </ResultSection>
+        </div>
+    );
 }
 
 export default ResultTitle;
@@ -144,6 +140,12 @@ const DrawResult = styled.div`
   ${theme.media.mobile`
     width:90%;
   `}
+`;
+
+const AnalysisResult = styled.div`
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #3F4045;
 `;
 
 const Button = styled.button`

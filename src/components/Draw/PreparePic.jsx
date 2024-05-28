@@ -154,6 +154,8 @@ function PreparePicture({ imgFile }) {
         if (response.ok) {
           const data = await response.json();
           console.log('File uploaded successfully:', data);
+           // 파일 업로드 성공 후 result 페이지로 이동
+           Navigate('/result', { state: { response: data } });
         } else {
           console.error('File upload failed', await response.text());
         }
@@ -326,6 +328,7 @@ const PutSection = styled.div`
   align-items: center;
   gap: 0.625rem; //10px;
   display: flex;
+  margin-top: 1.3rem;
 
   ${theme.media.mobile`
     display: none;

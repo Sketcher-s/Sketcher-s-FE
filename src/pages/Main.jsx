@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import Modal from 'react-modal';
 import { ReactComponent as Main1 } from '../assets/Main/Main1.svg';
 import { ReactComponent as Main2 } from  '../assets/Main/Main2.svg';
 import { ReactComponent as Main3 } from  '../assets/Main/Main3.svg';
@@ -23,11 +24,33 @@ const StyledMain3 = styled(Main3)`
   height: ${props => props.height || 'auto'};
 `;
 
-function Main (){
+Modal.setAppElement('#root'); // For accessibility
+
+function Main() {
   const Navigate = useNavigate(); 
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('jwtToken'));
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   function handleDrawClick() {
-    Navigate('/draw'); 
-  }  
+    if (isLoggedIn) {
+      Navigate('/draw'); 
+    } else {
+      setIsModalOpen(true);
+    }
+  }
+
+  function closeModal() {
+    setIsModalOpen(false);
+  }
+
+  function handleLogin() {
+    Navigate('/login');
+  }
+
+  function handleRegister() {
+    Navigate('/register');
+  }
+
   return (
     <MainContainer>
       <InspectionSection>
@@ -51,7 +74,7 @@ function Main (){
             <ResultsContent>
               <ResultsTitle>HTP 그림 심리 검사란?</ResultsTitle>
               <ResultsDescription>사용자가 집, 나무, 사람을 그리는 것을 통해 <br/>그들의 심리 상태를 분석하는 방법입니다.</ResultsDescription>
-              <ResultsDescription>사용자의 그림을 통해 형식 분석과 내용 분석을 진행하여, <br/>그림의 크기, 위치, 세밀함 등 다양한 요소를 평가하고, <br/>이를 통해   사용자의 자신감, 감정 상태, 대인 관계 태도 등을 <br/>파악할 수 있습니다.</ResultsDescription>
+              <ResultsDescription>사용자의 그림을 통해 형식 분석과 내용 분석을 진행하여, <br/>그림의 크기, 위치, 세밀함 등 다양한 요소를 평가하고, <br/>이를 통해 사용자의 자신감, 감정 상태, 대인 관계 태도 등을 <br/>파악할 수 있습니다.</ResultsDescription>
             </ResultsContent>
             <ImgBox><StyledMain3/></ImgBox>
           </ResultsSection>
@@ -66,113 +89,127 @@ function Main (){
             </FooterContent>
           </FooterBox>
         </Footer>
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={closeModal}
+          style={{
+            content: {
+              top: '50%',
+              left: '50%',
+              right: 'auto',
+              bottom: 'auto',
+              marginRight: '-50%',
+              transform: 'translate(-50%, -50%)',
+            },
+          }}
+        >
+          <h2>로그인이 필요합니다</h2>
+          <ButtonContainer>
+            <Button onClick={handleLogin}>로그인</Button>
+            <Button onClick={handleRegister}>회원가입</Button>
+          </ButtonContainer>
+        </Modal>
       </MainContainer>
   );
 }
+
 export default Main;
 
 const MainContainer = styled.div`
-overflow: hidden;
-
+  overflow: hidden;
 `;
+
 const InspectionSection = styled.div`
-display: flex;
-background: #f3f3f6;
-flex-direction:row;
-align-items: center;
-justify-content: center;
-${theme.media.mobile`
-flex-direction:column;
-position:relative;
-margin-bottom:5rem;
+  display: flex;
+  background: #f3f3f6;
+  flex-direction:row;
+  align-items: center;
+  justify-content: center;
+  ${theme.media.mobile`
+    flex-direction:column;
+    position:relative;
+    margin-bottom:5rem;
   `}
 `;
 
 const InspectionContent = styled.div`
-    margin : 3rem;
-    align-items: center;
-${theme.media.mobile`
-text-align: center;
-
+  margin : 3rem;
+  align-items: center;
+  ${theme.media.mobile`
+    text-align: center;
   `}
 `;
 
 const InspectionTitle = styled.h2`
-font-family: Pretendard;
-font-size: 1.125rem;  // 18px
-font-weight: 700;
-line-height: 1.6875rem;  // 27px
-color: #6487E2;
-${theme.media.mobile`
-font-size: 1.375rem;
-text-align: center;
+  font-family: Pretendard;
+  font-size: 1.125rem;  // 18px
+  font-weight: 700;
+  line-height: 1.6875rem;  // 27px
+  color: #6487E2;
+  ${theme.media.mobile`
+    font-size: 1.375rem;
+    text-align: center;
   `}
 `;
+
 const InspectionDescription = styled.p`
-    font-family: Pretendard;
-    font-size: 2vw;
-    font-weight: 700;
-    color:black;
-    ${theme.media.mobile`
-font-size: 1.375rem;
-text-align: center;
+  font-family: Pretendard;
+  font-size: 2vw;
+  font-weight: 700;
+  color:black;
+  ${theme.media.mobile`
+    font-size: 1.375rem;
+    text-align: center;
   `}
 `;
 
 const DrawButton = styled.button`
-width: 10rem;
-height: 2.75rem;
-border-radius: 0.25rem;
-background: #6487E2;
-color: white;
-border:none;
-font-weight:700;
-margin-top:20px;
-justify-content: center;
-margin-top:20px;
-cursor:pointer;
-${theme.media.mobile`
-position: absolute;
-bottom:-50px;
-left: 50%;
-transform: translateX(-50%);
+  width: 10rem;
+  height: 2.75rem;
+  border-radius: 0.25rem;
+  background: #6487E2;
+  color: white;
+  border:none;
+  font-weight:700;
+  margin-top:20px;
+  justify-content: center;
+  cursor:pointer;
+  ${theme.media.mobile`
+    position: absolute;
+    bottom:-50px;
+    left: 50%;
+    transform: translateX(-50%);
   `}
 `;
 
-const ImgBox = styled.div`
+const ImgBox = styled.div``;
 
-
-
-
-`;
 const Section = styled.div`
-    display:flex;
-    flex-direction:column;
-    justify-content: center;
-    align-items: center;
-    padding: 3.25rem;
-    background:white;
-    ${theme.media.mobile`
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  padding: 3.25rem;
+  background:white;
+  ${theme.media.mobile`
     align-items: center;
   `}
 `;
+
 const MindSection = styled.div`
-    display:flex;
-    ${theme.media.mobile`
+  display:flex;
+  ${theme.media.mobile`
     display:flex;
     flex-direction:column;
     width: 100%;
     height: 100%;
-    
-    `}
+  `}
 `;
 
 const MindContent = styled.div`
-
   padding: 2.125rem;
   justify-content: center;
-    align-items: center;
-
+  align-items: center;
 `;
 
 const MindTitle = styled.h2`
@@ -186,6 +223,7 @@ const MindTitle = styled.h2`
 const Highlighted = styled.span`
   color: #6487E2;
 `;
+
 const MindDescription = styled.p`
   width: 22.5rem;
   font-family: Pretendard;
@@ -195,86 +233,102 @@ const MindDescription = styled.p`
   text-align: left;
   color: #3F4045;
   ${theme.media.mobile`
-  width:100%;
-`}
-
+    width:100%;
+  `}
 `;
 
 const ResultsSection = styled.div`
   display:flex;
   color:black;
-    
-${theme.media.mobile`
-  flex-direction: column-reverse; // 모바일에서는 열 방향으로 변경하고 순서 반전
-  width: 100%;
-  height: 100%;
-`}
+  ${theme.media.mobile`
+    flex-direction: column-reverse; // 모바일에서는 열 방향으로 변경하고 순서 반전
+    width: 100%;
+    height: 100%;
+  `}
 `;
 
 const ResultsContent = styled.div`
   padding:2.5rem;
   ${theme.media.mobile`
-  padding: 0.5rem 1rem;
-  
-`}
+    padding: 0.5rem 1rem;
+  `}
 `;
 
 const ResultsTitle = styled.h2`
-font-family: Pretendard;
-font-size: 1.375rem;
-font-weight: 700;
-text-align: left;
-${theme.media.mobile`
-
-`}
+  font-family: Pretendard;
+  font-size: 1.375rem;
+  font-weight: 700;
+  text-align: left;
+  ${theme.media.mobile`
+  `}
 `;
+
 const ResultsDescription = styled.p`
-//styleName: body1/SB;
-font-family: Pretendard;
-font-size: 0.875rem;
-font-weight: 600;
-line-height: 1.3125rem;
-text-align: left;
-color: #3F4045;
-${theme.media.mobile`
-  
-`}
+  font-family: Pretendard;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3125rem;
+  text-align: left;
+  color: #3F4045;
+  ${theme.media.mobile`
+  `}
 `;
 
 const Footer = styled.footer`
   width: 100%;
   background: #27282B;
-  text-align:center
+  text-align:center;
   ${theme.media.mobile`
-  padding: 3.125rem 1.35rem;
-`}
+    padding: 3.125rem 1.35rem;
+  `}
 `;
 
 const FooterBox = styled.footer`
   padding:4.375rem;
-  text-align:center
+  text-align:center;
 `;
+
 const FooterTitle = styled.div`
-
-font-size: 1.275rem;
-font-weight: 700;
-line-height: 2.0625rem;
-text-align: center;
-color:white;
-margin-bottom:1.25rem;
-${theme.media.mobile`
-font-size: 1rem;
-`}
-
+  font-size: 1.275rem;
+  font-weight: 700;
+  line-height: 2.0625rem;
+  text-align: center;
+  color:white;
+  margin-bottom:1.25rem;
+  ${theme.media.mobile`
+    font-size: 1rem;
+  `}
 `;
+
 const FooterContent = styled.div`
-font-size: 0.875rem;
-font-weight: 600;
-line-height: 1.3125rem;
-text-align: center;
-color:white;
-${theme.media.mobile`
-font-size: 0.7rem;
-`}
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3125rem;
+  text-align: center;
+  color:white;
+  ${theme.media.mobile`
+    font-size: 0.7rem;
+  `}
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+`;
+
+const Button = styled.button`
+  width: 100px;
+  height: 40px;
+  background: #6487E2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+
+  &:hover {
+    background: #5371c9;
+  }
+`;
