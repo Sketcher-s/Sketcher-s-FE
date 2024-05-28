@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, use} from 'react';
 import styled from 'styled-components';
 import {theme} from '../../theme';
 
 function ResultContent() {
-  const [title, setTitle] = useState('');
-  const [image, setImage] = useState(null);
-  const [analysisResult, setAnalysisResult] = useState("이미지 분석 결과가 여기에 표시됩니다. 이미지의 세부 사항, 색상 분포, 감정 분석 등 다양한 정보를 제공할 수 있습니다.");
+  const [analysisResult, setAnalysisResult] = useState("");
 
   const [isOpen, setIsOpen] = useState({
     htp: false,
@@ -15,15 +13,6 @@ function ResultContent() {
   const toggleSection = section => {
     setIsOpen(prev => ({ ...prev, [section]: !prev[section] }));
   };
-  
-  useEffect(() => {
-    fetch('https://api.example.com/analyze-image') // 분석 결과를 제공하는 API
-      .then(response => response.json())
-      .then(data => {
-        setAnalysisResult(data.result);  // 분석 결과를 상태에 저장
-      })
-      .catch(error => console.error('Failed to load analysis result:', error));
-  }, []);
 
   return (
     <div>
