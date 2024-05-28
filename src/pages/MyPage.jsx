@@ -3,6 +3,11 @@ import React, {useState, useEffect, useCallback} from 'react';
 import { ReactComponent as User } from '../assets/User/user.svg';
 import { theme } from '../theme';
 import InquiryMypage from '../components/MyPage/InquiryMypage';
+import WithDrawal from '../components/WithDrawal/WithDrawal';
+import Modal from '../components/Modal';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../recoil/recoilState';
 
 // 주요 컨테이너
 const MyPageContainer = styled.div`
@@ -89,8 +94,9 @@ export const UserInfoContainer = styled.div`
 // 프로필 및 이메일 컨테이너
 export const ProfileContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
   align-items: center;
+  gap: 0.5rem;
 `;
 
 // 프로필 원형
@@ -185,7 +191,7 @@ const ListWrapper = styled.div`
 `;
 
 // 항목 컨테이너
-export const EntryContainer = styled.div`
+const EntryContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -194,7 +200,7 @@ export const EntryContainer = styled.div`
 `;
 
 // 항목 텍스트
-export const EntryText = styled.div`
+const EntryText = styled.div`
   width: 100%;
   color: #3F4045;
   font-size: 1rem;
@@ -204,7 +210,7 @@ export const EntryText = styled.div`
 `;
 
 // 날짜 텍스트
-export const EntryDate = styled.div`
+const EntryDate = styled.div`
   color: #97999F;
   font-size: 0.75rem;
   font-weight: 600;
@@ -219,6 +225,10 @@ const MyPage = () => {
     const [loading, setLoading] = useState(false);
     const [userInfo,setUserInfo] = useState({name: '', email: ''});
     const size = 8;
+    const [modalStatus, setModalStatus] = useState(null);
+
+    // 로그인 상태
+    const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
 
     const loadMoreData = useCallback(async () => {
       if(loading) return;
@@ -260,7 +270,35 @@ const MyPage = () => {
 
     useEffect(() => {
       loadMoreData(); // 초기 데이터 로드
-    }, []);
+    }, []); 
+
+
+    const handleClose = () => {
+      setModalStatus(null);
+    }
+
+    const handleOpen = () => {
+      setModalStatus('doubleCheck'); 
+    }
+
+    // 회원탈퇴
+    const handleWithDraw = async() => {
+      try{
+        const response = await WithDrawal();
+        console.log('api', response);
+        setModalStatus('alert');
+        localStorage.removeItem('jwtToken'); // 토큰 삭제
+        setIsLoggedIn(false); // 로그아웃
+      }catch (error){
+        console.error('Error delete:', error);
+      }
+    }
+
+    // 메인으로 이동
+    const navigate = useNavigate();
+    const moveToMain = () => {
+      navigate('/');
+    }
   
     
   return (
@@ -268,15 +306,18 @@ const MyPage = () => {
         <MyPageWrapper>
           <Title>마이페이지</Title>
           <ContentContainer>
-            <UserInfoContainer>
-              <ProfileContainer>
-                <ProfileCircle><User/></ProfileCircle>
-              </ProfileContainer>
-              <UserInfo>
-                <UserText>{userInfo.name}</UserText>
-                <UserText>{userInfo.email}</UserText>
-              </UserInfo>
-            </UserInfoContainer>
+            <ProContainer>
+              <UserInfoContainer>
+                <ProfileContainer>
+                  <ProfileCircle><User/></ProfileCircle>
+                </ProfileContainer>
+                <UserInfo>
+                  <UserText>{userInfo.name}</UserText>
+                  <UserText>{userInfo.email}</UserText>
+                </UserInfo>
+              </UserInfoContainer>
+              <WithDrawalButton onClick={handleOpen}>회원탈퇴</WithDrawalButton>
+            </ProContainer>
             <Divider />
             <ListContainer>
               <SectionTitle>검사 일기</SectionTitle>
@@ -292,6 +333,8 @@ const MyPage = () => {
               </ListWrapper>
             </ListContainer>
           </ContentContainer>
+          {modalStatus === 'doubleCheck' && <Modal title={`${userInfo.name}님`} message={'회원 탈퇴 시, 모든 검사 기록이 삭제됩니다. 확인 버튼 클릭 시 탈퇴가 완료됩니다.'} withdrawal={handleWithDraw} close={handleClose} />}
+          {modalStatus === 'alert' && <Modal title={'그동안 이용해주셔서 감사합니다.'} messgae='' close={moveToMain}></Modal>}
         </MyPageWrapper>
     </MyPageContainer>
   );
@@ -307,3 +350,36 @@ const UserInfo = styled.div`
 const BeforeList = styled(EntryText)`
   text-align: center;
 `
+
+// 회원탈퇴
+const WithDrawalButton = styled.button`
+  width: 15%;
+  height: 55%;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 0.7rem;
+  color: #97999F;
+  border: none;
+  align-self: center;
+  text-align: center;
+  border-radius: 5px;
+  padding-top: 0.15rem;
+
+  ${theme.media.mobile`
+  align-self: center;
+  width: 18%;
+  height: 35%;
+  font-size: 0.5rem;
+  font-weight: 600;
+  line-height: 0.7rem;
+  text-align: center;
+  padding-top: 0.11rem;
+  `}
+`;
+
+// 회원탈퇴 포함한 container
+const ProContainer = styled.div`
+  display: flex;  
+  justify-content: space-between;
+  width: 100%;
+`;

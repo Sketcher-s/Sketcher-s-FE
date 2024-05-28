@@ -53,6 +53,23 @@ font-size: 1rem;
 `}
 
 `;
+const ButtonWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+`;
+
+// 버튼 2개일 때
+const ButtonH = styled.button`
+  width: 6rem;
+  height: 2.75rem; // 44px to rem
+  padding-left: 0.5rem; // 20px to rem
+  padding-right: 0.5rem; // 20px to rem
+  background: #6487E2;
+  border-radius: 0.25rem; // 4px to rem
+  justify-content: center;
+  border: none;
+`;
 
 // 버튼 스타일
 const Button = styled.button`
@@ -72,9 +89,15 @@ const ButtonText = styled(Text)`
   color: white;
 `;
 
+// 버튼 2개일 때
+const ButtonTextH = styled(Text)`
+  width: 5rem; // 120px to rem
+  color: white;
+`;
 
 
-const Modal = ({close, title, message}) => {
+
+const Modal = ({close, title, message, withdrawal}) => {
 
 
     return (
@@ -82,9 +105,21 @@ const Modal = ({close, title, message}) => {
                 <ModalWrapper>
                     <Text>{title}</Text>
                     <Text color='#3F4045' fontWeight="600">{message}</Text>
-                    <Button onClick={close}>
+                    
+                    {withdrawal ? 
+                    (<ButtonWrapper>
+                      <ButtonH onClick={withdrawal}>
+                        <ButtonTextH>탈퇴</ButtonTextH>
+                      </ButtonH>
+                      <ButtonH onClick={close}>
+                        <ButtonTextH>취소</ButtonTextH>
+                      </ButtonH>
+                    </ButtonWrapper>) : (
+                      <Button onClick={close}>
                         <ButtonText>확인</ButtonText>
-                    </Button>
+                      </Button>
+                    )
+                    }
                 </ModalWrapper> 
             </ModalContainer>
     )
@@ -94,6 +129,7 @@ Modal.propTypes = {
   close: PropTypes.func.isRequired, // close prop이 함수 타입이며 필수라는 것을 명시
   title: PropTypes.string,
   message: PropTypes.string,
+  withdrawal: PropTypes.func
 };
 
 export default Modal;

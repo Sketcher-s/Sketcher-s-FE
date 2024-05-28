@@ -13,7 +13,7 @@ import Result from './pages/Result';
 import Main from './pages/Main';
 import Camera from './components/Draw/Camera';
 import Navbar from './components/Navbar/Navbar';
-import Sidebar from './components/Sidebar';
+import Sidebar from './components/Sidebar/Sidebar';
 import { RecoilRoot } from 'recoil';
 import styled from 'styled-components';
 
