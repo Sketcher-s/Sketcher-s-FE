@@ -12,10 +12,10 @@ default: 0,
 //     default: { width: '21.125rem', height: '21.125rem' },
 //   });
 
-export const canvasContentState = atom({
-    key: 'canvasContentState',
-    default: null,
-  });
+// export const canvasContentState = atom({
+//     key: 'canvasContentState',
+//     default: null,
+//   });
 
 // 로그인 지속
 const {persistAtom} = recoilPersist();
