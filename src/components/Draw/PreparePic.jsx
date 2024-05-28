@@ -460,20 +460,3 @@ const ButtonText = styled.h1`
   line-height: 1.5rem; //24px;
   word-wrap: break-word;
 `;
-
-const ButtonWrapper = styled.button`
-  background: #6487e2;
-  border-radius: 0.25rem; //4px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  border: none;
-
-  ${theme.media.mobile`
-    width: 75%;
-`}
-
-  ${theme.media.desktop`
-   width: 30%;
-  `}
-`;
