@@ -1,7 +1,13 @@
 import styled from 'styled-components';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import { ReactComponent as User } from '../assets/User/user.svg';
 import { theme } from '../theme';
+import InquiryMypage from '../components/MyPage/InquiryMypage';
+import WithDrawal from '../components/WithDrawal/WithDrawal';
+import Modal from '../components/Modal';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../recoil/recoilState';
 
 // 주요 컨테이너
 const MyPageContainer = styled.div`
@@ -88,8 +94,9 @@ export const UserInfoContainer = styled.div`
 // 프로필 및 이메일 컨테이너
 export const ProfileContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
   align-items: center;
+  gap: 0.5rem;
 `;
 
 // 프로필 원형
@@ -102,8 +109,8 @@ export const ProfileCircle = styled.div`
   justify-content: center;
   align-items: center;
   ${theme.media.mobile`
-  width: 1.3rem;
-    height: 1.3rem;
+    width: 2rem;
+    height: 2rem;
     border: 0.1874rem solid #F3F3F6;
 `}
 
@@ -114,16 +121,16 @@ export const ProfileCircle = styled.div`
 `}
 `;
 
-// 사용자 이메일
-export const UserEmail = styled.div`
-  text-align: right;
+
+// 사용자 정보
+export const UserText = styled.div`
   color: #3F4045;
-  
   font-weight: 700;
   line-height: 2.0625rem;
   word-wrap: break-word;
   ${theme.media.mobile`
   font-size: 1rem;
+  line-height: 1.5rem;
 `}
 
   ${theme.media.desktop`
@@ -213,56 +220,121 @@ const EntryDate = styled.div`
 
 // MyPage 함수형 컴포넌트
 const MyPage = () => {
-  // 로그인한 사용자의 이메일 가져오기
+    const [data, setData] = useState([]);
+    const [page, setPage] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [userInfo,setUserInfo] = useState({name: '', email: ''});
+    const size = 8;
+    const [modalStatus, setModalStatus] = useState(null);
 
-  // 목록 조회 api 연동
+    // 로그인 상태
+    const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+
+    const loadMoreData = useCallback(async () => {
+      if(loading) return;
+      setLoading(true);
+      try {
+        const response = await InquiryMypage(page, size);
+        
+        // 응답 구조를 확인
+        console.log('API Response:', response);
+
+        const {simpleMemberDto, simplePictureDtoList} = response;
+    
+        if(page === 0){
+          setUserInfo({
+            name: simpleMemberDto.name,
+            email: simpleMemberDto.email
+          });
+        }
+
+        setData(prevData => [...prevData, ...simplePictureDtoList]);
+        setPage(prevPage => prevPage + 1);
+      } catch (error) {
+        console.error('Error loading more data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }, [page, loading]);
+  
+    useEffect(() => {
+      const handleScroll = () => {
+        if (window.innerHeight + document.documentElement.scrollTop + 50 >= document.documentElement.scrollHeight && !loading) {
+          loadMoreData();
+        }
+      };
+  
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, [loadMoreData, loading]);
+
+    useEffect(() => {
+      loadMoreData(); // 초기 데이터 로드
+    }, []); 
+
+
+    const handleClose = () => {
+      setModalStatus(null);
+    }
+
+    const handleOpen = () => {
+      setModalStatus('doubleCheck'); 
+    }
+
+    // 회원탈퇴
+    const handleWithDraw = async() => {
+      try{
+        const response = await WithDrawal();
+        console.log('api', response);
+        setModalStatus('alert');
+        localStorage.removeItem('jwtToken'); // 토큰 삭제
+        setIsLoggedIn(false); // 로그아웃
+      }catch (error){
+        console.error('Error delete:', error);
+      }
+    }
+
+    // 메인으로 이동
+    const navigate = useNavigate();
+    const moveToMain = () => {
+      navigate('/');
+    }
+  
     
   return (
     <MyPageContainer>
         <MyPageWrapper>
           <Title>마이페이지</Title>
           <ContentContainer>
-            <UserInfoContainer>
-              <ProfileContainer>
-                <ProfileCircle><User/></ProfileCircle>
-              </ProfileContainer>
-              <UserEmail>qwe@naver.com</UserEmail>
-            </UserInfoContainer>
+            <ProContainer>
+              <UserInfoContainer>
+                <ProfileContainer>
+                  <ProfileCircle><User/></ProfileCircle>
+                </ProfileContainer>
+                <UserInfo>
+                  <UserText>{userInfo.name}</UserText>
+                  <UserText>{userInfo.email}</UserText>
+                </UserInfo>
+              </UserInfoContainer>
+              <WithDrawalButton onClick={handleOpen}>회원탈퇴</WithDrawalButton>
+            </ProContainer>
             <Divider />
             <ListContainer>
               <SectionTitle>검사 일기</SectionTitle>
               <ListWrapper>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
-                <EntryContainer>
-                  <EntryText>가나다라마바사</EntryText>
-                  <EntryDate>2024년 5월 1일</EntryDate>
-                </EntryContainer>
+              {data.map((item, index) => (
+              <EntryContainer key={index}>
+                <EntryText>{item.title}</EntryText>
+                <EntryDate>{item.createdAt}</EntryDate>
+              </EntryContainer>
+              ))}
+              {loading && <div>Loading...</div>}
+              {data?.length === 0 && <BeforeList>검사를 진행해보세요!</BeforeList>}
               </ListWrapper>
             </ListContainer>
           </ContentContainer>
+          {modalStatus === 'doubleCheck' && <Modal title={`${userInfo.name}님`} message={'회원 탈퇴 시, 모든 검사 기록이 삭제됩니다. 확인 버튼 클릭 시 탈퇴가 완료됩니다.'} withdrawal={handleWithDraw} close={handleClose} />}
+          {modalStatus === 'alert' && <Modal title={'그동안 이용해주셔서 감사합니다.'} messgae='' close={moveToMain}></Modal>}
         </MyPageWrapper>
     </MyPageContainer>
   );
@@ -270,11 +342,44 @@ const MyPage = () => {
 
 export default MyPage;
 
- {/* 임의로 text와 data라고 해 둔 것임 !!! */}
-//  {entries.map((entry) => ( // entries를 순회하며 각 항목 렌더링
-//                 <EntryContainer key={entry.id}>
-//                 <EntryText>{entry.text}</EntryText>
-//                 <EntryDate>{entry.data}</EntryDate>
-               
-//               </EntryContainer>
-//               ))} 
+const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const BeforeList = styled(EntryText)`
+  text-align: center;
+`
+
+// 회원탈퇴
+const WithDrawalButton = styled.button`
+  width: 15%;
+  height: 55%;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 0.7rem;
+  color: #97999F;
+  border: none;
+  align-self: center;
+  text-align: center;
+  border-radius: 5px;
+  padding-top: 0.15rem;
+
+  ${theme.media.mobile`
+  align-self: center;
+  width: 18%;
+  height: 35%;
+  font-size: 0.5rem;
+  font-weight: 600;
+  line-height: 0.7rem;
+  text-align: center;
+  padding-top: 0.11rem;
+  `}
+`;
+
+// 회원탈퇴 포함한 container
+const ProContainer = styled.div`
+  display: flex;  
+  justify-content: space-between;
+  width: 100%;
+`;

@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {IoCloseOutline} from 'react-icons/io5';
-import { ReactComponent as User } from '../assets/User/user.svg';
+import { ReactComponent as User } from '../../assets/User/user.svg';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { SidebarState } from '../recoil/recoilState';
-import { LoginState } from '../recoil/recoilState';
+import { SidebarState } from '../../recoil/recoilState';
+import { LoginState } from '../../recoil/recoilState';
+import FetchSidebar from './FetchSidebar';
 
 const Background = styled.div`
 position: fixed;
@@ -45,22 +46,22 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 1.25rem; /* 20px */
+  gap: 0.7rem; /* 20px */
   display: flex;
 `;
 
 const IconContainer = styled.div`
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   display: flex;
 `;
 
 const Icon = styled.div`
-  width: 3.75rem; /* 60px */
-  height: 3.75rem; /* 60px */
+  width: 3.35rem; /* 60px */
+  height: 3.35rem; /* 60px */
   background: #F3F3F6;
-  border-radius: 9999rem;
-  border: 0.1025rem solid #F3F3F6; /* 1.64px */
+  border-radius: 50px;
+  //border: 0.1025rem solid #F3F3F6; /* 1.64px */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,13 +115,14 @@ const MoveBtn = styled.button`
   text-align: left; /* 텍스트 왼쪽 정렬 */
 `;
 
-const Email = styled.div`
-  width: 11.25rem; /* 180px */
+const Info = styled.h1`
+  width: 100%; /* 180px */
+  height: 70%;
   color: #3F4045;
   font-size: 1rem; /* 16px */
   font-family: 'Pretendard';
   font-weight: 600;
-  line-height: 1.5rem; /* 24px */
+  line-height: 0.5;
   word-wrap: break-word;
 `;
 
@@ -130,11 +132,18 @@ right: 1rem;
 top: 3rem;
 `;
 
+const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const Sidebar = () => {
   // sidebar 상태
   const [isSidebarOpen, setIsSidebarOpen] = useRecoilState(SidebarState);
   // 로그인 상태
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  // 사용자 정보 상태
+  const [userInfo, setUserInfo] = useState({name: '', email: ''});
 
   const navigate = useNavigate();
     // 검사하기 이동
@@ -155,6 +164,26 @@ const Sidebar = () => {
     setIsLoggedIn(false); // 로그인 상태(로그아웃)
     navigate('/'); // main 화면으로 이동
   }
+
+  // 사용자 정보 받아오기
+  const Account = async() => {
+    try{
+      const response = await FetchSidebar(0, 8);
+      const {simpleMemberDto} = response;
+      setUserInfo({
+        name: simpleMemberDto.name,
+        email: simpleMemberDto.email
+      });
+      console.log('사용자 정보 받아옴', response);
+    }catch(error){
+      console.error('사용자 정보 못 받아옴', error);
+    }
+  }
+
+  useEffect(() => {
+    Account();
+  }, []);
+
     return (
       <>
       <Background show={isSidebarOpen} onClick={() => (setIsSidebarOpen(false))}/>
@@ -167,7 +196,10 @@ const Sidebar = () => {
             <IconContainer>
                 <Icon><User/></Icon> 
             </IconContainer>
-            <Email>qwer@naver.com</Email>
+            <InfoContainer>
+              <Info>{userInfo.name}</Info>
+              <Info>{userInfo.email}</Info>
+            </InfoContainer>
           </Content>
           
           <Divider />
