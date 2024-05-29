@@ -67,23 +67,6 @@ function Draw() {
     };
   }, []);
 
-
-  //ref가 잘 작동되는지 콘솔을 찍어봄
-  // useEffect(() => {
-  //   if(signatureCanvasRef.current) {
-  //     console.log("Ref is set", signatureCanvasRef.current);
-  //     try {
-  //       //const ctx = signatureCanvasRef.current.getContext('2d');
-  //       console.log("Context is accessible");
-  //     } catch (error) {
-  //       console.error("Failed to get context", error);
-  //     }
-  //   } else {
-  //     console.error("Ref is not set");
-  //   }
-  // }, []);
-
-
   // 버튼 클릭했을 때 화면 이동
   //const Navigate = useNavigate();
 
@@ -181,57 +164,20 @@ function Draw() {
     //   return () => window.removeEventListener('resize', handleResize);
     // }, [canvasContent]);
 
-
-
-    // //그림판 : 그림판의 크기가 고정되지만 그림은 날라가지 않는 코드(데스크탑규격과 모바일 규격 두개로 나눠서 작성)
-    // useEffect(() => {
-    //   const handleResize = () => {
-    //     const canvasElement = signatureCanvasRef.current.getCanvas(); // getCanvas()를 사용해 실제 canvas 요소를 가져옵니다.
-    //     if (signatureCanvasRef.current) {
-    //       // const canvas = signatureCanvasRef.current.getCanvas();  // 실제 canvas 요소를 가져옴
-    //       //const ctx = signatureCanvasRef.current.getContext('2d');
-    //       const ctx = canvasElement.getContext('2d'); // 이제 getContext를 호출할 수 있습니다.
-    //       const tempCanvas = document.createElement('canvas');
-    //       const tempCtx = tempCanvas.getContext('2d');
-    //       tempCanvas.width = signatureCanvasRef.current.width;
-    //       tempCanvas.height = signatureCanvasRef.current.height;
-    //       tempCtx.drawImage(signatureCanvasRef.current, 0, 0);
-  
-    //       const screenWidth = window.innerWidth;
-    //       const screenHeight = window.innerHeight;
-    //       let newWidth, newHeight;
-  
-    //       if (screenWidth < screenHeight) {
-    //         newWidth = screenWidth * 0.5;
-    //         newHeight = newWidth * 1;
-    //       } else {
-    //         newWidth = screenWidth * 0.5;
-    //         newHeight = newWidth / 1;
-    //         if (newHeight > screenHeight * 0.5) {
-    //           newHeight = screenHeight * 0.5;
-    //           newWidth = newHeight * 1;
-    //         }
-    //       }
-  
-    //       // setCanvasSize({ width: newWidth, height: newHeight });
-  
-    //       // signatureCanvasRef.current.width = newWidth;
-    //       // signatureCanvasRef.current.height = newHeight;
-    //       // ctx.drawImage(tempCanvas, 0, 0, newWidth, newHeight); // 새로운 크기로 이미지 데이터를 다시 그림
-
-
-    //       // canvas.width = newWidth;  // canvas 크기 설정
-    //       // canvas.height = newHeight;
-    //       canvasElement.width = newWidth;
-    //       canvasElement.height = newHeight;
-    //       ctx.drawImage(tempCanvas, 0, 0, newWidth, newHeight);
-          
-    //     }
-    //   };
-  
-    //   window.addEventListener('resize', handleResize);
-    //   return () => window.removeEventListener('resize', handleResize);
-    // }, []);
+    // ref가 잘 작동되는지 콘솔을 찍어봄
+    useEffect(() => {
+    if (signatureCanvasRef.current) {
+      console.log("Ref is set", signatureCanvasRef.current);
+      try {
+        const ctx = signatureCanvasRef.current.getContext('2d');
+        console.log("Context is accessible");
+      } catch (error) {
+        console.error("Failed to get context", error);
+      }
+    } else {
+      console.error("Ref is not set");
+    }
+  }, []);
 
 
     useEffect(() => {
@@ -272,25 +218,6 @@ function Draw() {
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
     }, []);
-    
-
-
-
-
-    // 창 크기에 따라 캔버스 크기 조정
-  //   useEffect(() => {
-  //   const checkSize = () => {
-  //     if (window.innerWidth < 768) { // 가정: 768px 미만은 모바일로 간주
-  //       setCanvasSize({ width: 250, height: 300 });
-  //     } else {
-  //       setCanvasSize({ width: 750, height: 425 });
-  //     }
-  //   };
-  //   checkSize(); // 컴포넌트 마운트 시 실행
-  //   window.addEventListener('resize', checkSize); // 창 크기 변경 시 실행
-
-  //   return () => window.removeEventListener('resize', checkSize); // 클린업
-  // }, []);
 
 
   useEffect(() => {
@@ -329,76 +256,6 @@ function Draw() {
   const [isLoading, setIsLoading] = useState(false);
 
 
-  // //파일 업로드 함수
-  // const uploadFile = async () => {
-
-  
-  //   if (!jwtToken) {
-  //       console.error("User not authenticated");
-  //       return;
-  //   }
-  
-  //   const fileInput = document.querySelector('input[type="file"]');
-  //   const file = fileInput.files[0];
-
-    
-  //   if (!file) {
-  //     console.error("No file selected");
-  //     return;
-  //   }
-
-  //   // FormData 객체 생성
-  //   const formData = new FormData();
-  //   formData.append('file', file);
-
-      
-  //   setIsLoading(true);
-
-  //   // 로그 추가: 요청 전송 직전
-  //   console.log('Sending POST request to server with form data:', formData);
-  
-  //   try {
-  //     // 서버로 POST 요청 보내기
-  //     const response = await fetch('https://dev.catchmind.shop/api/picture', {
-  //       method: 'POST',
-  //       headers: {
-
-  //       //'Accept': '*/*',
-  //       //'Content-Type': 'multipart/form-data', // 파일 업로드시에는 Content-Type을 multipart/form-data로 설정합니다.
-  //       'Authorization': `Bearer ${jwtToken}`, // 사용자 토큰을 헤더에 포함하여 서버로 전송
-
-  //       },
-  //       body: formData,
-  //     });
-  
-  //     // 응답 확인
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       console.log('File uploaded successfully:', data);
-  //        // 파일 업로드 성공 후 result 페이지로 이동
-  //        Navigate('/result', { state: { response: data } });
-  //     } else {
-  //       console.error('File upload failed', await response.text());
-  //     }
-  //   } catch (error) {
-  //     console.error('Error uploading file:', error.response.status, error.response.statusText);
-  //   } finally {
-  //     setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
-  //   }
-  // };
-
-  // // 완료 버튼 클릭 이벤트 처리
-  // const handleDoneClick = () => {
-  //   console.log('완료 버튼 클릭'); // 로그 찍기
-
-  //   if (sigCanvasRef.current) {
-  //     const dataURL = sigCanvasRef.current.toDataURL('image/png');
-  //     localStorage.setItem('savedCanvasImage', dataURL); // 로컬 스토리지에 저장
-  //     setImageURL(dataURL); // 상태 업데이트
-  //     uploadFile(dataURL); // 서버로 이미지 전송
-  //   }
-  // };
-
   // dataURI를 Blob으로 변환하는 함수
   function dataURItoBlob(dataURI) {
     const byteString = atob(dataURI.split(',')[1]);
@@ -422,19 +279,8 @@ function Draw() {
         console.error("로그인 인증 안됨");
         return;
     }
-  
-    //const fileInput = document.querySelector('input[type="file"]');
-    //const file = fileInput.files[0];
-
-    
-    // if (!file) {
-    //   console.error("No file selected");
-    //   return;
-    // }
 
     //FormData 객체 생성
-    // const formData = new FormData();
-    // formData.append('image', imageData);
     const formData = new FormData();
     const blob = dataURItoBlob(imageData); // Base64 데이터를 Blob으로 변환
     formData.append('file', blob, 'image.png'); // 여기서 'file'로 변경
@@ -458,29 +304,39 @@ function Draw() {
         body: formData // JSON.stringify를 사용하지 않고 FormData를 직접 전송
       });
 
-  //     if (!response.ok) throw new Error('Network response was not ok.');
+      //   // 응답 확인
+      //   if (response.ok) {
+      //     const data = await response.json();
+      //     console.log('File uploaded successfully:', data);
+      //      // 파일 업로드 성공 후 result 페이지로 이동
+      //      navigate('/result', { state: { response: data } });
+      //   } else {
+      //     console.error('File upload failed', await response.text());
+      //   }
+      // } catch (error) {
+      //   console.error('Error uploading file:', error.response.status, error.response.statusText);
+      // } finally {
+      //   setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
+      // }
 
-  //     const data = await response.json();
-  //     console.log('업로드 성공 Upload success:', data);
-  //     navigate('/result'); // 업로드 성공 시 네비게이션
-  //   } catch (error) {
-  //     console.error('업로드 실패 Upload failed:', error);
-  //   }
-  // };
-        // 응답 확인
-        if (response.ok) {
-          const data = await response.json();
-          console.log('File uploaded successfully:', data);
-           // 파일 업로드 성공 후 result 페이지로 이동
-           navigate('/result', { state: { response: data } });
-        } else {
-          console.error('File upload failed', await response.text());
-        }
-      } catch (error) {
-        console.error('Error uploading file:', error.response.status, error.response.statusText);
-      } finally {
-        setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
-      }
+
+
+    // 응답 확인
+    if (response.ok) {
+      const data = await response.json();
+      console.log('File uploaded successfully:', data);
+      
+       // 파일 업로드 성공 후 result 페이지로 이동
+       navigate('/result', { state: { response: data } });
+    } else {
+      console.error('File upload failed', await response.text());
+    }
+  } catch (error) {
+    console.error('Error uploading file:', error.response.status, error.response.statusText);
+  } finally {
+    setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
+  }
+
     };
 
 
@@ -621,9 +477,6 @@ function Draw() {
         )}
         {isDescriptionVisible && <Ver3 onClick={toggleBarBox} />}
       </DeskBtn>
-
-      
-
 
     </Wrap>
 
