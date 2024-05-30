@@ -16,7 +16,6 @@ function ResultContent() {
   };
   const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
   const pictureId = location.state?.response?.pictureDto?.id;
-  console.log("픽쳐 아이디" + pictureId);
   useEffect(() => {
     const fetchPictureDetails = async () => {
       if (!jwtToken) {
@@ -24,7 +23,6 @@ function ResultContent() {
         alert('로그인이 필요합니다.');
         return;  // 토큰이 없으면 함수를 더 이상 진행하지 않습니다.
       }
-  
       try {
         const response = await fetch(`https://dev.catchmind.shop/api/picture/${pictureId}`, {
           method: 'GET',
@@ -32,15 +30,12 @@ function ResultContent() {
             'Authorization': `Bearer ${jwtToken}`  // 헤더에 토큰을 포함시킵니다.
           }
         });
-  
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-  
         const responseData = await response.json();
         if (responseData && responseData.pictureDto) {
           setAnalysisResult(responseData.pictureDto.result);
-          console.log('Get response:', responseData);  // 성공 응답 로깅
         } else {
           throw new Error('No valid response data');
         }
@@ -48,7 +43,6 @@ function ResultContent() {
         console.error('데이터받아오는거 결과값', error);  // 오류 로깅
       }
     };
-  
     fetchPictureDetails();
   }, [jwtToken, pictureId]);  // 의존성 배열에 jwtToken과 pictureId 추가
   
