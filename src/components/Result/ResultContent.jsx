@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import styled from 'styled-components';
 import {theme} from '../../theme';
-
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 function ResultContent() {
-  const [title, setTitle] = useState('');
-  const [image, setImage] = useState(null);
-  const [analysisResult, setAnalysisResult] = useState("이미지 분석 결과가 여기에 표시됩니다. 이미지의 세부 사항, 색상 분포, 감정 분석 등 다양한 정보를 제공할 수 있습니다.");
-
+  const [analysisResult, setAnalysisResult] = useState("");
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState({
     htp: false,
     analysis: false
@@ -15,16 +14,45 @@ function ResultContent() {
   const toggleSection = section => {
     setIsOpen(prev => ({ ...prev, [section]: !prev[section] }));
   };
-  
+  const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
+  const pictureId = location.state?.response?.pictureDto?.id;
+  console.log("픽쳐 아이디" + pictureId);
   useEffect(() => {
-    fetch('https://api.example.com/analyze-image') // 분석 결과를 제공하는 API
-      .then(response => response.json())
-      .then(data => {
-        setAnalysisResult(data.result);  // 분석 결과를 상태에 저장
-      })
-      .catch(error => console.error('Failed to load analysis result:', error));
-  }, []);
-
+    const fetchPictureDetails = async () => {
+      if (!jwtToken) {
+        console.error('Authentication token is not available');
+        alert('로그인이 필요합니다.');
+        return;  // 토큰이 없으면 함수를 더 이상 진행하지 않습니다.
+      }
+  
+      try {
+        const response = await fetch(`https://dev.catchmind.shop/api/picture/${pictureId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${jwtToken}`  // 헤더에 토큰을 포함시킵니다.
+          }
+        });
+  
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+  
+        const responseData = await response.json();
+        if (responseData && responseData.pictureDto) {
+          setAnalysisResult(responseData.pictureDto.result);
+          console.log('Get response:', responseData);  // 성공 응답 로깅
+        } else {
+          throw new Error('No valid response data');
+        }
+      } catch (error) {
+        console.error('데이터받아오는거 결과값', error);  // 오류 로깅
+      }
+    };
+  
+    fetchPictureDetails();
+  }, [jwtToken, pictureId]);  // 의존성 배열에 jwtToken과 pictureId 추가
+  
+  
   return (
     <div>
         <Resultcontent>
