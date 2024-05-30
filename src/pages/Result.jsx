@@ -71,38 +71,34 @@ function Result() {
   };
 
   const handleSave = async () => {
-    const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
-  
     if (!jwtToken) {
       console.error('토큰오류임');
-
-      return;  // 토큰이 없으면 함수를 더 이상 진행하지 않습니다.
+      return;
     }
-  
+
     try {
       const response = await fetch(`https://dev.catchmind.shop/api/picture/title`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwtToken}`  // 헤더에 토큰을 포함시킵니다.
+          'Authorization': `Bearer ${jwtToken}`
         },
-        body: JSON.stringify({
-          id: id,   // 수정할 그림의 ID
-          title: title // 새로운 제목
-        })
+        body: JSON.stringify({ id: pictureId, title: title })
       });
-    localStorage.setId('pictureId', id);
-    localStorage.setTitle('pictureTitle', title);
-    const responseData = await response.json();
-    console.log('PATCH response:', responseData);
-      console.log('PATCH response:', response.data);  // 성공 응답 로깅
-    } catch (error) {
-      console.error('Error updating title:', error);  // 오류 로깅
-      console.log('바보',title);
-    }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
   
-      setIsEditing(false);
-  };
+  
+      
+    } catch (error) {
+      console.error('Error updating title:', error);
+    }
+
+    setIsEditing(false);
+};
+
   const handleEdit = async () => {
     setIsEditing(true);  // 편집 모드 종료
   };
