@@ -8,7 +8,6 @@ import Modal from '../components/Modal';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { LoginState } from '../recoil/recoilState';
-import InquiryList from '../components/MyPage/inquiryList';
 
 // 주요 컨테이너
 const MyPageContainer = styled.div`
@@ -303,14 +302,16 @@ const MyPage = () => {
     }
 
     // 항목 클릭 시, 해당 항목 결과 페이지로 이동
-    const moveToList = async (id) => {
-      try {  
-        const itemDetail = await InquiryList(id);
-        console.log('id 찍히나', itemDetail);
-        navigate(`/result/${id}`);
-      } catch(error) {
-        console.error('항목 안 불러와짐', error);
-      }
+    const moveToList = (id, title) => {
+      // try {  
+      //   const itemDetail = await InquiryList(id);
+      //   console.log('id 찍히나', itemDetail);
+      //   // 해당 항목에 대한 페이지로 이동
+      //   navigate(`/result`, {props: {id: id}}); 
+      // } catch(error) {
+      //   console.error('항목 안 불러와짐', error);
+      // }
+      navigate(`/result`, {state: { response: { pictureDto: { id: id, title: title} } } });
     }
  
   
@@ -336,7 +337,7 @@ const MyPage = () => {
               <SectionTitle>검사 일기</SectionTitle>
               <ListWrapper>
               {data.map((item, index) => (
-              <EntryContainer key={index} onClick={() => moveToList(item.id)}>
+              <EntryContainer key={index} onClick={() => moveToList(item.id, item.title)}>
                 <EntryText>{item.title}</EntryText>
                 <EntryDate>{item.createdAt}</EntryDate>
               </EntryContainer>

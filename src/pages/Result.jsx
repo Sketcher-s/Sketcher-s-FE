@@ -4,11 +4,12 @@ import { theme } from '../theme';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocation ,useNavigate} from 'react-router-dom';
+import { address } from '../components/Register/CheckEmail';
 
 function Result() {
   const location = useLocation();
   const Navigate = useNavigate();
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(location.state?.response?.pictureDto?.title); // 초기값은 이름을 입력해주세요. 마이페이지에서 왔으면, title 값 유지하고 있어야 함
   const [id ,setId] = useState(0);
   const [image, setImage] = useState('');
   const [analysisResult, setAnalysisResult] = useState('');
@@ -16,12 +17,14 @@ function Result() {
   const [isEditing, setIsEditing] = useState(true);  
   const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
   const pictureId = location.state?.response?.pictureDto?.id;
+
   function handleMyPageClick() {
     Navigate('/mypage', { state: { id: id, title: title } });
   }
   function handleMainClick() {
     Navigate('/Main');
   }
+
   useEffect(() => {
     const fetchPictureDetails = async () => {
       if (!jwtToken) {
@@ -74,27 +77,28 @@ function Result() {
     const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
   
     if (!jwtToken) {
-      console.error('토큰오류임');
-
+      console.error('Authentication token is not available');
+      alert('로그인이 필요합니다.');
       return;  // 토큰이 없으면 함수를 더 이상 진행하지 않습니다.
     }
   
     try {
-      const response = await fetch(`https://dev.catchmind.shop/api/picture/title`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwtToken}`  // 헤더에 토큰을 포함시킵니다.
-        },
-        body: JSON.stringify({
-          id: id,   // 수정할 그림의 ID
+      const response = await address.patch('/api/picture/title',
+        {
+          id: pictureId,   // 수정할 그림의 ID
           title: title // 새로운 제목
-        })
-      });
-    localStorage.setId('pictureId', id);
-    localStorage.setTitle('pictureTitle', title);
-    const responseData = await response.json();
-    console.log('PATCH response:', responseData);
+        },
+         { headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwtToken}`  // 헤더에 토큰을 포함시킵니다.
+          },
+        }
+      );
+  
+      console.log('제목', title);
+      console.log('그림 id', pictureId);
+
       console.log('PATCH response:', response.data);  // 성공 응답 로깅
     } catch (error) {
       console.error('Error updating title:', error);  // 오류 로깅
@@ -106,7 +110,6 @@ function Result() {
   const handleEdit = async () => {
     setIsEditing(true);  // 편집 모드 종료
   };
-  
   
   return (
     <div>
