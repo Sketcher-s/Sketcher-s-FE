@@ -3,31 +3,58 @@ import ResultContent from '../components/Result/ResultContent';
 import { theme } from '../theme';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation ,useNavigate} from 'react-router-dom';
 
 function Result() {
   const location = useLocation();
+  const Navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [id ,setId] = useState(0);
   const [image, setImage] = useState('');
   const [analysisResult, setAnalysisResult] = useState('');
   const [error, setError] = useState('');
-  const [isEditing, setIsEditing] = useState(true);
-
- 
+  const [isEditing, setIsEditing] = useState(true);  
+  const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
+  const pictureId = location.state?.response?.pictureDto?.id;
+  function handleMyPageClick() {
+    Navigate('/mypage', { state: { id: id, title: title } });
+  }
+  function handleMainClick() {
+    Navigate('/Main');
+  }
   useEffect(() => {
     const fetchPictureDetails = async () => {
+      if (!jwtToken) {
+        console.error('Authentication token is not available');
+        return;  
+      }
+  
       try {
-        console.log("location.state:", location.state);
-        setImage(location.state?.response?.pictureDto?.imageUrl);
+        const response = await fetch(`https://dev.catchmind.shop/api/picture/${pictureId}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${jwtToken}`  // 헤더에 토큰을 포함시킵니다.
+          }
+        });
+  
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+  
+        const responseData = await response.json();
+        if (responseData && responseData.pictureDto) {
+          setImage(responseData.pictureDto.imageUrl);
+          console.log('Get response:', responseData);  // 성공 응답 로깅
+        } else {
+          throw new Error('No valid response data');
+        }
       } catch (error) {
-        console.error("오류");
+        console.error('데이터받아오는거 결과값', error);  // 오류 로깅
       }
     };
-
-    fetchPictureDetails();
-  }, [location]);
   
+    fetchPictureDetails();
+  }, [jwtToken, pictureId]);  // 의존성 배열에 jwtToken과 pictureId 추가
   const handleTitleChange = (event) => {
       setTitle(event.target.value);
       validateTitle(event.target.value);
@@ -44,14 +71,11 @@ function Result() {
   };
 
   const handleSave = async () => {
-      setIsEditing(false);
-  };
-  const handleEdit = async () => {
     const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
   
     if (!jwtToken) {
-      console.error('Authentication token is not available');
-      alert('로그인이 필요합니다.');
+      console.error('토큰오류임');
+
       return;  // 토큰이 없으면 함수를 더 이상 진행하지 않습니다.
     }
   
@@ -67,13 +91,19 @@ function Result() {
           title: title // 새로운 제목
         })
       });
-  
-      const responseData = await response.json();
-      console.log('PATCH response:', responseData);  // 성공 응답 로깅
+    localStorage.setId('pictureId', id);
+    localStorage.setTitle('pictureTitle', title);
+    const responseData = await response.json();
+    console.log('PATCH response:', responseData);
+      console.log('PATCH response:', response.data);  // 성공 응답 로깅
     } catch (error) {
       console.error('Error updating title:', error);  // 오류 로깅
+      console.log('바보',title);
     }
   
+      setIsEditing(false);
+  };
+  const handleEdit = async () => {
     setIsEditing(true);  // 편집 모드 종료
   };
   
@@ -104,7 +134,14 @@ function Result() {
                 <AnalysisResult>{analysisResult}</AnalysisResult>
             </ResultSection>
           <ResultContent/>
-          <ResultButton/>
+          <ButtonBox>
+        <MainButtonBox >
+            <MainButton onClick={handleMainClick}>메인페이지로 이동</MainButton>
+          </MainButtonBox>
+        <MyPageButtonBox >
+            <MyPageButton onClick={handleMyPageClick}>마이페이지로 이동</MyPageButton>
+          </MyPageButtonBox>
+        </ButtonBox>
         </DrawingSection>
       </Wrapper>
     </div>
@@ -172,8 +209,9 @@ const TitleInput = styled.input`
   `}
 `;
 const StyledImage = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 75%;
+  height: 80%;
+  border: 1px solid #E0E1E9
 
 `;
 const ErrorMessage = styled.p`
@@ -201,6 +239,7 @@ const AnalysisResult = styled.div`
 `;
 
 const Button = styled.button`
+  width:6%;
   padding: 0.5rem 1rem;
   background-color: #6487e2;
   color: white;
@@ -211,5 +250,79 @@ const Button = styled.button`
     background-color: #5371c9;
   }
 
+  ${theme.media.mobile} {
+    padding: 0.5rem 0.1rem;
+    font-size: 0.5rem; // 모바일에서는 폰트 크기를 조금 작게
+  }
+
 `;
 
+
+
+
+const ButtonBox = styled.div`
+  display: flex;
+  gap: 3.125rem; /* 버튼 간격 */
+  justify-content: center;
+  align-items: center;
+  margin-top: 3.25rem;
+  margin-bottom:2.5rem;
+  ${theme.media.mobile`
+  flex-direction:column;
+  `}
+`;
+
+const MyPageButtonBox = styled.div`
+  width: 10rem;
+  height: 2.75rem;
+  padding: 0 1.25rem;
+  border-radius: 0.25rem;
+  border: 0.0625rem solid #6487e2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${theme.media.mobile`
+  width:80%;
+  margin-top:-1.875rem;
+  `}
+`;
+
+const MyPageButton = styled.div`
+  width: 7.5rem;
+  text-align: center;
+  color: #6487e2;
+  font-size: 0.9rem;
+  font-family: Pretendard-Regular;
+  font-weight: 700;
+  line-height: 1.5rem;
+  word-wrap: break-word;
+  
+
+`;
+
+const MainButton = styled.div`
+  width: 7.5rem;
+  text-align: center;
+  color: white;
+  font-size: 0.9rem;
+  font-family: Pretendard-Regular;
+  font-weight: 700;
+  line-height: 1.5rem;
+  word-wrap: break-word;
+  
+`;
+
+const MainButtonBox = styled.div`
+  width: 10rem;
+  height: 2.75rem;
+  padding: 0 1.25rem;
+  background: #6487e2;
+  border-radius: 0.25rem;
+  border: 0.0625rem solid #6487e2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${theme.media.mobile`
+  width:80%;
+  `}
+`;
