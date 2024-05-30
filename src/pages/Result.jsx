@@ -24,7 +24,7 @@ function Result() {
         console.error("오류");
       }
     };
-  
+
     fetchPictureDetails();
   }, [location]);
   
@@ -83,6 +83,7 @@ function Result() {
       <Wrapper>
         <DrawingSection>
         <ResultSection>
+              <TitleSection>
                 <TitleInput
                     type="text"
                     value={title}
@@ -90,17 +91,15 @@ function Result() {
                     placeholder="그림의 제목을 입력하세요"
                     readOnly={!isEditing}
                     isError={error.length > 0}
+                    
                 />
-                {error && <ErrorMessage>{error}</ErrorMessage>}
-                {!isEditing ? (
-                    <Button onClick={handleEdit}>수정</Button>
-                ) : (
-                    <Button onClick={handleSave}>저장</Button>
-                )}
+                <Button onClick={!isEditing ? handleEdit : handleSave}>
+                {!isEditing ? "수정" : "저장"}
+              </Button>
+              </TitleSection>
+              {error && <ErrorMessage>{error}</ErrorMessage>}
                 <DrawResult>
-                    {image && (
-                        <img src={image} alt="Drawing for Analysis" style={{ width: '40%', height: '40%' }} />
-                    )}
+                  {image && <StyledImage src={image} alt="Drawing for Analysis" />}
                 </DrawResult>
                 <AnalysisResult>{analysisResult}</AnalysisResult>
             </ResultSection>
@@ -141,19 +140,22 @@ const DrawingSection = styled.div`
     margin-bottom: 30px; // 하단 마진 추가
   `}
 `;
+const TitleSection = styled.div`
+  display: flex;
+  justify-content: space-between;  // 내부 요소를 양쪽 끝으로 정렬합니다.
+`;
 
 const ResultSection = styled.div`
   width: 100%;
 `;
 
 const TitleInput = styled.input`
-  width: 100%;
+  width: 90%;
   height: 1.875rem;
   font-size: 1.625rem;
   font-weight: bold;
   border: none;
   border-bottom: 0.125rem solid transparent;
-
   &:focus {
     outline: none;
     border-bottom: 0.125rem solid #6487e2;
@@ -162,14 +164,18 @@ const TitleInput = styled.input`
   &::placeholder {
     color: rgb(177, 178, 184);
     ${theme.media.mobile`
-      font-size: 1rem;
+      font-size: 0.9rem;
     `}
   }
   ${theme.media.mobile`
     width:90%;
   `}
 `;
+const StyledImage = styled.img`
+  width: 100%;
+  height: 100%;
 
+`;
 const ErrorMessage = styled.p`
   color: red;
   font-size: 0.75rem;
@@ -182,6 +188,7 @@ const DrawResult = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 1px solid #E0E1E9
   ${theme.media.mobile`
     width:90%;
   `}
@@ -194,15 +201,15 @@ const AnalysisResult = styled.div`
 `;
 
 const Button = styled.button`
-  margin-top: 1rem;
   padding: 0.5rem 1rem;
   background-color: #6487e2;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   cursor: pointer;
-
   &:hover {
     background-color: #5371c9;
   }
+
 `;
+
