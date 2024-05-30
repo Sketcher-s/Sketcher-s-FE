@@ -22,26 +22,42 @@ function ResultTitle() {
       }
     }, [location]);
     
+    const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
+    const pictureId = location.state?.response?.pictureDto?.id;
+    console.log("픽쳐 아이디" + pictureId);
     useEffect(() => {
       const fetchPictureDetails = async () => {
+        if (!jwtToken) {
+          console.error('Authentication token is not available');
+          return;  // 토큰이 없으면 함수를 더 이상 진행하지 않습니다.
+        }
+    
         try {
-          const pictureId = location.state?.id; // pictureId를 location.state에서 받아오거나 다른 방식으로 설정
-          if (!pictureId) {
-            console.error("id값 없음");
-            return;
+          const response = await fetch(`https://dev.catchmind.shop/api/picture/${pictureId}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${jwtToken}`  // 헤더에 토큰을 포함시킵니다.
+            }
+          });
+    
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
           }
-          const response = await axios.get(`https://dev.catchmind.shop/api/picture/${pictureId}`);
-          if (response.data) {
-            setImage(response.data.pictureDto.imageUrl);
-
+    
+          const responseData = await response.json();
+          if (responseData && responseData.pictureDto) {
+            setImage(responseData.pictureDto.imageUrl);
+            console.log('Get response:', responseData);  // 성공 응답 로깅
+          } else {
+            throw new Error('No valid response data');
           }
         } catch (error) {
-          console.error("오류다 임마", error);
+          console.error('데이터받아오는거 결과값', error);  // 오류 로깅
         }
       };
     
       fetchPictureDetails();
-    }, []);
+    }, [jwtToken, pictureId]);  // 의존성 배열에 jwtToken과 pictureId 추가
     
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -59,6 +75,32 @@ function ResultTitle() {
     };
 
     const handleSave = async () => {
+      const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
+    
+      if (!jwtToken) {
+        console.error('Authentication token is not available');
+        alert('로그인이 필요합니다.');
+        return;  // 토큰이 없으면 함수를 더 이상 진행하지 않습니다.
+      }
+    
+      try {
+        const response = await fetch(`https://dev.catchmind.shop/api/picture/title`, {
+          method: 'PATCH',
+          headers: {
+            'Authorization': `Bearer ${jwtToken}`  // 헤더에 토큰을 포함시킵니다.
+          },
+          body: JSON.stringify({
+            id: id,   // 수정할 그림의 ID
+            title: title // 새로운 제목
+          })
+        });
+
+        const responseData = await response.json();
+        console.log('PATCH response:', responseData);  // 성공 응답 로깅
+      } catch (error) {
+        console.error('Error updating title:', error);  // 오류 로깅
+      }
+
         setIsEditing(false);
     };
 
