@@ -8,6 +8,7 @@ import Modal from '../components/Modal';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { LoginState } from '../recoil/recoilState';
+import InquiryList from '../components/MyPage/inquiryList';
 
 // 주요 컨테이너
 const MyPageContainer = styled.div`
@@ -226,6 +227,7 @@ const MyPage = () => {
     const [userInfo,setUserInfo] = useState({name: '', email: ''});
     const size = 8;
     const [modalStatus, setModalStatus] = useState(null);
+    console.log(data.title, data.createdAt);
 
     // 로그인 상태
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
@@ -299,8 +301,19 @@ const MyPage = () => {
     const moveToMain = () => {
       navigate('/');
     }
+
+    // 항목 클릭 시, 해당 항목 결과 페이지로 이동
+    const moveToList = async (id) => {
+      try {  
+        const itemDetail = await InquiryList(id);
+        console.log('id 찍히나', itemDetail);
+        navigate(`/result/${id}`);
+      } catch(error) {
+        console.error('항목 안 불러와짐', error);
+      }
+    }
+ 
   
-    
   return (
     <MyPageContainer>
         <MyPageWrapper>
@@ -323,7 +336,7 @@ const MyPage = () => {
               <SectionTitle>검사 일기</SectionTitle>
               <ListWrapper>
               {data.map((item, index) => (
-              <EntryContainer key={index}>
+              <EntryContainer key={index} onClick={() => moveToList(item.id)}>
                 <EntryText>{item.title}</EntryText>
                 <EntryDate>{item.createdAt}</EntryDate>
               </EntryContainer>
