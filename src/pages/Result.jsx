@@ -8,7 +8,7 @@ import { useLocation ,useNavigate} from 'react-router-dom';
 function Result() {
   const location = useLocation();
   const Navigate = useNavigate();
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState(location.state?.response?.pictureDto?.title); // 초기값은 이름을 입력해주세요. 마이페이지에서 왔으면, title 값 유지하고 있어야 함
   const [id ,setId] = useState(0);
   const [image, setImage] = useState('');
   const [analysisResult, setAnalysisResult] = useState('');
@@ -16,12 +16,14 @@ function Result() {
   const [isEditing, setIsEditing] = useState(true);  
   const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
   const pictureId = location.state?.response?.pictureDto?.id;
+
   function handleMyPageClick() {
     Navigate('/mypage', { state: { id: id, title: title } });
   }
   function handleMainClick() {
     Navigate('/Main');
   }
+
   useEffect(() => {
     const fetchPictureDetails = async () => {
       if (!jwtToken) {
@@ -102,7 +104,6 @@ function Result() {
   const handleEdit = async () => {
     setIsEditing(true);  // 편집 모드 종료
   };
-  
   
   return (
     <div>

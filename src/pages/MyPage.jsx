@@ -226,6 +226,7 @@ const MyPage = () => {
     const [userInfo,setUserInfo] = useState({name: '', email: ''});
     const size = 8;
     const [modalStatus, setModalStatus] = useState(null);
+    console.log(data.title, data.createdAt);
 
     // 로그인 상태
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
@@ -299,8 +300,21 @@ const MyPage = () => {
     const moveToMain = () => {
       navigate('/');
     }
+
+    // 항목 클릭 시, 해당 항목 결과 페이지로 이동
+    const moveToList = (id, title) => {
+      // try {  
+      //   const itemDetail = await InquiryList(id);
+      //   console.log('id 찍히나', itemDetail);
+      //   // 해당 항목에 대한 페이지로 이동
+      //   navigate(`/result`, {props: {id: id}}); 
+      // } catch(error) {
+      //   console.error('항목 안 불러와짐', error);
+      // }
+      navigate(`/result`, {state: { response: { pictureDto: { id: id, title: title} } } });
+    }
+ 
   
-    
   return (
     <MyPageContainer>
         <MyPageWrapper>
@@ -323,7 +337,7 @@ const MyPage = () => {
               <SectionTitle>검사 일기</SectionTitle>
               <ListWrapper>
               {data.map((item, index) => (
-              <EntryContainer key={index}>
+              <EntryContainer key={index} onClick={() => moveToList(item.id, item.title)}>
                 <EntryText>{item.title}</EntryText>
                 <EntryDate>{item.createdAt}</EntryDate>
               </EntryContainer>

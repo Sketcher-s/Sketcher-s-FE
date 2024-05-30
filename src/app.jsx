@@ -21,9 +21,12 @@ import styled from 'styled-components';
 const PageLayout = () => {
   const location = useLocation();
   const isMainPage = location.pathname === '/';
+  const isPicPage = location.pathname === '/preparepicture';
+  const isResultPage = location.pathname === '/result';
+  const isDraw = location.pathname === '/draw';
 
   return (
-    <Container isMainPage={isMainPage}>
+    <Container isMainPage={isMainPage} isPicPage={isPicPage} isResultPage={isResultPage} isDraw={isDraw}>
       <RecoilRoot>
         <Navbar/>
             <Sidebar/>
@@ -37,7 +40,6 @@ const PageLayout = () => {
               <Route path="/loading" element={<Loading/>} />
               <Route path="/" element={<Main/>} />
               <Route path="/result" element={<Result/>} />
-    
               <Route path="/camera" element={<Camera/>} />
             </Routes>
       </RecoilRoot>
@@ -59,6 +61,6 @@ function App() {
 export default App;
 
 const Container = styled.div`
-  height: ${(props) => (props.isMainPage ? 'auto' : '100vh')};
-  overflow: ${(props) => (props.isMainPage ? 'auto' : 'hidden')};
+  height: ${(props) => (props.isMainPage || props.isPicPage || props.isResultPage || props.isDraw ? 'auto' : '100vh')};
+  overflow: ${(props) => (props.isMainPage  || props.isPicPage || props.isResultPage || props.isDraw ? 'auto' : 'hidden')};
 `;
