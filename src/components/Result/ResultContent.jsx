@@ -142,6 +142,7 @@ const Icon = styled.span`
   border-width: 0 0.125rem 0.125rem 0;
   padding: 0.1875rem;
   transform: ${props => props.isOpen ? 'rotate(-135deg)' : 'rotate(45deg)'};
+  cursor: pointer;
 `;
 
 const AccordionBody = styled.div`

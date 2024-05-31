@@ -257,7 +257,7 @@ const PicButton = styled.button`
   word-wrap: break-word;
   border: none;
   background: none;
-
+  cursor: pointer;
 `;
 
 const DraButton = styled.button`
@@ -271,7 +271,7 @@ const DraButton = styled.button`
   word-wrap: break-word;
   border: none;
   background: none;
-
+  cursor: pointer;
 `;
 
 const DraButtonBox = styled.div`

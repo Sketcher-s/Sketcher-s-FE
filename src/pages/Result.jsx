@@ -293,7 +293,7 @@ const MyPageButton = styled.div`
   font-weight: 700;
   line-height: 1.5rem;
   word-wrap: break-word;
-  
+  cursor: pointer;
 
 `;
 
@@ -306,6 +306,7 @@ const MainButton = styled.div`
   font-weight: 700;
   line-height: 1.5rem;
   word-wrap: break-word;
+  cursor: pointer;
   
 `;
 
