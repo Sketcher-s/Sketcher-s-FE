@@ -240,7 +240,6 @@ const MyPage = () => {
     const [userInfo,setUserInfo] = useState({name: '', email: ''});
     const size = 8;
     const [modalStatus, setModalStatus] = useState(null);
-    console.log(data.title, data.createdAt);
 
     // 로그인 상태
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
@@ -317,17 +316,33 @@ const MyPage = () => {
 
     // 항목 클릭 시, 해당 항목 결과 페이지로 이동
     const moveToList = (id, title) => {
-      // try {  
-      //   const itemDetail = await InquiryList(id);
-      //   console.log('id 찍히나', itemDetail);
-      //   // 해당 항목에 대한 페이지로 이동
-      //   navigate(`/result`, {props: {id: id}}); 
-      // } catch(error) {
-      //   console.error('항목 안 불러와짐', error);
-      // }
       navigate(`/result`, {state: { response: { pictureDto: { id: id, title: title} } } });
     }
  
+    // 시간 띄우기
+    const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      const year = date.getFullYear(); // 년도
+      const month = date.getMonth() + 1; // 월 (0부터 시작하므로 +1)
+      const day = date.getDate(); // 일
+      const hour = date.getHours(); // 시
+      const minute = date.getMinutes(); // 분
+
+      // 두자리
+      const monthFormatted = (`0${month}`).slice(-2);
+      const dayFormatted = (`0${day}`).slice(-2);
+      const hourFormatted = (`0${hour}`).slice(-2);
+      const minuteFormatted = (`0${minute}`).slice(-2);
+
+      return `${year}년 ${monthFormatted}월 ${dayFormatted}일 ${hourFormatted}시 ${minuteFormatted}분`;
+    }
+
+    // 최신순으로 정렬
+    const sortedData = data.sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+      return dateB - dateA; // 내림차순 정렬
+    });
   
   return (
     <MyPageContainer>
@@ -350,14 +365,14 @@ const MyPage = () => {
             <ListContainer>
               <SectionTitle>검사 일기</SectionTitle>
               <ListWrapper>
-              {data.map((item, index) => (
+              {sortedData.map((item, index) => (
               <EntryContainer key={index} onClick={() => moveToList(item.id, item.title)}>
                 <EntryText>{item.title}</EntryText>
-                <EntryDate>{item.createdAt}</EntryDate>
+                <EntryDate>{formatDate(item.createdAt)}</EntryDate>
               </EntryContainer>
               ))}
               {loading && <div>Loading...</div>}
-              {data?.length === 0 && <BeforeList>검사를 진행해보세요!</BeforeList>}
+              {sortedData?.length === 0 && <BeforeList>검사를 진행해보세요!</BeforeList>}
               </ListWrapper>
             </ListContainer>
           </ContentContainer>
@@ -393,7 +408,7 @@ const WithDrawalButton = styled.button`
   border-radius: 5px;
   padding-top: 0.15rem;
   cursor: pointer;
-  
+
   ${theme.media.mobile`
   align-self: center;
   width: 18%;
