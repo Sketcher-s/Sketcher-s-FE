@@ -15,26 +15,14 @@ import { BarBox, StyledShape, StyledRectangle, BarContainer, DeskBtn, MobileBtn,
 import { Container } from './Description';
 import { ReactComponent as RectangleH } from '../../assets/Draw/RectangleH.svg';
 import {} from 'recoil';
-//import { useRecoilValue } from 'recoil';
-import { useRecoilState } from 'recoil';
 import { atom } from 'recoil';
 import Ver3 from './Description';
-// import { calculatedCanvasSizeState } from './atoms'
-//import { canvasContentState } from './atoms';
 
 // Recoil을 사용하여 캔버스의 내용을 상태로 관리
 const canvasContentState = atom({
   key: 'canvasContentState',
   default: null,
 });
-
-// // imgFile props에 대한 유효성 검사를 추가
-// Draw.propTypes = {
-
-//   // imgFile은 File 객체로 전달되어야 합니다.
-//   imgFile: Draw.instanceOf(File),
-  
-// };
 
 function Draw() {  
 
@@ -295,13 +283,7 @@ const uploadImageToServer = async () => {
       console.error(`HTTP error! status: ${response.status}, message: ${errorText}`);
       throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
     }
-    // if (!response.ok) {
-    //   const data = await response.json();
-    //   console.error(`HTTP error! status: ${response.status}, message: ${errorText}`);
-    //   throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
-    // }
    
-    
     // 응답이 비어 있는지 확인
     const text = await response.text();
     if (!text) {
