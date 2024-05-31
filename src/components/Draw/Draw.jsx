@@ -39,7 +39,7 @@ const canvasContentState = atom({
 function Draw() {  
 
   //상태관리
-  const [canvasContent, setCanvasContent] = useRecoilState(canvasContentState);
+  //const [canvasContent, setCanvasContent] = useRecoilState(canvasContentState);
 
   // Ref를 사용하여 Signaturecanvas 컴포넌트에 접근한다.
   const signatureCanvasRef = useRef(null);
@@ -47,6 +47,16 @@ function Draw() {
   const [savedSignatures, setSavedSignatures] = useState([]);
   const [canvasData, setCanvasData] = useState('');
 
+  // 흰색 배경
+  useEffect(() => {
+    // 캔버스 배경을 흰색으로 설정합니다.
+    const canvas = signatureCanvasRef.current.getCanvas();
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#FFFFFF'; // 흰색 배경 설정
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // 이 후의 그림 그리기는 흰색 배경 위에 수행됩니다.
+  }, []);
   useEffect(() => {
     // 컴포넌트가 마운트될 때 로컬 스토리지에서 저장된 그림 데이터를 복원한다.
     const savedData = localStorage.getItem('canvasData');
@@ -55,6 +65,7 @@ function Draw() {
       signatureCanvasRef.current.fromDataURL(savedData);
     }
 }, []);
+
 
   useEffect(() => {
     //컴포넌트가 언마운트 되거나 창 크기가 변경 되기 전에 로컬 스토리지에 저장
@@ -124,53 +135,9 @@ function Draw() {
     } 
   };
 
-
     // //그림판 구현
     const [canvasSize, setCanvasSize] = useState({ width: 250, height: 300 });
     const [color, setColor] = useState("black");
-    
-    //그림판 : 그림판의 크기가 화면에 따라 크기 조정되지만 크기 조정될때마다 그림이 날라가는 코드
-    // useEffect(() => {
-    //   const handleResize = () => {
-    //     // 화면 크기에 따라 canvas 크기를 조정
-    //     const screenWidth = window.innerWidth;
-    //     const screenHeight = window.innerHeight;
-    //     let newWidth, newHeight;
-
-    //   if (screenWidth < screenHeight) {
-    //     // 모바일 세로 화면일 때 (A4 세로 비율)
-    //     newWidth = screenWidth * 0.7;
-    //     newHeight = newWidth * 1.414;
-    //   } else {
-    //     // 데스크탑 가로 화면일 때 (A4 가로 비율)
-    //     newWidth = screenWidth * 0.6;
-    //     newHeight = newWidth / 1.414;
-
-    //     // 높이가 화면을 초과할 경우, 높이 기준으로 너비를 계산
-    //     if (newHeight > screenHeight * 0.7) {
-    //       newHeight = screenHeight * 0.7;
-    //       newWidth = newHeight * 1.414;
-    //     }
-    //   }
-
-    //   setCanvasSize({ width: newWidth, height: newHeight });
-
-    //     if (canvasContent && signatureCanvasRef.current) {
-    //       const ctx = signatureCanvasRef.current.getContext('2d');
-    //       const img = new Image();
-    //       img.onload = function () {
-    //         ctx.drawImage(img, 0, 0);
-    //       };
-    //       img.src = canvasContent;
-    //     }
-    //   };
-      
-  
-    //   // 컴포넌트가 마운트될 때와 화면 크기가 변경될 때마다 크기를 업데이트
-    //   handleResize();
-    //   window.addEventListener('resize', handleResize);
-    //   return () => window.removeEventListener('resize', handleResize);
-    // }, [canvasContent]);
 
     // ref가 잘 작동되는지 콘솔을 찍어봄
     useEffect(() => {
@@ -246,14 +213,6 @@ function Draw() {
     return () => window.removeEventListener('resize', checkSize); // 클린업
 }, []);
 
-
-
-
-  // const sigCanvasRef = useRef(null);
-  //const sigCanvasRef = useRef(null);
-  //const [imageURL, setImageURL] = useState('');
-
-
   // useEffect를 사용하여 컴포넌트가 마운트될 때 토큰을 가져옵니다.
   useEffect(() => {
     const token = localStorage.getItem('jwtToken');
@@ -282,209 +241,95 @@ function Draw() {
     };
   }, []);
 
-
-// //이미지 데이터를 서버로 전송하는 함수
-// const uploadImageToServer = async () => {
-//   const canvas = signatureCanvasRef.current;
-//   if (!canvas) {
-//     console.error("Canvas is not initialized");
-//     return;
-//   }
-
-//   // 이미지를 JPEG 형식으로 추출 (품질 1.0)
-//   const imageDataUrl = canvas.toDataURL('image/jpeg', 1.0);
-
-//   // 이미지 데이터를 Blob으로 변환
-//   const response = await fetch(imageDataUrl);
-//   const blob = await response.blob();
-
-//   // FormData 객체 생성 및 설정
-//   const formData = new FormData();
-//   formData.append('picture', blob, 'canvasImage.jpg');
-
-//   try {
-//     // 서버로 POST 요청 보내기
-//     const serverResponse = await fetch('https://dev.catchmind.shop/api/picture', {
-//       method: 'POST',
-//       body: formData,
-//       headers: {
-//         'Authorization': `Bearer ${jwtToken}`, // 필요한 경우 인증 토큰 추가
-//       },
-//     });
-
-//   //   if (!serverResponse.ok) throw new Error('Failed to upload image');
-//   //   const result = await serverResponse.json();
-//   //   console.log('Image uploaded successfully:', result);
-//   // } catch (error) {
-//   //   console.error('Error uploading image:', error);
-//   // }
-
-//   if (!response.ok) {
-//     console.error(`HTTP error! status: ${response.status}`);
-//     const errorBody = await response.text();  // Assuming the server sends a text response for errors
-//     console.error(`Error details: ${errorBody}`);
-//     throw new Error(`HTTP error! status: ${response.status}`);
-//   }
-//   const data = await response.json();
-//   console.log('File uploaded successfully:', data);
-// } catch (error) {
-//   console.error('File upload failed:', error.message);
-// }
-
-// };
-
-
-
-  // 이미지 데이터를 서버로 전송하는 함수
-  const uploadImageToServer = async () => {
-
-    const token = localStorage.getItem('jwtToken');
-    if (token) {
-      console.log('사용자 인증 완료');
-
-      setjwtToken(token);
-    } else {
-      console.error("JWT token not found in local storage");
+  // 데이터 url blob로 변화하기
+  const dataURLtoBlob = (dataURL) => {
+    const byteString = atob(dataURL.split(',')[1]);
+    const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
     }
+    return new Blob([ab], { type: mimeString });
+  };
 
+ // 이미지 데이터를 서버로 전송하는 함수
+const uploadImageToServer = async () => {
 
+  const token = localStorage.getItem('jwtToken');
+  if (!token) {
+    console.error("JWT token not found in local storage");
+    return;
+  }
 
+  console.log('JWT token found:', token);
 
-  const imageData = signatureCanvasRef.current.toDataURL(); // 이미지를 JPEG 형식으로 변환 
-  const base64Response = await fetch(imageData);  // Base64 문자열에서 필요하지 않은 부분을 제거
-  const blob = await base64Response.blob(); // Blob으로 변환
+  const imageData = signatureCanvasRef.current.toDataURL('image/png'); // 이미지를 PNG 형식으로 변환
+  console.log('Image data URL:', imageData);
+
+  const blob = dataURLtoBlob(imageData);
+
+  // const base64Response = await fetch(imageData);
+  // const blob = await base64Response.blob(); // Blob으로 변환
+
   const formData = new FormData();
-  // formData.append('file', blob, "filename.png"); // Blob을 파일로 처리하여 추가
-  formData.append('file', blob);
-
-  // 요청 세부 정보 로깅
-  console.log('Prepared FormData:');
-  formData.forEach((value, key) => {
-  console.log(key, typeof value, value);
-  });
+  formData.append('file', blob, 'image.png'); // Blob을 파일로 처리하여 추가
 
   // 로그 추가: 요청 전송 직전
-  console.log('Sending POST request to server with form data:', formData);
+  console.log('Sending POST request to server with form data:');
+  for (let pair of formData.entries()) {
+    console.log(pair[0], pair[1]);
+  }
 
+  try {
+    const response = await fetch('https://dev.catchmind.shop/api/picture', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+      body: formData,
+    });
 
-
-    try {
-      const response = await fetch('https://dev.catchmind.shop/api/picture', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${jwtToken}`,
-        },
-        body: formData,
-        credentials: 'include', // 쿠키를 포함하려면 추가
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-     // 응답이 비어 있는지 확인
-     const text = await response.text();
-     if (!text) {
-       throw new Error("응답이 비어있습니다");
-     }
- 
-     // JSON 데이터가 있는지 안전하게 확인
-     let data;
-     try {
-       data = JSON.parse(text);
-     } catch (error) {
-       throw new Error("응답 데이터가 JSON 형식이 아닙니다");
-     }
-
-      console.log('파일 업로드 성공:', data);
-    } catch (error) {
-      console.error('파일 업로드 실패:', error);
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+      throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
     }
-  };
+    // if (!response.ok) {
+    //   const data = await response.json();
+    //   console.error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+    //   throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+    // }
+   
+    
+    // 응답이 비어 있는지 확인
+    const text = await response.text();
+    if (!text) {
+      console.error("응답이 비어 있습니다");
+      throw new Error("응답이 비어 있습니다");
+    }
 
+    // JSON 데이터가 있는지 안전하게 확인
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (error) {
+      console.error("응답 데이터가 JSON 형식이 아닙니다:", text);
+      throw new Error("응답 데이터가 JSON 형식이 아닙니다");
+    }
 
+    console.log('파일 업로드 성공:', data);
+  } catch (error) {
+    console.error('파일 업로드 실패:', error.message);
+  }
+};
 
-
-  //여긴 403ㄷ에러 뜨는 코드임
-//   // 이미지 데이터를 서버로 전송하는 함수
-// const uploadImageToServer = async () => {
-//   // 로컬 스토리지에서 JWT 토큰을 가져옴
-//   const token = localStorage.getItem('jwtToken');
-//   if (token) {
-//     console.log('사용자 인증 완료');
-//     setjwtToken(token); // 상태 업데이트
-//   } else {
-//     console.error("JWT token not found in local storage");
-//     return; // 토큰이 없으면 함수를 빠져나옴
-//   }
-
-//   // Canvas에서 이미지 데이터를 JPEG 형식으로 추출
-//   const imageDataUrl = signatureCanvasRef.current.toDataURL('image/jpeg', 1.0);
-
-//   // Base64 URL을 Blob으로 변환
-//   fetch(imageDataUrl)
-//     .then(response => response.blob())
-//     .then(blob => {
-//       // FormData 객체 생성 및 이미지 파일 추가
-//       const formData = new FormData();
-//       formData.append('imageFile', blob, 'image.jpg');
-
-//       // FormData 내용 확인
-//       for (let pair of formData.entries()) {
-//         console.log(`${pair[0]}: ${pair[1]}`);
-//       }
-
-//       // 로그 추가: 요청 전송 직전
-//       console.log('Sending POST request to server with form data:', formData);
-      
-//       // 요청 세부 정보 로깅
-//     console.log('Prepared FormData:');
-//     formData.forEach((value, key) => {
-//       console.log(key, typeof value, value);
-//     });
-
-//       // 서버에 이미지 데이터를 포함한 POST 요청 보내기
-//       fetch('https://dev.catchmind.shop/api/picture', {
-//         method: 'POST',
-//         headers: {
-//           'Authorization': `Bearer ${jwtToken}`
-//         },
-//         body: formData
-//       })
-//       .then(response => {
-//         if (!response.ok) {
-//           throw new Error(`HTTP error! status: ${response.status}`);
-//         }
-//         return response.text(); // 응답을 텍스트로 변환
-//       })
-//       .then(text => {
-//         if (!text) {
-//           throw new Error("응답이 비어있습니다");
-//         }
-//         // JSON 파싱 시도
-//         try {
-//           const data = JSON.parse(text);
-//           console.log('파일 업로드 성공:', data);
-//         } catch (error) {
-//           throw new Error("응답 데이터가 JSON 형식이 아닙니다");
-//         }
-//       })
-//       .catch(error => {
-//         console.error('파일 업로드 실패:', error);
-//       });
-//     });
-// };
-
-
-  
-
-  // 완료 버튼 클릭 이벤트 핸들러
-  
-  const handleDoneClick = () => {
-    console.log('완료 버튼 클릭');
-    uploadImageToServer(); // 서버로 이미지 전송
-  };
-
+// 완료 버튼 클릭 이벤트 핸들러
+const handleDoneClick = () => {
+  console.log('완료 버튼 클릭');
+  //addWhiteBack(signatureCanvasRef.current);
+  uploadImageToServer(); // 서버로 이미지 전송
+};
 
   return (
     <Wrap>
@@ -558,6 +403,7 @@ function Draw() {
             {/* <CanvasContainer> */}
             <SignatureCanvas
                 ref={signatureCanvasRef}
+                backgroundColor='white'
                 penColor={color}
                 penSize={penSize} // penSize 상태를 전달
                 canvasProps={{ width: canvasSize.width, height: canvasSize.height }}
@@ -569,13 +415,13 @@ function Draw() {
                   setSavedSignatures([...savedSignatures, dataURL])
                 }}
                 onMouseDown={() => {
-                  if (canvasContent) {
+                  if (canvasContentState) {
                     const ctx = signatureCanvasRef.current.getContext('2d');
                     const img = new Image();
                     img.onload = function () {
                       ctx.drawImage(img, 0, 0);
                     };
-                    img.src = canvasContent;
+                    img.src = canvasContentState;
                   }
                 }}
             />
