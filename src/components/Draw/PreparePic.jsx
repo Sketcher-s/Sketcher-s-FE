@@ -329,7 +329,7 @@ const PutSection = styled.div`
   gap: 0.625rem; //10px;
   display: flex;
   margin-top: 1.3rem;
-
+  cursor: pointer;
   ${theme.media.mobile`
     display: none;
 `}
@@ -443,6 +443,7 @@ const ButtonWrapper = styled.button`
   align-items: center;
   display: flex;
   border: none;
+  cursor: pointer;
 
   ${theme.media.mobile`
     width: 75%;

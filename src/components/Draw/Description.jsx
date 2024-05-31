@@ -231,6 +231,7 @@ export const StyledContent = styled.div`
 export const BarContainer = styled.div`
 display: flex;
 position: relative;
+cursor: pointer;
 
 ${theme.media.mobile`
 width: 100%;

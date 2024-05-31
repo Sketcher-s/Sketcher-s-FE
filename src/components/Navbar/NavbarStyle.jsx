@@ -41,6 +41,7 @@ export const LogoContainer = styled.div`
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const HeaderButtons = styled.div`

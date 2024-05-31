@@ -210,6 +210,7 @@ const EntryContainer = styled.div`
   justify-content: flex-start;
   align-items: flex-start;
   gap: 0.625rem;
+  cursor: pointer;
 `;
 
 // 항목 텍스트
@@ -391,7 +392,8 @@ const WithDrawalButton = styled.button`
   text-align: center;
   border-radius: 5px;
   padding-top: 0.15rem;
-
+  cursor: pointer;
+  
   ${theme.media.mobile`
   align-self: center;
   width: 18%;

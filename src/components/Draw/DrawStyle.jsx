@@ -124,6 +124,7 @@ export const ButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   display: inline-flex;
+  cursor: pointer;
 
   ${theme.media.mobile`
   `}
@@ -166,6 +167,7 @@ export const WStyledWrapper = styled.div`
   display: inline-flex;
   margin-right: 1.25rem; //20px;
   margin-bottom: 1rem; //16px;
+  cursor: pointer;
 
   ${theme.media.mobile`
   `}
