@@ -123,7 +123,7 @@ export const ProfileCircle = styled.div`
 
 
 // 사용자 정보
-export const UserText = styled.div`
+export const UserName = styled.div`
   color: #3F4045;
   font-weight: 700;
   line-height: 2.0625rem;
@@ -137,6 +137,19 @@ export const UserText = styled.div`
   font-size: 1.375rem;
 `}
 `;
+
+export const UserEmail = styled(UserName)`
+ 
+  ${theme.media.mobile`
+  font-size: 0.8rem;
+  line-height: 1.5rem;
+`}
+
+  ${theme.media.desktop`
+  font-size: 1rem;
+`}
+`;
+
 
 // 구분선
 export const Divider = styled.div`
@@ -326,8 +339,8 @@ const MyPage = () => {
                   <ProfileCircle><User/></ProfileCircle>
                 </ProfileContainer>
                 <UserInfo>
-                  <UserText>{userInfo.name}</UserText>
-                  <UserText>{userInfo.email}</UserText>
+                  <UserName>{userInfo.name}</UserName>
+                  <UserEmail>{userInfo.email}</UserEmail>
                 </UserInfo>
               </UserInfoContainer>
               <WithDrawalButton onClick={handleOpen}>회원탈퇴</WithDrawalButton>
