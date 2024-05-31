@@ -256,24 +256,24 @@ function Draw() {
   const [isLoading, setIsLoading] = useState(false);
 
 
-  // dataURI를 Blob으로 변환하는 함수
-  function dataURItoBlob(dataURI) {
-    const byteString = atob(dataURI.split(',')[1]);
-    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+  // // dataURI를 Blob으로 변환하는 함수
+  // function dataURItoBlob(dataURI) {
+  //   const byteString = atob(dataURI.split(',')[1]);
+  //   const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
 
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
+  //   const ab = new ArrayBuffer(byteString.length);
+  //   const ia = new Uint8Array(ab);
+  //   for (let i = 0; i < byteString.length; i++) {
+  //     ia[i] = byteString.charCodeAt(i);
+  //   }
 
-    return new Blob([ab], { type: mimeString });
-  }
+  //   return new Blob([ab], { type: mimeString });
+  // }
 
 
   // 이미지 데이터를 서버로 전송하는 함수
   const uploadImageToServer = async (imageData) => {
-    console.log(" 이미지를 서버로 전송 "); // 로그 시작
+    console.log(" 이미지를 서버로 전송 ", imageData); // 로그 시작
 
     if (!jwtToken) {
         console.error("로그인 인증 안됨");
@@ -282,8 +282,8 @@ function Draw() {
 
     //FormData 객체 생성
     const formData = new FormData();
-    const blob = dataURItoBlob(imageData); // Base64 데이터를 Blob으로 변환
-    formData.append('file', blob, 'image.png'); // 여기서 'file'로 변경
+    //const blob = dataURItoBlob(imageData); // Base64 데이터를 Blob으로 변환
+    //formData.append('file', blob, 'image.png'); // 여기서 'file'로 변경
 
       
     // setIsLoading(true);
@@ -296,12 +296,13 @@ function Draw() {
       const response = await fetch('https://dev.catchmind.shop/api/picture', {
         method: 'POST',
         headers: {
-          // 'Content-Type': 'application/json',
+          'Content-Type': 'application/json',
           'Authorization': `Bearer ${jwtToken}`
           // 추가적으로 인증 헤더를 포함할 수 있습니다.
         },
         // body: JSON.stringify({ image: imageData })
-        body: formData // JSON.stringify를 사용하지 않고 FormData를 직접 전송
+        //body: formData // JSON.stringify를 사용하지 않고 FormData를 직접 전송
+        body: JSON.stringify({ image: imageData }) // JSON 형식으로 dataURI를 전송
       });
 
       //   // 응답 확인
@@ -321,23 +322,118 @@ function Draw() {
 
 
 
-    // 응답 확인
-    if (response.ok) {
-      const data = await response.json();
-      console.log('File uploaded successfully:', data);
+  //   // 응답 확인
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     console.log('File uploaded successfully:', data);
       
-       // 파일 업로드 성공 후 result 페이지로 이동
-       navigate('/result', { state: { response: data } });
-    } else {
-      console.error('File upload failed', await response.text());
-    }
-  } catch (error) {
-    console.error('Error uploading file:', error.response.status, error.response.statusText);
-  } finally {
-    setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
-  }
+  //      // 파일 업로드 성공 후 result 페이지로 이동
+  //      navigate('/result', { state: { response: data } });
+  //   } else {
+  //     console.error('File upload failed', await response.text());
+  //   }
+  // } catch (error) {
+  //   console.error('Error uploading file:', error.response.status, error.response.statusText);
+  // } finally {
+  //   setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
+  // }
+  // };
 
-    };
+
+    // 응답 상태 출력
+    console.log("Response status:", response.status);
+
+    const responseText = await response.text();
+    console.log('Response text:', responseText);
+
+  
+  //     // 응답 확인
+  //     if (response.ok) {
+  //       let data;
+  //       try {
+  //         data = await response.json();
+  //       } catch (error) {
+  //         console.error('Failed to parse JSON:', error);
+  //         throw new Error('Invalid JSON response');
+  //       }
+  
+  //       console.log('File uploaded successfully:', data);
+        
+  //       // 파일 업로드 성공 후 result 페이지로 이동
+  //       navigate('/result', { state: { response: data } });
+  //     } else {
+  //       const responseText = await response.text();
+  //       console.error('File upload failed', responseText);
+  //       throw new Error(`File upload failed with status ${response.status}: ${responseText}`);
+  //     }
+  //   } catch (error) {
+  //     if (error.response) {
+  //       console.error('Error uploading file:', error.response.status, error.response.statusText);
+  //     } else {
+  //       console.error('Error uploading file:', error.message || error);
+  //     }
+  //   } finally {
+  //     setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
+  //   }
+  // };
+
+
+   // 응답 상태 출력
+   console.log("Response status:", response.status);
+  console.log('Response text:', responseText);
+
+        let data;
+        try {
+            if (!responseText) {
+                throw new Error('Empty response text');
+            }
+            data = JSON.parse(responseText);
+        } catch (error) {
+            console.error('Failed to parse JSON:', error);
+            throw new Error('Invalid JSON response');
+        }
+
+        console.log('Response data:', data);
+
+        if (!response.ok || !data) {
+            throw new Error('Response data is null or undefined.');
+        }
+
+        console.log('Upload success:', data);
+        navigate('/result', { state: { response: data } }); // 업로드 성공 시 네비게이션
+    } catch (error) {
+        console.error('Upload failed:', error.message || error);
+    } finally {
+        setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
+    }
+};
+
+//    let data;
+//    try {
+//        if (!responseText) {
+//            throw new Error('Empty response text');
+//        }
+//        data = JSON.parse(responseText);
+//    } catch (error) {
+//        console.error('Failed to parse JSON:', error);
+//        throw new Error('Invalid JSON response');
+//    }
+
+//    console.log('Response data:', data);
+
+//    if (!response.ok || !data) {
+//        throw new Error('Response data is null or undefined.');
+//    }
+
+//    console.log('Upload success:', data);
+//    navigate('/result', { state: { response: data } }); // 업로드 성공 시 네비게이션
+// } catch (error) {
+//    console.error('Upload failed:', error.message || error);
+// } finally {
+//    setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
+// }
+// };
+  
 
 
   // 완료 버튼 클릭 이벤트 핸들러
