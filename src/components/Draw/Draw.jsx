@@ -28,6 +28,14 @@ const canvasContentState = atom({
   default: null,
 });
 
+// // imgFile props에 대한 유효성 검사를 추가
+// Draw.propTypes = {
+
+//   // imgFile은 File 객체로 전달되어야 합니다.
+//   imgFile: Draw.instanceOf(File),
+  
+// };
+
 function Draw() {  
 
   //상태관리
@@ -68,7 +76,7 @@ function Draw() {
   }, []);
 
   // 버튼 클릭했을 때 화면 이동
-  //const Navigate = useNavigate();
+  const Navigate = useNavigate();
 
 
   //토글 구현
@@ -244,7 +252,7 @@ function Draw() {
   // const sigCanvasRef = useRef(null);
   //const sigCanvasRef = useRef(null);
   //const [imageURL, setImageURL] = useState('');
-  const navigate = useNavigate();
+
 
   // useEffect를 사용하여 컴포넌트가 마운트될 때 토큰을 가져옵니다.
   useEffect(() => {
@@ -256,199 +264,227 @@ function Draw() {
   const [isLoading, setIsLoading] = useState(false);
 
 
-  // // dataURI를 Blob으로 변환하는 함수
-  // function dataURItoBlob(dataURI) {
-  //   const byteString = atob(dataURI.split(',')[1]);
-  //   const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+  useEffect(() => {
+    // 컴포넌트가 언마운트될 때 로컬 스토리지에 저장
+    const saveCanvasData = () => {
+      if (signatureCanvasRef.current) {
+        const dataUrl = signatureCanvasRef.current.toDataURL();
+        localStorage.setItem('canvasData', dataUrl);
+        console.log('Saved image to localStorage:', dataUrl);
+      }
+    };
 
-  //   const ab = new ArrayBuffer(byteString.length);
-  //   const ia = new Uint8Array(ab);
-  //   for (let i = 0; i < byteString.length; i++) {
-  //     ia[i] = byteString.charCodeAt(i);
-  //   }
+    window.addEventListener('beforeunload', saveCanvasData);
+    window.addEventListener('resize', saveCanvasData);
+    return () => {
+      window.removeEventListener('beforeunload', saveCanvasData);
+      window.removeEventListener('resize', saveCanvasData);
+    };
+  }, []);
 
-  //   return new Blob([ab], { type: mimeString });
-  // }
+
+// //이미지 데이터를 서버로 전송하는 함수
+// const uploadImageToServer = async () => {
+//   const canvas = signatureCanvasRef.current;
+//   if (!canvas) {
+//     console.error("Canvas is not initialized");
+//     return;
+//   }
+
+//   // 이미지를 JPEG 형식으로 추출 (품질 1.0)
+//   const imageDataUrl = canvas.toDataURL('image/jpeg', 1.0);
+
+//   // 이미지 데이터를 Blob으로 변환
+//   const response = await fetch(imageDataUrl);
+//   const blob = await response.blob();
+
+//   // FormData 객체 생성 및 설정
+//   const formData = new FormData();
+//   formData.append('picture', blob, 'canvasImage.jpg');
+
+//   try {
+//     // 서버로 POST 요청 보내기
+//     const serverResponse = await fetch('https://dev.catchmind.shop/api/picture', {
+//       method: 'POST',
+//       body: formData,
+//       headers: {
+//         'Authorization': `Bearer ${jwtToken}`, // 필요한 경우 인증 토큰 추가
+//       },
+//     });
+
+//   //   if (!serverResponse.ok) throw new Error('Failed to upload image');
+//   //   const result = await serverResponse.json();
+//   //   console.log('Image uploaded successfully:', result);
+//   // } catch (error) {
+//   //   console.error('Error uploading image:', error);
+//   // }
+
+//   if (!response.ok) {
+//     console.error(`HTTP error! status: ${response.status}`);
+//     const errorBody = await response.text();  // Assuming the server sends a text response for errors
+//     console.error(`Error details: ${errorBody}`);
+//     throw new Error(`HTTP error! status: ${response.status}`);
+//   }
+//   const data = await response.json();
+//   console.log('File uploaded successfully:', data);
+// } catch (error) {
+//   console.error('File upload failed:', error.message);
+// }
+
+// };
+
 
 
   // 이미지 데이터를 서버로 전송하는 함수
-  const uploadImageToServer = async (imageData) => {
-    console.log(" 이미지를 서버로 전송 ", imageData); // 로그 시작
+  const uploadImageToServer = async () => {
 
-    if (!jwtToken) {
-        console.error("로그인 인증 안됨");
-        return;
+    const token = localStorage.getItem('jwtToken');
+    if (token) {
+      console.log('사용자 인증 완료');
+
+      setjwtToken(token);
+    } else {
+      console.error("JWT token not found in local storage");
     }
 
-    //FormData 객체 생성
-    const formData = new FormData();
-    //const blob = dataURItoBlob(imageData); // Base64 데이터를 Blob으로 변환
-    //formData.append('file', blob, 'image.png'); // 여기서 'file'로 변경
 
-      
-    // setIsLoading(true);
 
-    // 로그 추가: 요청 전송 직전
-    console.log('Sending POST request to server with form data:');
+
+  const imageData = signatureCanvasRef.current.toDataURL(); // 이미지를 JPEG 형식으로 변환 
+  const base64Response = await fetch(imageData);  // Base64 문자열에서 필요하지 않은 부분을 제거
+  const blob = await base64Response.blob(); // Blob으로 변환
+  const formData = new FormData();
+  // formData.append('file', blob, "filename.png"); // Blob을 파일로 처리하여 추가
+  formData.append('file', blob);
+
+  // 요청 세부 정보 로깅
+  console.log('Prepared FormData:');
+  formData.forEach((value, key) => {
+  console.log(key, typeof value, value);
+  });
+
+  // 로그 추가: 요청 전송 직전
+  console.log('Sending POST request to server with form data:', formData);
+
 
 
     try {
       const response = await fetch('https://dev.catchmind.shop/api/picture', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${jwtToken}`
-          // 추가적으로 인증 헤더를 포함할 수 있습니다.
+          'Authorization': `Bearer ${jwtToken}`,
         },
-        // body: JSON.stringify({ image: imageData })
-        //body: formData // JSON.stringify를 사용하지 않고 FormData를 직접 전송
-        body: JSON.stringify({ image: imageData }) // JSON 형식으로 dataURI를 전송
+        body: formData,
+        credentials: 'include', // 쿠키를 포함하려면 추가
       });
 
-      //   // 응답 확인
-      //   if (response.ok) {
-      //     const data = await response.json();
-      //     console.log('File uploaded successfully:', data);
-      //      // 파일 업로드 성공 후 result 페이지로 이동
-      //      navigate('/result', { state: { response: data } });
-      //   } else {
-      //     console.error('File upload failed', await response.text());
-      //   }
-      // } catch (error) {
-      //   console.error('Error uploading file:', error.response.status, error.response.statusText);
-      // } finally {
-      //   setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
-      // }
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
+     // 응답이 비어 있는지 확인
+     const text = await response.text();
+     if (!text) {
+       throw new Error("응답이 비어있습니다");
+     }
+ 
+     // JSON 데이터가 있는지 안전하게 확인
+     let data;
+     try {
+       data = JSON.parse(text);
+     } catch (error) {
+       throw new Error("응답 데이터가 JSON 형식이 아닙니다");
+     }
 
-
-  //   // 응답 확인
-  //   if (response.ok) {
-  //     const data = await response.json();
-  //     console.log('File uploaded successfully:', data);
-      
-  //      // 파일 업로드 성공 후 result 페이지로 이동
-  //      navigate('/result', { state: { response: data } });
-  //   } else {
-  //     console.error('File upload failed', await response.text());
-  //   }
-  // } catch (error) {
-  //   console.error('Error uploading file:', error.response.status, error.response.statusText);
-  // } finally {
-  //   setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
-  // }
-  // };
-
-
-    // 응답 상태 출력
-    console.log("Response status:", response.status);
-
-    const responseText = await response.text();
-    console.log('Response text:', responseText);
-
-  
-  //     // 응답 확인
-  //     if (response.ok) {
-  //       let data;
-  //       try {
-  //         data = await response.json();
-  //       } catch (error) {
-  //         console.error('Failed to parse JSON:', error);
-  //         throw new Error('Invalid JSON response');
-  //       }
-  
-  //       console.log('File uploaded successfully:', data);
-        
-  //       // 파일 업로드 성공 후 result 페이지로 이동
-  //       navigate('/result', { state: { response: data } });
-  //     } else {
-  //       const responseText = await response.text();
-  //       console.error('File upload failed', responseText);
-  //       throw new Error(`File upload failed with status ${response.status}: ${responseText}`);
-  //     }
-  //   } catch (error) {
-  //     if (error.response) {
-  //       console.error('Error uploading file:', error.response.status, error.response.statusText);
-  //     } else {
-  //       console.error('Error uploading file:', error.message || error);
-  //     }
-  //   } finally {
-  //     setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
-  //   }
-  // };
-
-
-   // 응답 상태 출력
-   console.log("Response status:", response.status);
-  console.log('Response text:', responseText);
-
-        let data;
-        try {
-            if (!responseText) {
-                throw new Error('Empty response text');
-            }
-            data = JSON.parse(responseText);
-        } catch (error) {
-            console.error('Failed to parse JSON:', error);
-            throw new Error('Invalid JSON response');
-        }
-
-        console.log('Response data:', data);
-
-        if (!response.ok || !data) {
-            throw new Error('Response data is null or undefined.');
-        }
-
-        console.log('Upload success:', data);
-        navigate('/result', { state: { response: data } }); // 업로드 성공 시 네비게이션
+      console.log('파일 업로드 성공:', data);
     } catch (error) {
-        console.error('Upload failed:', error.message || error);
-    } finally {
-        setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
-    }
-};
-
-//    let data;
-//    try {
-//        if (!responseText) {
-//            throw new Error('Empty response text');
-//        }
-//        data = JSON.parse(responseText);
-//    } catch (error) {
-//        console.error('Failed to parse JSON:', error);
-//        throw new Error('Invalid JSON response');
-//    }
-
-//    console.log('Response data:', data);
-
-//    if (!response.ok || !data) {
-//        throw new Error('Response data is null or undefined.');
-//    }
-
-//    console.log('Upload success:', data);
-//    navigate('/result', { state: { response: data } }); // 업로드 성공 시 네비게이션
-// } catch (error) {
-//    console.error('Upload failed:', error.message || error);
-// } finally {
-//    setIsLoading(false); // 업로드 완료 시 로딩 상태 비활성화
-// }
-// };
-  
-
-
-  // 완료 버튼 클릭 이벤트 핸들러
-  const handleDoneClick = () => {
-    console.log('완료 버튼 클릭'); // 로그 찍기
-    if (signatureCanvasRef.current) {
-      const imageDataURL = signatureCanvasRef.current.toDataURL('image/png');
-      console.log("Image data URL generated:", imageDataURL); // 데이터 URL 생성 로그
-      localStorage.setItem('savedCanvasImage', imageDataURL); // 로컬 스토리지 저장 로그
-       uploadImageToServer(imageDataURL); // 서버 전송 호출 로그
-      //await uploadImageToServer(imageDataURL); // 서버 전송 호출
-    } else {
-      console.error("No signatureCanvasRef available."); // 참조 에러 로그
+      console.error('파일 업로드 실패:', error);
     }
   };
+
+
+
+
+  //여긴 403ㄷ에러 뜨는 코드임
+//   // 이미지 데이터를 서버로 전송하는 함수
+// const uploadImageToServer = async () => {
+//   // 로컬 스토리지에서 JWT 토큰을 가져옴
+//   const token = localStorage.getItem('jwtToken');
+//   if (token) {
+//     console.log('사용자 인증 완료');
+//     setjwtToken(token); // 상태 업데이트
+//   } else {
+//     console.error("JWT token not found in local storage");
+//     return; // 토큰이 없으면 함수를 빠져나옴
+//   }
+
+//   // Canvas에서 이미지 데이터를 JPEG 형식으로 추출
+//   const imageDataUrl = signatureCanvasRef.current.toDataURL('image/jpeg', 1.0);
+
+//   // Base64 URL을 Blob으로 변환
+//   fetch(imageDataUrl)
+//     .then(response => response.blob())
+//     .then(blob => {
+//       // FormData 객체 생성 및 이미지 파일 추가
+//       const formData = new FormData();
+//       formData.append('imageFile', blob, 'image.jpg');
+
+//       // FormData 내용 확인
+//       for (let pair of formData.entries()) {
+//         console.log(`${pair[0]}: ${pair[1]}`);
+//       }
+
+//       // 로그 추가: 요청 전송 직전
+//       console.log('Sending POST request to server with form data:', formData);
+      
+//       // 요청 세부 정보 로깅
+//     console.log('Prepared FormData:');
+//     formData.forEach((value, key) => {
+//       console.log(key, typeof value, value);
+//     });
+
+//       // 서버에 이미지 데이터를 포함한 POST 요청 보내기
+//       fetch('https://dev.catchmind.shop/api/picture', {
+//         method: 'POST',
+//         headers: {
+//           'Authorization': `Bearer ${jwtToken}`
+//         },
+//         body: formData
+//       })
+//       .then(response => {
+//         if (!response.ok) {
+//           throw new Error(`HTTP error! status: ${response.status}`);
+//         }
+//         return response.text(); // 응답을 텍스트로 변환
+//       })
+//       .then(text => {
+//         if (!text) {
+//           throw new Error("응답이 비어있습니다");
+//         }
+//         // JSON 파싱 시도
+//         try {
+//           const data = JSON.parse(text);
+//           console.log('파일 업로드 성공:', data);
+//         } catch (error) {
+//           throw new Error("응답 데이터가 JSON 형식이 아닙니다");
+//         }
+//       })
+//       .catch(error => {
+//         console.error('파일 업로드 실패:', error);
+//       });
+//     });
+// };
+
+
+  
+
+  // 완료 버튼 클릭 이벤트 핸들러
+  
+  const handleDoneClick = () => {
+    console.log('완료 버튼 클릭');
+    uploadImageToServer(); // 서버로 이미지 전송
+  };
+
 
   return (
     <Wrap>
