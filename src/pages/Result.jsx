@@ -22,7 +22,7 @@ function Result() {
     Navigate('/mypage', { state: { id: id, title: title } });
   }
   function handleMainClick() {
-    Navigate('/Main');
+    Navigate('/');
   }
   useEffect(() => {
 
@@ -210,7 +210,7 @@ const TitleInput = styled.input`
     `}
   }
   ${theme.media.mobile`
-    width:90%;
+    width:80%;
     font-size: 0.9rem;
   `}
 `;
