@@ -51,19 +51,20 @@ export default function Loading() {
     </TexDiv>
     {/* <ImageData>
     </ImageData> */}
-    </TContainer>
-
     <DrawingArea>
 
-    <CanvasContainer>
-      {imageData && (
-        <ImageData>
-          <img id="loadedImage" src={imageData} style={{ maxWidth: '20rem', maxHeight: '20rem'}} />
-        </ImageData>
-      )}
-      </CanvasContainer>
+<CanvasContainer>
+  {imageData && (
+    <ImageData>
+      <img id="loadedImage" src={imageData} style={{ maxWidth: '20rem', maxHeight: '20rem'}} />
+    </ImageData>
+  )}
+  </CanvasContainer>
 
-    </DrawingArea>
+</DrawingArea>
+    </TContainer>
+
+    
     <Scan/>
     {/* 모달을 열기 위한 버튼 */}
     {modalOpen && (
@@ -100,12 +101,11 @@ const OutContainer = styled.div`
 `;
 
 const DrawingArea = styled.div`
-  left: 13.1875rem; //211px;
-  top: 7.25rem; //116px;
+  margin-top: 5rem;
   width: 20rem;
   height: 20rem;
   display: flex;
-  flex-direction: row;
+  // flex-direction: row;
 
   ${theme.media.mobile`
   width: 18.625rem;

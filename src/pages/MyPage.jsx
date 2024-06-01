@@ -188,6 +188,7 @@ const ListWrapper = styled.div`
   gap: 2rem;
   overflow: auto;
   height: 100%;
+  margin-bottom: 2rem;
 
   &::-webkit-scrollbar-track {
     border-radius: 0.125rem;
@@ -383,7 +384,7 @@ const MyPage = () => {
               <ListWrapper ref={listRef}>
               {sortedData.map((item, index) => (
               <EntryContainer key={index} onClick={() => moveToList(item.id, item.title)}>
-                <EntryText>{item.title}</EntryText>
+                <EntryText>{item.title || '제목을 입력하세요.'}</EntryText>
                 <EntryDate>{formatDate(item.createdAt)}</EntryDate>
               </EntryContainer>
               ))}
