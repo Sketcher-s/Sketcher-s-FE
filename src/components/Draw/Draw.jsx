@@ -253,10 +253,8 @@ useEffect(() => {
 //     return () => window.removeEventListener('resize', checkSize); // 클린업
 // }, []);
 
-
-
 useEffect(() => {
-  
+
   // const handleResize = () => {
   //   if (signatureCanvasRef.current) {
   //     const canvasElement = signatureCanvasRef.current.getCanvas(); // 실제 canvas 요소를 가져옵니다.
