@@ -110,7 +110,7 @@ function Draw() {
 
   // 펜의 최소 두께와 최대 두께
   const minPenSize = 1;
-  const maxPenSize = 1000;
+  const maxPenSize = 10;
 
   // 펜 사이즈 상태
   const [penSize, setPenSize] = useState({ minWidth: minPenSize, maxWidth: maxPenSize });
@@ -125,6 +125,7 @@ function Draw() {
       handleClear(); // 클릭 시 지우기 기능 호출
     } 
   };
+
 
     // //그림판 구현
     const [canvasSize, setCanvasSize] = useState({ width: 400, height: 300 });
@@ -367,7 +368,8 @@ const handleDoneClick = () => {
 
         <Icon>
 
-        {/* WPencil 버튼 */}
+
+      {/* WPencil 버튼 */}
       {isButtonClicked !== 'WPencil' ? (
         <WStyledWrapper>
           <WPencil onClick={() => {handleClick('WPencil'); handleColorChange('black'); changePenSize(minPenSize);}} />
@@ -427,6 +429,9 @@ const handleDoneClick = () => {
                     img.src = canvasContentState;
                   }
                 }}
+                minWidth={penSize} // 펜의 최소 두께
+                maxWidth={penSize} // 펜의 최대 두께
+  
             />
             </CanvasContainer>
 
