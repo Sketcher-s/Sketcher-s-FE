@@ -13,7 +13,8 @@ function Result() {
   const [image, setImage] = useState('');
   const [analysisResult, setAnalysisResult] = useState('');
   const [error, setError] = useState('');
-  const [isEditing, setIsEditing] = useState(true);  
+  const isFromMyPage = location.state?.fromMyPage ?? false;
+  const [isEditing, setIsEditing] = useState(!isFromMyPage);  
   const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
   const pictureId = location.state?.response?.pictureDto?.id;
 
@@ -21,16 +22,22 @@ function Result() {
     Navigate('/mypage', { state: { id: id, title: title } });
   }
   function handleMainClick() {
-    Navigate('/Main');
+    Navigate('/');
   }
+  useEffect(() => {
 
+    if (location.state?.response?.fromMyPage) {
+      setIsEditing(false);  // 마이페이지에서 온 경우
+    } else {
+      setIsEditing(true);  // 다른 경우 (기본 설정)
+    }
+  }, [location.state]);
   useEffect(() => {
     const fetchPictureDetails = async () => {
       if (!jwtToken) {
         console.error('Authentication token is not available');
         return;  
       }
-  
       try {
         const response = await fetch(`https://dev.catchmind.shop/api/picture/${pictureId}`, {
           method: 'GET',
@@ -56,7 +63,7 @@ function Result() {
     };
   
     fetchPictureDetails();
-  }, [jwtToken, pictureId]);  // 의존성 배열에 jwtToken과 pictureId 추가
+  }, [jwtToken, pictureId,location.state]);  // 의존성 배열에 jwtToken과 pictureId 추가
   const handleTitleChange = (event) => {
       setTitle(event.target.value);
       validateTitle(event.target.value);
@@ -123,6 +130,7 @@ function Result() {
                 <Button onClick={!isEditing ? handleEdit : handleSave}>
                 {!isEditing ? "수정" : "저장"}
               </Button>
+     
               </TitleSection>
               {error && <ErrorMessage>{error}</ErrorMessage>}
                 <DrawResult>
@@ -202,13 +210,18 @@ const TitleInput = styled.input`
     `}
   }
   ${theme.media.mobile`
-    width:90%;
+    width:80%;
+    font-size: 0.9rem;
   `}
 `;
 const StyledImage = styled.img`
   width: 75%;
   height: 80%;
   border: 1px solid #E0E1E9
+  ${theme.media.mobile`
+  width:100%;
+  height: 100%;
+`}
 
 `;
 const ErrorMessage = styled.p`
@@ -235,9 +248,9 @@ const AnalysisResult = styled.div`
   color: #3F4045;
 `;
 
+
 const Button = styled.button`
-  width:6%;
-  padding: 0.5rem 1rem;
+  width:3rem;
   background-color: #6487e2;
   color: white;
   border: none;
@@ -248,15 +261,11 @@ const Button = styled.button`
   }
 
   ${theme.media.mobile} {
-    padding: 0.5rem 0.1rem;
-    font-size: 0.5rem; // 모바일에서는 폰트 크기를 조금 작게
+    padding: 0.6rem 1rem; 
+    font-size: 0.2rem; 
   }
 
 `;
-
-
-
-
 const ButtonBox = styled.div`
   display: flex;
   gap: 3.125rem; /* 버튼 간격 */

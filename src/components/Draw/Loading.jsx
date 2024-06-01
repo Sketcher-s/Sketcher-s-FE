@@ -58,7 +58,7 @@ export default function Loading() {
     <CanvasContainer>
       {imageData && (
         <ImageData>
-          <img id="loadedImage" style={{ maxWidth: '20rem', maxHeight: '20rem'}} />
+          <img id="loadedImage" src={imageData} style={{ maxWidth: '20rem', maxHeight: '20rem'}} />
         </ImageData>
       )}
       </CanvasContainer>

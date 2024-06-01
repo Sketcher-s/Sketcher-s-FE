@@ -240,7 +240,6 @@ const MyPage = () => {
     const [userInfo,setUserInfo] = useState({name: '', email: ''});
     const size = 8;
     const [modalStatus, setModalStatus] = useState(null);
-
     // 로그인 상태
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
 
@@ -316,7 +315,9 @@ const MyPage = () => {
 
     // 항목 클릭 시, 해당 항목 결과 페이지로 이동
     const moveToList = (id, title) => {
-      navigate(`/result`, {state: { response: { pictureDto: { id: id, title: title} } } });
+      navigate(`/result`, {state: { response: { pictureDto: { id: id, title: title},fromMyPage:true}} 
+    });
+      
     }
  
     // 시간 띄우기

@@ -10,7 +10,12 @@ function ResultContent() {
     htp: false,
     analysis: false
   });
-
+  const [results, setResults] = useState({
+    home: '',
+    tree: '',
+    person: '',
+    summary: ''
+  });
   const toggleSection = section => {
     setIsOpen(prev => ({ ...prev, [section]: !prev[section] }));
   };
@@ -36,6 +41,8 @@ function ResultContent() {
         const responseData = await response.json();
         if (responseData && responseData.pictureDto) {
           setAnalysisResult(responseData.pictureDto.result);
+          const parsedResults = parseResults(responseData.pictureDto.result);
+          setResults(parsedResults);
         } else {
           throw new Error('No valid response data');
         }
@@ -46,13 +53,47 @@ function ResultContent() {
     fetchPictureDetails();
   }, [jwtToken, pictureId]);  // 의존성 배열에 jwtToken과 pictureId 추가
   
+  function parseResults(text) {
+    console.log("서버 응답 원본 데이터:", text); // 서버 응답 로깅
+
+    const home = text.match(/\[집\]\s*([^[]*)/)?.[1].trim() || "집 정보 없음";
+    const tree = text.match(/\[나무\]\s*([^[]*)/)?.[1].trim() || "나무 정보 없음";
+    const person = text.match(/\[사람\]\s*([^[]*)/)?.[1].trim() || "사람 정보 없음";
+    const summary = text.match(/\[종합\]\s*([^[]*)/)?.[1].trim() || "종합 정보 없음";
+
+    console.log("추출된 집 데이터:", home); // 추출 데이터 로깅
+    console.log("추출된 나무 데이터:", tree);
+    console.log("추출된 사람 데이터:", person);
+    console.log("추출된 종합 데이터:", summary);
+    const result = { home, tree, person, summary };
+    console.log("Parsed results:", result); // 결과 로깅을 위해 이 줄을 추가하세요
+    return result;
+}
+
   
   return (
     <div>
         <Resultcontent>
           <ContentTitle>검사 결과 상세 내용</ContentTitle>
-          <Content>{analysisResult || "분석 결과를 불러오는 중입니다..."}</Content>
-        
+          <Content>
+        <DetailsSection>
+          <SectionTitle>집</SectionTitle>
+          <SectionContent>{results?.home}</SectionContent>
+        </DetailsSection>
+        <DetailsSection>
+          <SectionTitle>나무</SectionTitle>
+          <SectionContent>{results?.tree}</SectionContent>
+        </DetailsSection>
+        <DetailsSection>
+          <SectionTitle>사람</SectionTitle>
+          <SectionContent>{results?.person}</SectionContent>
+        </DetailsSection>
+        <DetailsSection>
+          <SectionTitle>종합</SectionTitle>
+          <SectionContent>{results?.summary}</SectionContent>
+        </DetailsSection>
+      </Content>
+      
         <Accordion>
           <AccordionHeader onClick={() => toggleSection('htp')}>
             HTP 그림 검사 유의사항
@@ -86,7 +127,6 @@ ${theme.media.mobile`
 `}
 `;
 const ContentTitle = styled.p`
-  padding-bottom:1.25rem;
 font-size: 1rem;
 font-weight: 700;
 line-height: 1.5rem;
@@ -101,9 +141,6 @@ const Content = styled.p`
   width: 100%;
   padding-bottom:1.25rem;
   font-family: Pretendard;
-  font-size: 1rem;
-  font-weight: 600;
-  line-height: 1.5rem;
   text-align: justified;
   color:#3F4045;  
   ${theme.media.mobile`
@@ -150,4 +187,31 @@ const AccordionBody = styled.div`
   font-size: 0.875rem;
   color: #666;
   display: ${props => props.isOpen ? 'block' : 'none'};
+`;
+
+const DetailsSection = styled.div`
+
+  ${theme.media.mobile` 
+
+  `}
+`;
+
+const SectionTitle = styled.h2`
+  font-size: 1rem;
+  color: #333;
+  ${theme.media.mobile`  // 모바일에서는 글자 크기를 조금 줄임
+    font-size: 1rem;
+  `}
+`;
+
+const SectionContent = styled.p`
+  font-size: 0.9rem;
+  color: #666;
+font-family: Pretendard;
+font-weight: 600;
+text-align: justified;
+
+  ${theme.media.mobile`  // 모바일에서는 글자 크기를 조금 줄임
+    font-size: 0.8rem;
+  `}
 `;

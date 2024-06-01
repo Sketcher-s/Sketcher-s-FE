@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import Modal from 'react-modal';
+import MainModal from '../components/MainModal';  // Modal 컴포넌트의 경로를 확인하고 적절히 수정하세요.
 import { ReactComponent as Main1 } from '../assets/Main/Main1.svg';
 import { ReactComponent as Main2 } from  '../assets/Main/Main2.svg';
 import { ReactComponent as Main3 } from  '../assets/Main/Main3.svg';
 import { theme } from '../theme';
-
+import { ButtonWrapper } from '../components/Login/LoginStyle';
 const StyledMain1 = styled(Main1)`
   width: ${props => props.width || '90%'};
   height: ${props => props.height || '22.4475rem'};
@@ -24,7 +24,6 @@ const StyledMain3 = styled(Main3)`
   height: ${props => props.height || 'auto'};
 `;
 
-Modal.setAppElement('#root'); // For accessibility
 
 function Main() {
   const Navigate = useNavigate(); 
@@ -33,7 +32,7 @@ function Main() {
 
   function handleDrawClick() {
     if (isLoggedIn) {
-      Navigate('/draw'); 
+      Navigate('/preparedraw'); 
     } else {
       setIsModalOpen(true);
     }
@@ -42,15 +41,6 @@ function Main() {
   function closeModal() {
     setIsModalOpen(false);
   }
-
-  function handleLogin() {
-    Navigate('/login');
-  }
-
-  function handleRegister() {
-    Navigate('/register');
-  }
-
   return (
     <MainContainer>
       <InspectionSection>
@@ -89,26 +79,7 @@ function Main() {
             </FooterContent>
           </FooterBox>
         </Footer>
-        <Modal
-          isOpen={isModalOpen}
-          onRequestClose={closeModal}
-          style={{
-            content: {
-              top: '50%',
-              left: '50%',
-              right: 'auto',
-              bottom: 'auto',
-              marginRight: '-50%',
-              transform: 'translate(-50%, -50%)',
-            },
-          }}
-        >
-          <h2>로그인이 필요합니다</h2>
-          <ButtonContainer>
-            <Button onClick={handleLogin}>로그인</Button>
-            <Button onClick={handleRegister}>회원가입</Button>
-          </ButtonContainer>
-        </Modal>
+        {isModalOpen && <MainModal close={closeModal} />}
       </MainContainer>
   );
 }
@@ -309,26 +280,4 @@ const FooterContent = styled.div`
   ${theme.media.mobile`
     font-size: 0.7rem;
   `}
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  margin-top: 1rem;
-`;
-
-const Button = styled.button`
-  width: 100px;
-  height: 40px;
-  background: #6487E2;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: 700;
-
-  &:hover {
-    background: #5371c9;
-  }
 `;

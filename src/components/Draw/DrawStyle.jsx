@@ -75,7 +75,8 @@ export const Icon = styled.div`
 
 
 export const DrawingArea = styled.div`
-  left: 13.1875rem; //211px;
+  left: 15.1875rem; //211px;
+  //left: 13.1875rem; //211px;
   top: 7.25rem; //116px;
   display: flex;
 
@@ -83,14 +84,19 @@ export const DrawingArea = styled.div`
   // width: 100%; /* 너비를 부모 요소에 맞게 설정 */
   // height: 60vh; /* 높이를 화면 높이의 60%로 설정 */
 
-  width: ${({ canvasWidth }) => canvasWidth}px;
-  height: ${({ canvasHeight }) => canvasHeight}px;
+  // width: ${({ canvasWidth }) => canvasWidth}px;
+  // height: ${({ canvasHeight }) => canvasHeight}px;
 
 
 
   ${theme.media.mobile`
   flex-direction: column-reverse;
   display: fixed;
+`}
+
+${theme.media.desktop`
+  margin-right: 3.5rem;
+
 `}
 
 `;

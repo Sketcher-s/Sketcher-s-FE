@@ -69,7 +69,6 @@ const ButtonH = styled.button`
   border-radius: 0.25rem; // 4px to rem
   justify-content: center;
   border: none;
-  cursor: pointer;
 `;
 
 // 버튼 스타일
@@ -82,7 +81,6 @@ const Button = styled.button`
   border-radius: 0.25rem; // 4px to rem
   justify-content: center;
   border: none;
-  cursor: pointer;
 `;
 
 // 버튼 내부 텍스트 스타일
