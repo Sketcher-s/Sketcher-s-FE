@@ -331,7 +331,7 @@ const PutSection = styled.div`
   align-items: center;
   gap: 0.625rem; //10px;
   display: flex;
-  margin-top: 1.3rem;
+  margin-top: 4rem;
   cursor: pointer;
   ${theme.media.mobile`
     display: none;

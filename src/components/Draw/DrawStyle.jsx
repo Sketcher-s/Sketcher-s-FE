@@ -30,7 +30,7 @@ export const Wrap = styled.div`
 export const OutContainer = styled.div`
   width: 100%;
   height: 100%;
-  padding-top: 2.5rem;
+  padding-top: 4rem;
   padding-bottom: 2.5rem; //40px;
   flex-direction: column;
   justify-content: flex-start;
@@ -111,7 +111,7 @@ export const CanvasContainer = styled.div`
   box-shadow: 0.3125rem 0.3125rem 0.625rem rgba(0, 0, 0, 0.04);
 
   /* DrawingArea 내에서 공간을 균등하게 분배하여 CanvasContainer가 DrawingArea 크기에 따라 변하도록 함 */
-  // flex: 1;
+  flex: 1;
 
 
 
