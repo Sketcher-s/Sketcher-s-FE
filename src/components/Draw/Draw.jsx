@@ -268,10 +268,9 @@ const uploadImageToServer = async () => {
   }
 
 
+  setIsLoading(true);
+
   try {
-
-    setIsLoading(true);
-
 
     const response = await fetch('https://dev.catchmind.shop/api/picture', {
       method: 'POST',
