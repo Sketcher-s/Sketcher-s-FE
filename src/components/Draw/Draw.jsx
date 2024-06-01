@@ -25,6 +25,12 @@ const canvasContentState = atom({
   default: null,
 });
 
+// default 값이 type 이 default
+WPencil.defaultProps = {
+  type: "default",
+};
+
+
 function Draw() {  
 
   // Ref를 사용하여 Signaturecanvas 컴포넌트에 접근한다.
@@ -100,19 +106,45 @@ useEffect(() => {
   //각 버튼 클릭시 버튼 변경
   const [isButtonClicked, setIsButtonClicked] = useState(false);
 
-  const handleClear = () => {
-    if (signatureCanvasRef.current) { // null 체크 추가
-      signatureCanvasRef.current.clear();
-    }
-  };
+    //서버에 전송후 토큰 삭제
+    const handleClear = () => {
+      if (signatureCanvasRef.current) { // null 체크 추가
+        signatureCanvasRef.current.clear();
+      }
+    };
+
+  //서버에 전송후 토큰 삭제
+  // const handleTokenClear = () => {
+  //   if (signatureCanvasRef.current) { // null 체크 추가
+  //     signatureCanvasRef.current.clear();
+
+  //     //이부분 추가
+  //     localStorage.removeItem('canvasData');
+  //     console.log('Canvas cleared and data removed from localStorage');
+  //     setCanvasData(null);
+  //     setSavedSignatures([]);
+  //   }
+  // };
+
+  
   
   const handleColorChange = (newColor) => {
     setColor(newColor);
   };
 
-  // 초기 설정: 컴포넌트가 마운트될 때 'WPencil' 버튼이 눌린 상태로 설정
+  // 그림판 초기화: 펜 색상과 크기를 설정
   useEffect(() => {
-    handleClick('WPencil');
+    if (signatureCanvasRef.current) {
+      console.log('Default pencil is set');
+      setColor('black'); // 펜 색상을 검정색으로 설정
+      setPenSize(1); // 펜 크기를 1로 설정
+      // 이후 필요한 추가 초기화 작업을 수행할 수 있습니다.
+    }
+  }, []);
+
+
+  useEffect(() => {
+    handleClick('WPencil'); // 컴포넌트 마운트 시 연필 도구 활성화
   }, []);
 
   // 펜의 최소 두께와 최대 두께
@@ -202,14 +234,18 @@ useEffect(() => {
       if (screenWidth < 768) {
         newWidth = 300;
         newHeight = 250;
-      } else {
-        newWidth = 600;
-        newHeight = 425;
+      } else if(768 <= screenWidth && screenWidth < 1024){
+        newWidth = 630;
+        newHeight = 470;
+      }else {
+        newWidth = 1000;
+        newHeight = 550;
         if (newHeight > screenHeight * 0.6) {
           newHeight = screenHeight * 0.6;
           newWidth = newHeight * 1;
         }
       }
+
 
       // // 기존 캔버스의 비율을 유지하면서 크기를 변경합니다.
       // const scaleWidth = newWidth / tempCanvas.width;
@@ -244,15 +280,28 @@ useEffect(() => {
 
   const checkSize = () => {
     let width, height;
-    if (window.innerWidth < 768) { // 가정: 768px 미만은 모바일로 간주
-      width = 300;
-      height = 250;
-    } else {
-      width = 600;
-      height = 425;
-    }
-    setCanvasSize({ width, height });
-  };
+  //   if (window.innerWidth < 768) { // 가정: 768px 미만은 모바일로 간주
+  //     width = 300;
+  //     height = 250;
+  //   } else {
+  //     width = 630;
+  //     height = 470;
+  //   }
+  //   setCanvasSize({ width, height });
+  // };
+
+  if (window.innerWidth < 768) { // 가정: 768px 미만은 모바일로 간주
+    width = 300;
+    height = 250;
+  } else if(768 <= window.innerWidth && window.innerWidth < 1024){
+    width = 630;
+    height = 470;
+  }else {
+    width = 1000;
+    height = 550;
+  }
+  setCanvasSize({ width, height });
+};
 
   handleResize(); // 초기 캔버스 크기 조정
   checkSize(); // 컴포넌트 마운트 시 실행
@@ -383,19 +432,20 @@ const handleDoneClick = () => {
   const imageData = signatureCanvasRef.current.toDataURL('image/png');
     Navigate('/loading', { state: { imageData } });
     uploadImageToServer(imageData); // 서버로 이미지 전송
+   // handleTokenClear(); //캔버스 토큰 삭제
   uploadImageToServer(); // 서버로 이미지 전송
 };
 
   return (
+
     <>
     {isLoading ? (
         <Loading />
       ) : (
 
-    <Wrap>
+    <Wrap className="scrollContainer">
 
-      <OutContainer>
-
+      <OutContainer className="scrollContainer">
       <MobileBtn>
         {!isDescriptionVisible && (
         <Container>
@@ -497,10 +547,6 @@ const handleDoneClick = () => {
           <Button>완료</Button>
         </ButtonContainer>
 
-        {/* <DMobileContainer>
-        <MDescription/>
-      </DMobileContainer> */}
-
       </OutContainer>
 
       {/* <Description/> */}
@@ -519,10 +565,10 @@ const handleDoneClick = () => {
         )}
         {isDescriptionVisible && <Ver3 onClick={toggleBarBox} />}
       </DeskBtn>
-
     </Wrap>
       )}
-    </>
+      </>
+
 
   );
 }

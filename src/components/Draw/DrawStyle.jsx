@@ -30,7 +30,7 @@ export const Wrap = styled.div`
 export const OutContainer = styled.div`
   width: 100%;
   height: 100%;
-  padding-top: 4rem;
+  padding-top: 5rem;
   padding-bottom: 2.5rem; //40px;
   flex-direction: column;
   justify-content: flex-start;
