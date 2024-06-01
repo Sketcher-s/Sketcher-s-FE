@@ -111,7 +111,7 @@ export const CanvasContainer = styled.div`
   box-shadow: 0.3125rem 0.3125rem 0.625rem rgba(0, 0, 0, 0.04);
 
   /* DrawingArea 내에서 공간을 균등하게 분배하여 CanvasContainer가 DrawingArea 크기에 따라 변하도록 함 */
-  // flex: 1;
+  flex: 1;
 
 
 

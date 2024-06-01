@@ -35,21 +35,38 @@ function Draw() {
 
   // 흰색 배경
   useEffect(() => {
-    // 캔버스 배경을 흰색으로 설정합니다.
+    // 캔버스 배경을 흰색으로 설정
     const canvas = signatureCanvasRef.current.getCanvas();
     const ctx = canvas.getContext('2d');
     ctx.fillStyle = '#FFFFFF'; // 흰색 배경 설정
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // 이 후의 그림 그리기는 흰색 배경 위에 수행됩니다.
+    // 이 후의 그림 그리기는 흰색 배경 위에 수행
   }, []);
-  useEffect(() => {
-    // 컴포넌트가 마운트될 때 로컬 스토리지에서 저장된 그림 데이터를 복원한다.
-    const savedData = localStorage.getItem('canvasData');
-    if(savedData){
-      setCanvasData(savedData);
-      signatureCanvasRef.current.fromDataURL(savedData);
-    }
+
+
+//   useEffect(() => {
+//     // 컴포넌트가 마운트될 때 로컬 스토리지에서 저장된 그림 데이터를 복원한다.
+//     const savedData = localStorage.getItem('canvasData');
+//     if(savedData){
+//       setCanvasData(savedData);
+//       signatureCanvasRef.current.fromDataURL(savedData);
+//     }
+// }, []);
+
+
+useEffect(() => {
+  const savedData = localStorage.getItem('canvasData');
+  if (savedData) {
+    setCanvasData(savedData);
+    const img = new Image();
+    img.onload = () => {
+      const canvas = signatureCanvasRef.current.getCanvas();
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // 이미지를 캔버스 크기에 맞게 그립니다.
+    };
+    img.src = savedData;
+  }
 }, []);
 
 
@@ -63,11 +80,11 @@ function Draw() {
       }
     };
 
-    window.addEventListener('beforeunload', saveCanvasData);
+   // window.addEventListener('beforeunload', saveCanvasData);
     window.addEventListener('resize', saveCanvasData);
 
     return () => {
-      window.removeEventListener('beforeunload', saveCanvasData);
+     // window.removeEventListener('beforeunload', saveCanvasData);
       window.removeEventListener('resize', saveCanvasData);
     };
   }, []);
@@ -126,7 +143,6 @@ function Draw() {
     } 
   };
 
-
     // //그림판 구현
     const [canvasSize, setCanvasSize] = useState({ width: 400, height: 300 });
     const [color, setColor] = useState("black");
@@ -136,7 +152,7 @@ function Draw() {
     if (signatureCanvasRef.current) {
       console.log("Ref is set", signatureCanvasRef.current);
       try {
-        const ctx = signatureCanvasRef.current.getContext('2d');
+        // const ctx = signatureCanvasRef.current.getContext('2d');
         console.log("Context is accessible");
       } catch (error) {
         console.error("Failed to get context", error);
@@ -147,63 +163,209 @@ function Draw() {
   }, []);
 
 
-    useEffect(() => {
-      const handleResize = () => {
-        if (signatureCanvasRef.current) {
-          const canvasElement = signatureCanvasRef.current.getCanvas(); // 실제 canvas 요소를 가져옵니다.
-          const ctx = canvasElement.getContext('2d'); // 이제 getContext를 호출할 수 있습니다.
-    
-          // 임시 캔버스를 생성하고, 기존 캔버스의 내용을 임시 캔버스에 복사합니다.
-          const tempCanvas = document.createElement('canvas');
-          const tempCtx = tempCanvas.getContext('2d');
-          tempCanvas.width = canvasElement.width;
-          tempCanvas.height = canvasElement.height;
-          tempCtx.drawImage(canvasElement, 0, 0); // 기존 캔버스의 내용을 임시 캔버스에 복사
-    
-          const screenWidth = window.innerWidth;
-          const screenHeight = window.innerHeight;
-          let newWidth, newHeight;
-    
-          if (screenWidth < screenHeight) {
-            newWidth = screenWidth * 0.6;
-            newHeight = newWidth * 1;
-          } else {
-            newWidth = screenWidth * 0.6;
-            newHeight = newWidth / 1;
-            if (newHeight > screenHeight * 0.6) {
-              newHeight = screenHeight * 0.6;
-              newWidth = newHeight * 1;
-            }
-          }
-    
-          canvasElement.width = newWidth; // 캔버스 크기를 재설정
-          canvasElement.height = newHeight;
-          ctx.drawImage(tempCanvas, 0, 0, newWidth, newHeight); // 임시 캔버스의 내용을 새 크기의 캔버스에 그립니다.
-        }
-      };
-    
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-
+  //캔버스를 벗어날때 캔버스 초기화
   useEffect(() => {
-    const checkSize = () => {
-      let width, height;
-      if (window.innerWidth < 768) { // 가정: 768px 미만은 모바일로 간주
-        width = 300;
-        height = 250;
-      } else {
-        width = 750;
-        height = 425;
+    const clearCanvas = () => {
+      if (signatureCanvasRef.current) {
+        signatureCanvasRef.current.clear();
       }
-      setCanvasSize({ width, height });
     };
-    checkSize(); // 컴포넌트 마운트 시 실행
-    window.addEventListener('resize', checkSize); // 창 크기 변경 시 실행
+  
+    const handleBeforeUnload = () => {
+      clearCanvas();
+      localStorage.removeItem('canvasData'); // 페이지를 벗어나면 로컬 스토리지에서 캔버스 데이터를 제거합니다.
+    };
+  
+    window.addEventListener('beforeunload', handleBeforeUnload);
+  
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
+  
 
-    return () => window.removeEventListener('resize', checkSize); // 클린업
+
+
+//     useEffect(() => {
+//       const handleResize = () => {
+//         if (signatureCanvasRef.current) {
+//           const canvasElement = signatureCanvasRef.current.getCanvas(); // 실제 canvas 요소를 가져옵니다.
+//           const ctx = canvasElement.getContext('2d'); // 이제 getContext를 호출할 수 있습니다.
+    
+//           // 임시 캔버스를 생성하고, 기존 캔버스의 내용을 임시 캔버스에 복사합니다.
+//           const tempCanvas = document.createElement('canvas');
+//           const tempCtx = tempCanvas.getContext('2d');
+//           tempCanvas.width = canvasElement.width;
+//           tempCanvas.height = canvasElement.height;
+//           tempCtx.drawImage(canvasElement, 0, 0); // 기존 캔버스의 내용을 임시 캔버스에 복사
+    
+//           const screenWidth = window.innerWidth;
+//           const screenHeight = window.innerHeight;
+//           let newWidth, newHeight;
+    
+//           if (screenWidth < screenHeight) {
+//             newWidth = screenWidth * 0.6;
+//             newHeight = newWidth * 1;
+//           } else {
+//             newWidth = screenWidth * 0.6;
+//             newHeight = newWidth / 1;
+//             if (newHeight > screenHeight * 0.6) {
+//               newHeight = screenHeight * 0.6;
+//               newWidth = newHeight * 1;
+//             }
+//           }
+    
+//           // canvasElement.width = newWidth; // 캔버스 크기를 재설정
+//           // canvasElement.height = newHeight;
+//           // ctx.drawImage(tempCanvas, 0, 0, newWidth, newHeight); // 임시 캔버스의 내용을 새 크기의 캔버스에 그립니다.
+
+//       // 기존 캔버스의 비율을 유지하면서 크기를 변경합니다.
+//       const scaleWidth = newWidth / tempCanvas.width;
+//       const scaleHeight = newHeight / tempCanvas.height;
+//       const scale = Math.min(scaleWidth, scaleHeight);
+
+//       canvasElement.width = tempCanvas.width * scale;
+//       canvasElement.height = tempCanvas.height * scale;
+//       ctx.drawImage(tempCanvas, 0, 0, canvasElement.width, canvasElement.height); // 임시 캔버스의 내용을 새 크기의 캔버스에 그립니다.
+//         }
+//       };
+    
+//       window.addEventListener('resize', handleResize);
+//       return () => window.removeEventListener('resize', handleResize);
+//     }, []);
+
+
+//   useEffect(() => {
+//     const checkSize = () => {
+//       let width, height;
+//       if (window.innerWidth < 768) { // 가정: 768px 미만은 모바일로 간주
+//         width = 300;
+//         height = 250;
+//       } else {
+//         width = 750;
+//         height = 425;
+//       }
+//       setCanvasSize({ width, height });
+//     };
+//     checkSize(); // 컴포넌트 마운트 시 실행
+//     window.addEventListener('resize', checkSize); // 창 크기 변경 시 실행
+
+//     return () => window.removeEventListener('resize', checkSize); // 클린업
+// }, []);
+
+
+
+useEffect(() => {
+  
+  // const handleResize = () => {
+  //   if (signatureCanvasRef.current) {
+  //     const canvasElement = signatureCanvasRef.current.getCanvas(); // 실제 canvas 요소를 가져옵니다.
+  //     const ctx = canvasElement.getContext('2d'); // 이제 getContext를 호출할 수 있습니다.
+
+  //     // 임시 캔버스를 생성하고, 기존 캔버스의 내용을 임시 캔버스에 복사합니다.
+  //     const tempCanvas = document.createElement('canvas');
+  //     const tempCtx = tempCanvas.getContext('2d');
+  //     tempCanvas.width = canvasElement.width;
+  //     tempCanvas.height = canvasElement.height;
+  //     tempCtx.drawImage(canvasElement, 0, 0); // 기존 캔버스의 내용을 임시 캔버스에 복사
+
+  //     const screenWidth = window.innerWidth;
+  //     const screenHeight = window.innerHeight;
+  //     let newWidth, newHeight;
+
+  //     if (screenWidth < screenHeight) {
+  //       newWidth = screenWidth * 0.6;
+  //       newHeight = newWidth * 1;
+  //     } else {
+  //       newWidth = screenWidth * 0.6;
+  //       newHeight = newWidth / 1;
+  //       if (newHeight > screenHeight * 0.6) {
+  //         newHeight = screenHeight * 0.6;
+  //         newWidth = newHeight * 1;
+  //       }
+  //     }
+
+  //     // 기존 캔버스의 비율을 유지하면서 크기를 변경합니다.
+  //     const scaleWidth = newWidth / tempCanvas.width;
+  //     const scaleHeight = newHeight / tempCanvas.height;
+  //     const scale = Math.min(scaleWidth, scaleHeight);
+
+  //     canvasElement.width = tempCanvas.width * scale;
+  //     canvasElement.height = tempCanvas.height * scale;
+  //     ctx.drawImage(tempCanvas, 0, 0, canvasElement.width, canvasElement.height); // 임시 캔버스의 내용을 새 크기의 캔버스에 그립니다.
+  //   }
+  // };
+
+
+    const handleResize = () => {
+    if (signatureCanvasRef.current) {
+      const canvasElement = signatureCanvasRef.current.getCanvas(); // 실제 canvas 요소를 가져옵니다.
+      const ctx = canvasElement.getContext('2d'); // 이제 getContext를 호출할 수 있습니다.
+
+      // 임시 캔버스를 생성하고, 기존 캔버스의 내용을 임시 캔버스에 복사합니다.
+      const tempCanvas = document.createElement('canvas');
+      const tempCtx = tempCanvas.getContext('2d');
+      tempCanvas.width = canvasElement.width;
+      tempCanvas.height = canvasElement.height;
+      tempCtx.drawImage(canvasElement, 0, 0); // 기존 캔버스의 내용을 임시 캔버스에 복사
+
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      let newWidth, newHeight;
+
+      if (screenWidth < 768) {
+        newWidth = 300;
+        newHeight = 250;
+      } else {
+        newWidth = 750;
+        newHeight = 425;
+        if (newHeight > screenHeight * 0.6) {
+          newHeight = screenHeight * 0.6;
+          newWidth = newHeight * 1;
+        }
+      }
+
+      // 기존 캔버스의 비율을 유지하면서 크기를 변경합니다.
+      const scaleWidth = newWidth / tempCanvas.width;
+      const scaleHeight = newHeight / tempCanvas.height;
+      const scale = Math.min(scaleWidth, scaleHeight);
+
+      canvasElement.width = tempCanvas.width * scale;
+      canvasElement.height = tempCanvas.height * scale;
+      ctx.drawImage(tempCanvas, 0, 0, canvasElement.width, canvasElement.height); // 임시 캔버스의 내용을 새 크기의 캔버스에 그립니다.
+    }
+  };
+
+
+
+
+  const checkSize = () => {
+    let width, height;
+    if (window.innerWidth < 768) { // 가정: 768px 미만은 모바일로 간주
+      width = 300;
+      height = 250;
+    } else {
+      width = 750;
+      height = 425;
+    }
+    setCanvasSize({ width, height });
+  };
+
+  handleResize(); // 초기 캔버스 크기 조정
+  checkSize(); // 컴포넌트 마운트 시 실행
+
+  window.addEventListener('resize', handleResize); // 창 크기 변경 시 실행
+  window.addEventListener('resize', checkSize); // 창 크기 변경 시 실행
+
+  return () => {
+    window.removeEventListener('resize', handleResize); // 클린업
+    window.removeEventListener('resize', checkSize); // 클린업
+  };
 }, []);
+
+
+
+
 
   // useEffect를 사용하여 컴포넌트가 마운트될 때 토큰을 가져옵니다.
   useEffect(() => {
