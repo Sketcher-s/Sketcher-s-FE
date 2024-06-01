@@ -261,7 +261,8 @@ height: 4.375rem; //70px;
 justify-content: center; /* 수평 중앙 정렬 */
 //padding-top: 10%;
 
-padding-top: 1000%;
+//padding-top: 1000%;
+margin-top: 17rem;
 
 `}
 `;
