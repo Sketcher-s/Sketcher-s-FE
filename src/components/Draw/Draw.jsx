@@ -193,8 +193,8 @@ function Draw() {
     const checkSize = () => {
       let width, height;
       if (window.innerWidth < 768) { // 가정: 768px 미만은 모바일로 간주
-        width = 250;
-        height = 300;
+        width = 300;
+        height = 250;
       } else {
         width = 750;
         height = 425;
