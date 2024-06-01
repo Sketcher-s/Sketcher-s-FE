@@ -10,7 +10,7 @@ function ResultButton() {
     Navigate('/mypage');
   }
   function handleMainClick() {
-    Navigate('/Main');
+    Navigate('/');
   }
   return (
     <div>
