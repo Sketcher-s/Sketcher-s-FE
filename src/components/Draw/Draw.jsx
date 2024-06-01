@@ -27,9 +27,6 @@ const canvasContentState = atom({
 
 function Draw() {  
 
-  //상태관리
-  //const [canvasContent, setCanvasContent] = useRecoilState(canvasContentState);
-
   // Ref를 사용하여 Signaturecanvas 컴포넌트에 접근한다.
   const signatureCanvasRef = useRef(null);
   //그림 저장 상태
