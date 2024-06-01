@@ -398,15 +398,15 @@ const BeforeList = styled(EntryText)`
 const WithDrawalButton = styled.button`
   width: 15%;
   height: 55%;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  line-height: 0.7rem;
+  //line-height: 0.7rem;
   color: #97999F;
   border: none;
   align-self: center;
   text-align: center;
   border-radius: 5px;
-  padding-top: 0.15rem;
+  //padding-top: 0.15rem;
   cursor: pointer;
 
   ${theme.media.mobile`
