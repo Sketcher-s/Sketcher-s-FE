@@ -236,7 +236,7 @@ useEffect(() => {
         newHeight = 250;
       } else if(768 <= screenWidth && screenWidth < 1100){
         newWidth = 570;
-        newHeight = 440;
+        newHeight = 400;
       }else {
         newWidth = 1000;
         newHeight = 550;
@@ -295,7 +295,7 @@ useEffect(() => {
     height = 250;
   } else if(768 <= window.innerWidth && window.innerWidth < 1025){
     width = 570;
-    height = 440;
+    height = 400;
   }else {
     width = 1000;
     height = 550;
