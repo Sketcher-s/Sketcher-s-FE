@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import { ReactComponent as User } from '../assets/User/user.svg';
 import { theme } from '../theme';
 import InquiryMypage from '../components/MyPage/InquiryMypage';
@@ -240,6 +240,7 @@ const MyPage = () => {
     const [userInfo,setUserInfo] = useState({name: '', email: ''});
     const size = 8;
     const [modalStatus, setModalStatus] = useState(null);
+    const listRef = useRef(null);
     // 로그인 상태
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
 
@@ -247,6 +248,7 @@ const MyPage = () => {
       if(loading) return;
       setLoading(true);
       try {
+        console.log('loading more data');
         const response = await InquiryMypage(page, size);
         
         // 응답 구조를 확인
@@ -263,26 +265,41 @@ const MyPage = () => {
 
         setData(prevData => [...prevData, ...simplePictureDtoList]);
         setPage(prevPage => prevPage + 1);
+        
       } catch (error) {
         console.error('Error loading more data:', error);
       } finally {
         setLoading(false);
       }
     }, [page, loading]);
-  
+
+
     useEffect(() => {
       const handleScroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop + 50 >= document.documentElement.scrollHeight && !loading) {
-          loadMoreData();
+        console.log('scrolling...');
+        // listWrapperRef.current를 사용하여 스크롤 위치 접근
+        if (listRef.current) {
+          const { scrollTop, scrollHeight, clientHeight } = listRef.current;
+          if (clientHeight + scrollTop + 50 >= scrollHeight && !loading) {
+            console.log('Load more data condition met');
+            loadMoreData();
+          }
         }
       };
   
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
-    }, [loadMoreData, loading]);
+      const listWrapper = listRef.current;
+      if (listWrapper) {
+        listWrapper.addEventListener('scroll', handleScroll);
+      }
+      return () => {
+        if (listWrapper) {
+          listWrapper.removeEventListener('scroll', handleScroll);
+        }
+      };
+    }, [loadMoreData, loading]); // 의존성 배열 업데이트
 
     useEffect(() => {
-      loadMoreData(); // 초기 데이터 로드
+      loadMoreData(); // 초기 데이터 로드     
     }, []); 
 
 
@@ -315,9 +332,7 @@ const MyPage = () => {
 
     // 항목 클릭 시, 해당 항목 결과 페이지로 이동
     const moveToList = (id, title) => {
-      navigate(`/result`, {state: { response: { pictureDto: { id: id, title: title},fromMyPage:true}} 
-    });
-      
+      navigate(`/result`, {state: { response: { pictureDto: { id: id, title: title} } } });
     }
  
     // 시간 띄우기
@@ -365,14 +380,13 @@ const MyPage = () => {
             <Divider />
             <ListContainer>
               <SectionTitle>검사 일기</SectionTitle>
-              <ListWrapper>
+              <ListWrapper ref={listRef}>
               {sortedData.map((item, index) => (
               <EntryContainer key={index} onClick={() => moveToList(item.id, item.title)}>
                 <EntryText>{item.title}</EntryText>
                 <EntryDate>{formatDate(item.createdAt)}</EntryDate>
               </EntryContainer>
               ))}
-              {loading && <div>Loading...</div>}
               {sortedData?.length === 0 && <BeforeList>검사를 진행해보세요!</BeforeList>}
               </ListWrapper>
             </ListContainer>
@@ -399,15 +413,15 @@ const BeforeList = styled(EntryText)`
 const WithDrawalButton = styled.button`
   width: 15%;
   height: 55%;
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 600;
-  //line-height: 0.7rem;
+  line-height: 0.7rem;
   color: #97999F;
   border: none;
   align-self: center;
   text-align: center;
   border-radius: 5px;
-  //padding-top: 0.15rem;
+  padding-top: 0.15rem;
   cursor: pointer;
 
   ${theme.media.mobile`
