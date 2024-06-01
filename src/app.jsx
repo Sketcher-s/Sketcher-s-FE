@@ -23,10 +23,10 @@ const PageLayout = () => {
   const isMainPage = location.pathname === '/';
   const isPicPage = location.pathname === '/preparepicture';
   const isResultPage = location.pathname === '/result';
-  const isDraw = location.pathname === '/draw';
+  //const isDraw = location.pathname === '/draw';
 
   return (
-    <Container isMainPage={isMainPage} isPicPage={isPicPage} isResultPage={isResultPage} isDraw={isDraw}>
+    <Container isMainPage={isMainPage} isPicPage={isPicPage} isResultPage={isResultPage}>
       <RecoilRoot>
         <Navbar/>
             <Sidebar/>
