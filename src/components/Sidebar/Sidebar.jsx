@@ -48,6 +48,7 @@ const Content = styled.div`
   align-items: flex-start;
   gap: 0.7rem; /* 20px */
   display: flex;
+  width: 11.125rem;
 `;
 
 const IconContainer = styled.div`
@@ -115,7 +116,7 @@ const MoveBtn = styled.button`
   text-align: left; /* 텍스트 왼쪽 정렬 */
 `;
 
-const Info = styled.h1`
+const InfoName = styled.h1`
   width: 100%; /* 180px */
   height: 70%;
   color: #3F4045;
@@ -125,6 +126,10 @@ const Info = styled.h1`
   line-height: 0.5;
   word-wrap: break-word;
 `;
+
+const InfoEmail = styled(InfoName)`
+  font-size: 0.8rem;
+`
 
 const CloseContainer = styled.div`
 position: absolute;
@@ -197,8 +202,8 @@ const Sidebar = () => {
                 <Icon><User/></Icon> 
             </IconContainer>
             <InfoContainer>
-              <Info>{userInfo.name}</Info>
-              <Info>{userInfo.email}</Info>
+              <InfoName>{userInfo.name}</InfoName>
+              <InfoEmail>{userInfo.email}</InfoEmail>
             </InfoContainer>
           </Content>
           
