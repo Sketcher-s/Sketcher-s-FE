@@ -547,10 +547,6 @@ const handleDoneClick = () => {
           <Button>완료</Button>
         </ButtonContainer>
 
-        {/* <DMobileContainer>
-        <MDescription/>
-      </DMobileContainer> */}
-
       </OutContainer>
 
       {/* <Description/> */}
