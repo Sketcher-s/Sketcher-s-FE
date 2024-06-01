@@ -142,17 +142,6 @@ useEffect(() => {
     }
   }, []);
 
-  // //초기 설정: 컴포넌트가 마운트될 때 'WPencil' 버튼이 눌린 상태로 설정
-  // const handleClick2 = (buttonName) => {
-  //   console.log('handleClick 호출됨', buttonName);
-  //   setIsButtonClicked(buttonName);
-  //   if (buttonName === 'WPencil') {
-  //     console.log('WPencil 설정');
-  //     handleColorChange('black');
-  //     changePenSize({ minWidth: minPenSize, maxWidth: minPenSize });
-  //   }
-  // };
-
 
   useEffect(() => {
     handleClick('WPencil'); // 컴포넌트 마운트 시 연필 도구 활성화
@@ -456,7 +445,7 @@ const handleDoneClick = () => {
     Navigate('/loading', { state: { imageData } });
     uploadImageToServer(imageData); // 서버로 이미지 전송
    // handleTokenClear(); //캔버스 토큰 삭제
-  //uploadImageToServer(); // 서버로 이미지 전송
+  uploadImageToServer(); // 서버로 이미지 전송
 };
 
   return (
