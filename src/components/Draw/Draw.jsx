@@ -106,6 +106,11 @@ function Draw() {
     setColor(newColor);
   };
 
+  // 초기 설정: 컴포넌트가 마운트될 때 'WPencil' 버튼이 눌린 상태로 설정
+  useEffect(() => {
+    handleClick('WPencil');
+  }, []);
+
   // 펜의 최소 두께와 최대 두께
   const minPenSize = 1;
   const maxPenSize = 1000;
@@ -125,7 +130,7 @@ function Draw() {
   };
 
     // //그림판 구현
-    const [canvasSize, setCanvasSize] = useState({ width: 250, height: 300 });
+    const [canvasSize, setCanvasSize] = useState({ width: 400, height: 300 });
     const [color, setColor] = useState("black");
 
     // ref가 잘 작동되는지 콘솔을 찍어봄
@@ -162,13 +167,13 @@ function Draw() {
           let newWidth, newHeight;
     
           if (screenWidth < screenHeight) {
-            newWidth = screenWidth * 0.5;
+            newWidth = screenWidth * 0.6;
             newHeight = newWidth * 1;
           } else {
-            newWidth = screenWidth * 0.5;
+            newWidth = screenWidth * 0.6;
             newHeight = newWidth / 1;
-            if (newHeight > screenHeight * 0.5) {
-              newHeight = screenHeight * 0.5;
+            if (newHeight > screenHeight * 0.6) {
+              newHeight = screenHeight * 0.6;
               newWidth = newHeight * 1;
             }
           }
