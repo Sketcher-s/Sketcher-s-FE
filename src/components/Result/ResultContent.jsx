@@ -10,7 +10,12 @@ function ResultContent() {
     htp: false,
     analysis: false
   });
-
+  const [results, setResults] = useState({
+    home: '',
+    tree: '',
+    person: '',
+    summary: ''
+  });
   const toggleSection = section => {
     setIsOpen(prev => ({ ...prev, [section]: !prev[section] }));
   };
@@ -36,6 +41,8 @@ function ResultContent() {
         const responseData = await response.json();
         if (responseData && responseData.pictureDto) {
           setAnalysisResult(responseData.pictureDto.result);
+          const parsedResults = parseResults(responseData.pictureDto.result);
+          setResults(parsedResults);
         } else {
           throw new Error('No valid response data');
         }
@@ -46,7 +53,15 @@ function ResultContent() {
     fetchPictureDetails();
   }, [jwtToken, pictureId]);  // 의존성 배열에 jwtToken과 pictureId 추가
   
-  
+    function parseResults(text) {
+    const sections = {
+      home: text.match(/집:([^]*)나무:/)?.[1].trim(),
+      tree: text.match(/나무:([^]*)사람:/)?.[1].trim(),
+      person: text.match(/사람:([^]*)종합:/)?.[1].trim(),
+      summary: text.match(/종합:([^]*)$/)?.[1].trim()
+    };
+    return sections;
+  }
   return (
     <div>
         <Resultcontent>
