@@ -95,6 +95,9 @@ function PreparePicture({ imgFile }) {
           // 서버로 파일 전송
            uploadFile(); // 파일을 함수의 인자로 전달
 
+           // 이미지 파일인 경우 로딩 페이지로 전달
+          Navigate('/loading', { state: { imageData: URL.createObjectURL(file) } });
+
         } else {
           // 이미지 파일이 아닌 경우 경고 메시지 출력
           console.error('Selected file is not an image.');
@@ -170,10 +173,10 @@ function PreparePicture({ imgFile }) {
     //uploadFile();
 
   const handleButtonClick = () => {
-
     // 파일을 선택하기 위해 input 요소 클릭
     fileInputRef.current.click();
   };
+
 
   return (
     <>

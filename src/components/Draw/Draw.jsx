@@ -17,6 +17,7 @@ import { ReactComponent as RectangleH } from '../../assets/Draw/RectangleH.svg';
 import {} from 'recoil';
 import { atom } from 'recoil';
 import Ver3 from './Description';
+import Loading from '../Draw/Loading';
 
 // Recoil을 사용하여 캔버스의 내용을 상태로 관리
 const canvasContentState = atom({
@@ -257,9 +258,6 @@ const uploadImageToServer = async () => {
 
   const blob = dataURLtoBlob(imageData);
 
-  // const base64Response = await fetch(imageData);
-  // const blob = await base64Response.blob(); // Blob으로 변환
-
   const formData = new FormData();
   formData.append('file', blob, 'image.png'); // Blob을 파일로 처리하여 추가
 
@@ -269,7 +267,12 @@ const uploadImageToServer = async () => {
     console.log(pair[0], pair[1]);
   }
 
+
   try {
+
+    setIsLoading(true);
+
+
     const response = await fetch('https://dev.catchmind.shop/api/picture', {
       method: 'POST',
       headers: {
@@ -301,19 +304,36 @@ const uploadImageToServer = async () => {
     }
 
     console.log('파일 업로드 성공:', data);
+    Navigate('/result', { state: { response: data } }); // 업로드 완료 후 결과 페이지로 이동
   } catch (error) {
     console.error('파일 업로드 실패:', error.message);
+  }finally {
+    setIsLoading(false); // 로딩 상태 비활성화
   }
 };
 
-// 완료 버튼 클릭 이벤트 핸들러
+//완료 버튼 클릭 이벤트 핸들러
+// const handleDoneClick = () => {
+//   console.log('완료 버튼 클릭');
+//   //addWhiteBack(signatureCanvasRef.current);
+//   uploadImageToServer(); // 서버로 이미지 전송
+// };
+
 const handleDoneClick = () => {
   console.log('완료 버튼 클릭');
   //addWhiteBack(signatureCanvasRef.current);
+  const imageData = signatureCanvasRef.current.toDataURL('image/png');
+    Navigate('/loading', { state: { imageData } });
+    uploadImageToServer(imageData); // 서버로 이미지 전송
   uploadImageToServer(); // 서버로 이미지 전송
 };
 
   return (
+    <>
+    {isLoading ? (
+        <Loading />
+      ) : (
+
     <Wrap>
 
       <OutContainer>
@@ -439,6 +459,8 @@ const handleDoneClick = () => {
       </DeskBtn>
 
     </Wrap>
+      )}
+    </>
 
   );
 }
