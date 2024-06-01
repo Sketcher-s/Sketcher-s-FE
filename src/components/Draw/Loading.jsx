@@ -40,7 +40,7 @@ export default function Loading() {
 
 
   return (
-    <div>
+  
         
     <OutContainer onClick={handleModalOpen}>
 
@@ -65,17 +65,18 @@ export default function Loading() {
 
     </DrawingArea>
     <Scan/>
-    </OutContainer>
-
     {/* 모달을 열기 위한 버튼 */}
-        {modalOpen && (
+    {modalOpen && (
         <Modal
           title="그림 확인이 필요해요 !"
           message="집, 나무, 사람이 제대로 그려졌는지 확인해주세요."
           close={handleModalClose} // 모달을 닫는 핸들러를 전달
         />
       )}
-  </div>
+    </OutContainer>
+
+    
+
   );
 }
 
@@ -85,15 +86,15 @@ Loading.propTypes = {
 
 const OutContainer = styled.div`
   width: 100%;
-  height: 100%;
-  padding-top: 2.5rem; //40px;
-  padding-bottom: 2.5rem; //40px;
+  height: 93vh;
+  //padding-top: 2.5rem; //40px;
+  //padding-bottom: 2.5rem; //40px;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  gap: 2.5rem; //40px;
+  //gap: 2.5rem; //40px;
   display: flex;
-  background: #f3f3f6;
+  //background: #f3f3f6;
   position: relative;
   overflow: hidden;
 `;
@@ -115,12 +116,12 @@ const DrawingArea = styled.div`
 const TContainer = styled.div`
 width: 100%;
 height: 100%;
-padding-top: 2.5rem; //40px;
+padding-top: 5rem; //40px;
 flex-direction: column;
 justify-content: flex-start;
 align-items: center;
-gap: 0.875rem; //14px;
-display: inline-flex;
+gap: 1rem; //14px;
+display: flex;
 `;
 
 const Spinner = styled.img`
@@ -132,6 +133,8 @@ const Text = styled.div`
   width: 21.5rem; //296px;
   height: 2.4375rem; //39px;
   color: #3F4045;
+  display: flex;
+  justify-content: center;
   font-size: 1.625rem; //26px;
   font-family: Pretendard-Regular;
   font-weight: 700;
