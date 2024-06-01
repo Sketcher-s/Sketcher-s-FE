@@ -75,7 +75,6 @@ export const Icon = styled.div`
 
 
 export const DrawingArea = styled.div`
-margin-right: 3.5rem;
   left: 15.1875rem; //211px;
   //left: 13.1875rem; //211px;
   top: 7.25rem; //116px;
@@ -93,6 +92,11 @@ margin-right: 3.5rem;
   ${theme.media.mobile`
   flex-direction: column-reverse;
   display: fixed;
+`}
+
+${theme.media.desktop`
+  margin-right: 3.5rem;
+
 `}
 
 `;
