@@ -246,18 +246,6 @@ useEffect(() => {
         }
       }
 
-      // if (screenWidth < 768) {
-      //   newWidth = 300;
-      //   newHeight = 250;
-      // } else {
-      //   newWidth = 600;
-      //   newHeight = 425;
-      //   if (newHeight > screenHeight * 0.6) {
-      //     newHeight = screenHeight * 0.6;
-      //     newWidth = newHeight * 1;
-      //   }
-      // }
-
 
       // // 기존 캔버스의 비율을 유지하면서 크기를 변경합니다.
       // const scaleWidth = newWidth / tempCanvas.width;
