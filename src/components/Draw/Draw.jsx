@@ -43,6 +43,8 @@ function Draw() {
 
     // 이 후의 그림 그리기는 흰색 배경 위에 수행됩니다.
   }, []);
+
+  
   useEffect(() => {
     // 컴포넌트가 마운트될 때 로컬 스토리지에서 저장된 그림 데이터를 복원한다.
     const savedData = localStorage.getItem('canvasData');
