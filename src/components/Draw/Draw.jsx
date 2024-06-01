@@ -45,16 +45,6 @@ function Draw() {
   }, []);
 
 
-//   useEffect(() => {
-//     // 컴포넌트가 마운트될 때 로컬 스토리지에서 저장된 그림 데이터를 복원한다.
-//     const savedData = localStorage.getItem('canvasData');
-//     if(savedData){
-//       setCanvasData(savedData);
-//       signatureCanvasRef.current.fromDataURL(savedData);
-//     }
-// }, []);
-
-
 useEffect(() => {
   const savedData = localStorage.getItem('canvasData');
   if (savedData) {
