@@ -7,18 +7,24 @@ import Scan from './Scan';
 import { theme } from '../../theme';
 import PropTypes from 'prop-types';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../recoil/recoilState';
 
 
 export default function Loading() {
 
-    const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
- 
+  const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
+  const navigate = useNavigate();
+
+  // 로그인 상태
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  if(!isLoggedIn){
+    navigate('/');
+  }
+  
   const handleModalOpen = () => {
     setModalOpen(true); // 모달을 열기 위해 상태를 변경하는 함수
   };
-
-  const navigate = useNavigate();
   
   const handleModalClose = () => {
     setModalOpen(false);

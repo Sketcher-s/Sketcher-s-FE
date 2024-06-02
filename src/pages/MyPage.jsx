@@ -242,8 +242,13 @@ const MyPage = () => {
     const size = 8;
     const [modalStatus, setModalStatus] = useState(null);
     const listRef = useRef(null);
+    const navigate = useNavigate();
+    
     // 로그인 상태
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+    if(!isLoggedIn){
+      navigate('/');
+    }
 
     const loadMoreData = useCallback(async () => {
       if(loading) return;
@@ -326,7 +331,7 @@ const MyPage = () => {
     }
 
     // 메인으로 이동
-    const navigate = useNavigate();
+    
     const moveToMain = () => {
       navigate('/');
     }
