@@ -63,5 +63,6 @@ export default App;
 
 const Container = styled.div`
   height: ${(props) => (props.isMainPage || props.isPicPage || props.isResultPage ? 'auto' : '100vh')};
-  overflow: ${(props) => (props.isMainPage  || props.isPicPage || props.isResultPage ? 'auto' : 'hidden')};
+  overflow-y: ${(props) => (props.isMainPage  || props.isPicPage || props.isResultPage ? 'auto' : 'hidden')};
+  overflow-x: hidden;
 `;
