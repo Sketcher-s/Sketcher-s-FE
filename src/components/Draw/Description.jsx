@@ -70,12 +70,12 @@ const Ver3=({onClick}) => {
 </StyledMissionContainer>
 
 <StyledItemContainer>
-  <StyledItem>
+  {/* <StyledItem>
     <StyledIconContainer>
       <GCheck/>
     </StyledIconContainer>
     <StyledContent>아이가 검정색으로 그림을 완성할 수 있도록 도와주세요.</StyledContent>
-  </StyledItem>
+  </StyledItem> */}
   <StyledItem>
     <StyledIconContainer>
       <PrepareDraw1 />
