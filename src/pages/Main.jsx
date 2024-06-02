@@ -109,6 +109,7 @@ export default Main;
 const MainContainer = styled.div`
 overflow: auto;
 height: 100vh; // 뷰포트의 전체 높이
+width: 100vh;
 `;
 
 const InspectionSection = styled.div`
