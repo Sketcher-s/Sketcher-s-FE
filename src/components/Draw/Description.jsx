@@ -23,9 +23,10 @@ export const Container = styled.div`
     flex-direction: column;
     overflow: hidden;
 
-    position: fixed;
+    position: absolute;
+    top: 0px;
     z-index: 999;
-    margin-top: -10rem;
+    //margin-top: -10rem;
 
   `}
   ${theme.media.desktop`
