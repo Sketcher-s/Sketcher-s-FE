@@ -55,8 +55,16 @@ export default function Loading() {
 
 <CanvasContainer>
   {imageData && (
-    <ImageData>
-      <img id="loadedImage" src={imageData} style={{ maxWidth: '20rem', maxHeight: '20rem'}} />
+    // <ImageData>
+    //   <img id="loadedImage" src={imageData} style={{ maxWidth: '20rem', maxHeight: '20rem'}} />
+    // </ImageData>
+    <ImageData style={{ width: '20rem', height: '20rem', overflow: 'hidden' }}>
+    <img 
+      id="loadedImage" 
+      src={imageData} 
+      alt="이미지 설명" 
+      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+    />
     </ImageData>
   )}
   </CanvasContainer>
