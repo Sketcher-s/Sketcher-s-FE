@@ -13,7 +13,7 @@ function Result() {
   const [image, setImage] = useState('');
   const [analysisResult, setAnalysisResult] = useState('');
   const [error, setError] = useState('');
-  const isFromMyPage = location.state?.fromMyPage ?? false;
+  const isFromMyPage = location.state?.response?.fromMyPage ?? false;
   const [isEditing, setIsEditing] = useState(!isFromMyPage);  
   const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
   const pictureId = location.state?.response?.pictureDto?.id;
@@ -25,8 +25,9 @@ function Result() {
     Navigate('/');
   }
   useEffect(() => {
-
-    if (location.state?.response?.fromMyPage) {
+    console.log("fromePage",location.state?.fromMyPage);
+    console.log(location.state); // 전체 state 로깅
+    if (location.state?.fromMyPage) {
       setIsEditing(false);  // 마이페이지에서 온 경우
     } else {
       setIsEditing(true);  // 다른 경우 (기본 설정)
@@ -104,7 +105,6 @@ function Result() {
     } catch (error) {
       console.error('Error updating title:', error);
     }
-
     setIsEditing(false);
 };
 

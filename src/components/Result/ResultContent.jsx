@@ -2,7 +2,7 @@ import React, { useState, useEffect} from 'react';
 import styled from 'styled-components';
 import {theme} from '../../theme';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
+
 function ResultContent() {
   const [analysisResult, setAnalysisResult] = useState("");
   const location = useLocation();
@@ -21,6 +21,7 @@ function ResultContent() {
   };
   const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
   const pictureId = location.state?.response?.pictureDto?.id;
+  
   useEffect(() => {
     const fetchPictureDetails = async () => {
       if (!jwtToken) {
@@ -54,19 +55,11 @@ function ResultContent() {
   }, [jwtToken, pictureId]);  // 의존성 배열에 jwtToken과 pictureId 추가
   
   function parseResults(text) {
-    console.log("서버 응답 원본 데이터:", text); // 서버 응답 로깅
-
     const home = text.match(/\[집\]\s*([^[]*)/)?.[1].trim() || "집 정보 없음";
     const tree = text.match(/\[나무\]\s*([^[]*)/)?.[1].trim() || "나무 정보 없음";
     const person = text.match(/\[사람\]\s*([^[]*)/)?.[1].trim() || "사람 정보 없음";
     const summary = text.match(/\[종합\]\s*([^[]*)/)?.[1].trim() || "종합 정보 없음";
-
-    console.log("추출된 집 데이터:", home); // 추출 데이터 로깅
-    console.log("추출된 나무 데이터:", tree);
-    console.log("추출된 사람 데이터:", person);
-    console.log("추출된 종합 데이터:", summary);
     const result = { home, tree, person, summary };
-    console.log("Parsed results:", result); // 결과 로깅을 위해 이 줄을 추가하세요
     return result;
 }
 
