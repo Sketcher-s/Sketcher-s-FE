@@ -53,9 +53,13 @@ export const OutContainer = styled.div`
   
   ${theme.media.mobile`
 
-  //padding-top: 0rem;
   padding-top: 10rem;
-  //position:fixed;
+  position: relative;
+  z-index: 0;
+  gap: 0.5rem; // 30px;
+
+  height: auto; // 모바일에서는 내용에 따라 높이 자동 조정
+  overflow-y: auto; // 내용이 넘칠 경우 세로 스크롤 허용
   z-index: 0;
   `}
 `;
