@@ -125,7 +125,6 @@ function Result() {
                     placeholder="그림의 제목을 입력하세요"
                     readOnly={!isEditing}
                     isError={error.length > 0}
-                    
                 />
                 <Button onClick={!isEditing ? handleEdit : handleSave}>
                 {!isEditing ? "수정" : "저장"}

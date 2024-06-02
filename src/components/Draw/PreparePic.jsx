@@ -18,7 +18,11 @@ PreparePicture.propTypes = {
   
 };
 
-function PreparePicture({ imgFile }) {
+function PreparePicture() {
+
+  // 이미지 사이즈
+  const [imgFile, setImgFile] = useState(null);
+  const [imgDimensions, setImgDimensions] = useState({width: 0, height: 0});
 
   // useEffect를 사용하여 컴포넌트가 마운트될 때 토큰을 가져옵니다.
   useEffect(() => {
@@ -63,7 +67,13 @@ function PreparePicture({ imgFile }) {
 
   useEffect(() => {
     if (imgFile) {
-      Navigate('/loading', { state: { imageData: URL.createObjectURL(imgFile) } });
+      const img = new Image();
+      img.onload = () => {
+        setImgDimensions({ width: img.width, height: img.height });
+        console.log('규격', imgDimensions);
+      Navigate('/loading', { state: { imageData: URL.createObjectURL(imgFile), width: img.width, height: img.height } });
+    };
+    img.src = URL.createObjectURL(imgFile);
     }
   }, [imgFile, Navigate]);
 
@@ -91,12 +101,14 @@ function PreparePicture({ imgFile }) {
           for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value.name}`);
           }
-
-          // 서버로 파일 전송
+          
+          setImgFile(file);
+           // 서버로 파일 전송
            uploadFile(); // 파일을 함수의 인자로 전달
 
            // 이미지 파일인 경우 로딩 페이지로 전달
-          Navigate('/loading', { state: { imageData: URL.createObjectURL(file) } });
+          //Navigate('/loading', { state: { imageData: URL.createObjectURL(file)} });
+          
 
         } else {
           // 이미지 파일이 아닌 경우 경고 메시지 출력

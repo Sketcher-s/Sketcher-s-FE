@@ -5,6 +5,7 @@ import React from "react";
 import { theme } from "../../theme";
 
 const Scan = () => {
+
   return (
     <SpinnerWrapper>
         <SpinnerBarStyled/>
@@ -16,38 +17,51 @@ const Scan = () => {
 export default Scan;
 
 
-const Slide = keyframes`
-0% {
-  transform: translateY(0);
-}
-50% {
-  transform: translateY(200px);
-}
-100% {
-  transform: translateY(0);
-}
-`;
 
+// const SlideM = keyframes`
+//   0% {
+//     transform: translateY(0);
+//   }
+//   50% {
+//     transform: translateY(200px);
+//   }
+//   100% {
+//     transform: translateY(0);
+//   }
+// `;
+
+// const SlideD = keyframes`
+// 0% {
+//   transform: translateY(0);
+// }
+// 50% {
+//   transform: translateY(450px);
+// }
+// 100% {
+//   transform: translateY(0);
+// }
+// `;
 
 const SpinnerWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  animation: ${Slide} 2.7s linear infinite both;
   height: 100%;
   position: absolute;
   //left: 50;
   z-index: 1;
   //margin-top: 4rem;
+  width: 100%;
+  align-items: center;
 
   ${theme.media.mobile`
-    //width: 21.125rem;
-    margin-top: 0rem;
-    top: 25%;
+    top: 28%;
+    animation: SlideM 2.7s linear infinite both;
 `}
 
   ${theme.media.desktop`
     //width: 40rem;
     top: 20%;
+    animation: SlideD 2.7s linear infinite both;
 `}
 `;
 
@@ -56,11 +70,13 @@ const StyledSpinnerImg = styled(SpinnerImg)`
   //height: 100%;
 
   ${theme.media.desktop`
-    width: 40rem;
+    //width: 35rem;
+    width: 40%;
 `}
 
 ${theme.media.mobile`
-    width: 21.125rem;
+    //width: 20rem;
+    width: 70%;
 `}
 `;
 
@@ -68,10 +84,12 @@ const SpinnerBarStyled = styled(SpinnerBar)`
 //height: 100%;
 
 ${theme.media.desktop`
-width: 40rem;
+    //width: 35rem;
+    width: 40%;
 `}
 
 ${theme.media.mobile`
-width: 21.125rem;
+    //width: 20rem;
+    width: 70%;
 `}
 `;
