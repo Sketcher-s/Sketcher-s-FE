@@ -162,9 +162,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center; // 중앙 정렬
   justify-content: center; // 중앙 정렬
-  padding: 20px 0; // 상하 패딩
+  padding: 2rem 0; // 상하 패딩
   ${theme.media.mobile`
-    padding: 15px 10px; // 모바일에서 패딩 조정
+  
   `}
 `;
 
@@ -174,12 +174,10 @@ const DrawingSection = styled.div`
   justify-content: center;
   background: white;
   border-radius: 0.8rem;
-  margin-top:2rem;
-  padding: 3rem 5rem; // 데스크탑에서의 패딩
+  padding: 1.5rem 3.2rem; // 데스크탑에서의 패딩
   ${theme.media.mobile`  
   width: 60%; // 기본 화면에서의 너비
-    padding: 30px 20px; // 모바일에서 패딩 조정
-    margin-bottom: 30px; // 하단 마진 추가
+
   `}
 `;
 const TitleSection = styled.div`
