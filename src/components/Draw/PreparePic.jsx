@@ -197,104 +197,87 @@ function PreparePicture() {
       
     ) : (
     <Container>
-
-      <Section>
-        <PutSection onClick={handleDrawClick}>
-          <Back />
-          <Title>뒤로가기</Title>
-        </PutSection>
-        <Content>
-          <SubTitle>검사를 위해 준비해야 할 사항</SubTitle>
-
-            <NoteContainer>
-              <PreContainer>
-              <Preparation>
-                <Check />
-              </Preparation>
-              <Text>연필, 볼펜, 색연필 등은 사용할 수 없으며, 지우개와 A4 용지 한 장을 준비해주세요.</Text>
-              </PreContainer>
-
-              <PreContainer>
-              <Preparation>
-                <Check />
-              </Preparation>
-              <Text>지우개를 사용할 경우, 깨끗하게 지워 잔상이나 다른 연필 선이 남지 않도록 주의해주세요.</Text>
-              </PreContainer>
-
-              <PreContainer>
-              <Preparation>
-                <Check />
-              </Preparation>
-              <Text>종이가 접히거나 구겨지지 않도록 주의해주세요.</Text>
-              </PreContainer>
-
-              <PreContainer>
-              <Preparation>
-                <Check />
-              </Preparation>
-              <Text>아이가 새로운 종이에 다시 그리거나 할 경우, 최종적으로 그린 그림을 업로드해주세요.</Text>
-              </PreContainer>
-
-            </NoteContainer>
-
-            <SubTitle>사진 첨부 시 유의사항</SubTitle>
-
-            <NoteContainer>
-              <PreContainer>
-              <Preparation>
-                <Check />
-              </Preparation>
-              <Text>밝고 어두운 그림자가 없는 밝은 곳에서 촬영해주세요.</Text>
-              </PreContainer>
-
-              <PreContainer>
-              <Preparation>
-                <Check />
-              </Preparation>
-              <Text>A4 용지에 딱 맞춰서 촬영하고, 그림자가 생기지 않도록 주의해주세요.</Text>
-              </PreContainer>
-            </NoteContainer>
-
-            <ButtonContainer>
-              <ButtonWrapper>
-                <ButtonText onClick={handleButtonClick}>
-                  사진 첨부하기
-                  <input
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleFileChange}
-                    style={{ display: 'none' }}
-                    ref={fileInputRef}
-                  />
-                </ButtonText>
-              </ButtonWrapper>
-            </ButtonContainer>
-        </Content>
-
-
-
-      {/* 첨부한 이미지 파일을 보여줌 */}
-      {/* {imgFile && (
-        <div>
-          <img src={URL.createObjectURL(imgFile)} alt="Selected Image" width="200" height="200" />
-        </div>
-      )} */}
-
-      </Section>
-
-      {/* 모달을 열기 위한 버튼 */}
-      {modalOpen && (
-        <Modal
-          title="사진 확인이 필요해요 !"
-          message="사진이 적절하게 첨부되었는지 다시 확인해주세요."
-          close={handleModalClose} // 모달을 닫는 핸들러를 전달합니다.
-        />
-      )}
-
-
+        <Section>
+          <PutSection onClick={handleDrawClick}>
+            <Back />
+            <Title>뒤로가기</Title>
+          </PutSection>
+          <Content>
+            <SubTitle>검사를 위해 준비해야 할 사항</SubTitle>
+              <NoteContainer>
+                <PreContainer>
+                <Preparation>
+                  <Check />
+                </Preparation>
+                <Text>연필, 볼펜, 색연필 등은 사용할 수 없으며, 지우개와 A4 용지 한 장을 준비해주세요.</Text>
+                </PreContainer>
+                <PreContainer>
+                <Preparation>
+                  <Check />
+                </Preparation>
+                <Text>지우개를 사용할 경우, 깨끗하게 지워 잔상이나 다른 연필 선이 남지 않도록 주의해주세요.</Text>
+                </PreContainer>
+                <PreContainer>
+                <Preparation>
+                  <Check />
+                </Preparation>
+                <Text>종이가 접히거나 구겨지지 않도록 주의해주세요.</Text>
+                </PreContainer>
+                <PreContainer>
+                <Preparation>
+                  <Check />
+                </Preparation>
+                <Text>아이가 새로운 종이에 다시 그리거나 할 경우, 최종적으로 그린 그림을 업로드해주세요.</Text>
+                </PreContainer>
+              </NoteContainer>
+              <SubTitle>사진 첨부 시 유의사항</SubTitle>
+              <NoteContainer>
+                <PreContainer>
+                <Preparation>
+                  <Check />
+                </Preparation>
+                <Text>밝고 어두운 그림자가 없는 밝은 곳에서 촬영해주세요.</Text>
+                </PreContainer>
+                <PreContainer>
+                <Preparation>
+                  <Check />
+                </Preparation>
+                <Text>A4 용지에 딱 맞춰서 촬영하고, 그림자가 생기지 않도록 주의해주세요.</Text>
+                </PreContainer>
+              </NoteContainer>
+              <ButtonContainer>
+                <ButtonWrapper>
+                  <ButtonText onClick={handleButtonClick}>
+                    사진 첨부하기
+                    <input
+                      type="file"
+                      accept="image/*"
+                      multiple
+                      onChange={handleFileChange}
+                      style={{ display: 'none' }}
+                      ref={fileInputRef}
+                    />
+                  </ButtonText>
+                </ButtonWrapper>
+              </ButtonContainer>
+          </Content>
+        {/* 첨부한 이미지 파일을 보여줌 */}
+        {/* {imgFile && (
+          <div>
+            <img src={URL.createObjectURL(imgFile)} alt="Selected Image" width="200" height="200" />
+          </div>
+        )} */}
+        </Section>
+        {/* 모달을 열기 위한 버튼 */}
+        {modalOpen && (
+          <Modal
+            title="사진 확인이 필요해요 !"
+            message="사진이 적절하게 첨부되었는지 다시 확인해주세요."
+            close={handleModalClose} // 모달을 닫는 핸들러를 전달합니다.
+          />
+        )}
       
-    </Container>
+      </Container>
           )}
     </>
 
@@ -311,7 +294,7 @@ const Container = styled.div`
   gap: 1.875rem; //30px;
   display: flex;
   background: white;
-  //overflow: hidden;
+  overflow: auto;
   ${theme.media.mobile`
   height: 93vh;
 `}
