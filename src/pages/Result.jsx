@@ -161,7 +161,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center; // 중앙 정렬
   justify-content: center; // 중앙 정렬
-  padding: 2rem 0; // 상하 패딩
+  padding: 3rem 0; // 상하 패딩
   ${theme.media.mobile`
   
   `}
@@ -173,7 +173,7 @@ const DrawingSection = styled.div`
   justify-content: center;
   background: white;
   border-radius: 0.8rem;
-  padding: 1.5rem 3.2rem; // 데스크탑에서의 패딩
+  padding: 1.9rem 3.2rem; // 데스크탑에서의 패딩
   ${theme.media.mobile`  
   width: 60%; // 기본 화면에서의 너비
 
