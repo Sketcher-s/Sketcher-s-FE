@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {IoCloseOutline} from 'react-icons/io5';
@@ -82,20 +82,6 @@ const LinkContainer = styled.div`
   display: flex;
 `;
 
-// const Link = styled.div`
-//   width: 11.125rem; /* 178px */
-//   padding: 0.625rem 0; /* 10px 0 */
-//   justify-content: flex-start;
-//   align-items: center;
-//   gap: 0.625rem; /* 10px */
-//   display: inline-flex;
-//   color: ${(props) => props.color || '#3F4045'};
-//   font-size: 1rem; /* 16px */
-//   font-family: 'Pretendard';
-//   font-weight: 700;
-//   line-height: 1.5rem; /* 24px */
-//   word-wrap: break-word;
-// `;
 
 const MoveBtn = styled.button`
   width: 11.125rem; /* 178px */
@@ -179,19 +165,22 @@ const Sidebar = () => {
         name: simpleMemberDto.name,
         email: simpleMemberDto.email
       });
-      console.log('사용자 정보 받아옴', response);
+      console.log('sidebar 사용자 정보 받아옴', response);
     }catch(error){
       console.error('사용자 정보 못 받아옴', error);
     }
   }
 
   useEffect(() => {
-    Account();
-  }, []);
+    if(isLoggedIn){
+      Account();
+    }
+  }, [isLoggedIn]);
+
 
     return (
       <>
-      <Background show={isSidebarOpen} onClick={() => (setIsSidebarOpen(false))}/>
+      <Background show={isSidebarOpen} onClick={() => setIsSidebarOpen(false)}/>
         <SideContainer show={isSidebarOpen}>
         <InnerContainer>
           <CloseContainer onClick={() => (setIsSidebarOpen(false))}>
