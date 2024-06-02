@@ -9,6 +9,8 @@ import { theme } from '../../theme';
 //import DrawHook from '../../hooks/DrawHooks';
 import PropTypes from 'prop-types';
 import Loading from '../Draw/Loading'
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../recoil/recoilState';
 
 // imgFile props에 대한 유효성 검사를 추가
 PreparePicture.propTypes = {
@@ -23,6 +25,13 @@ function PreparePicture() {
   // 이미지 사이즈
   const [imgFile, setImgFile] = useState(null);
   const [imgDimensions, setImgDimensions] = useState({width: 0, height: 0});
+  //페이지 이동 부분
+  const Navigate = useNavigate();
+  // 로그인 상태
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  if(!isLoggedIn){
+    Navigate('/');
+  }
 
   // useEffect를 사용하여 컴포넌트가 마운트될 때 토큰을 가져옵니다.
   useEffect(() => {
@@ -37,8 +46,6 @@ function PreparePicture() {
     setModalOpen(false);
   }
 
-  //페이지 이동 부분
-  const Navigate = useNavigate();
 
   function handleDrawClick() {
     Navigate('/PrepareDraw');

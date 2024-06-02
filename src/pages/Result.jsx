@@ -17,12 +17,14 @@ function Result() {
   const [isEditing, setIsEditing] = useState(!isFromMyPage);  
   const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
   const pictureId = location.state?.response?.pictureDto?.id;
+  const [canSave, setCanSave] = useState(false);
 
   function handleMyPageClick() {
     Navigate('/mypage', { state: { id: id, title: title } });
   }
   function handleMainClick() {
     Navigate('/');
+    window.scrollTo(0, 0);
   }
   useEffect(() => {
     console.log("fromePage",location.state?.fromMyPage);
@@ -33,6 +35,12 @@ function Result() {
       setIsEditing(true);  // 다른 경우 (기본 설정)
     }
   }, [location.state]);
+
+  
+  useEffect(() => {
+    validateTitle(title);  // 초기 렌더링 시 제목의 유효성을 검사합니다.
+  }, []);  // 의존성 배열을 비워 컴포넌트 마운트 시 한 번만 실행되도록 합니다.
+  
   useEffect(() => {
     const fetchPictureDetails = async () => {
       if (!jwtToken) {
@@ -71,14 +79,18 @@ function Result() {
   };
 
   const validateTitle = (inputTitle) => {
-      if (inputTitle.length > 15) {
-          setError('제목은 15자를 넘지 말아주세요.');
-      } else if (!inputTitle) {
-          setError('제목을 입력해주세요.');
-      } else {
-          setError('');
-      }
+    if (inputTitle.length > 15) {
+        setError('제목은 15자를 넘지 말아주세요.');
+        setCanSave(false);
+    } else if (!inputTitle) {
+        setError('제목을 입력해주세요.');
+        setCanSave(false);
+    } else {
+        setError('');
+        setCanSave(true);
+    }
   };
+  
 
   const handleSave = async () => {
     if (!jwtToken) {
@@ -99,7 +111,6 @@ function Result() {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
   
       
     } catch (error) {
@@ -126,10 +137,11 @@ function Result() {
                     readOnly={!isEditing}
                     isError={error.length > 0}
                 />
-                <Button onClick={!isEditing ? handleEdit : handleSave}>
+                <SaveButton onClick={!isEditing ? handleEdit : handleSave}
+                disabled={!canSave}>
                 {!isEditing ? "수정" : "저장"}
-              </Button>
-     
+                
+              </SaveButton>
               </TitleSection>
               {error && <ErrorMessage>{error}</ErrorMessage>}
                 <DrawResult>
@@ -181,7 +193,6 @@ const DrawingSection = styled.div`
 `;
 const TitleSection = styled.div`
   display: flex;
-  justify-content: space-between;  // 내부 요소를 양쪽 끝으로 정렬합니다.
 `;
 
 const ResultSection = styled.div`
@@ -245,24 +256,24 @@ const AnalysisResult = styled.div`
   color: #3F4045;
 `;
 
-
-const Button = styled.button`
+const SaveButton = styled.button`
   width:3rem;
   background-color: #6487e2;
   color: white;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
+  margin-left:1.2rem;
   &:hover {
     background-color: #5371c9;
   }
-
   ${theme.media.mobile} {
-    padding: 0.6rem 1rem; 
+    padding: 0.5rem 2rem; 
     font-size: 0.2rem; 
   }
 
 `;
+
 const ButtonBox = styled.div`
   display: flex;
   gap: 3.125rem; /* 버튼 간격 */

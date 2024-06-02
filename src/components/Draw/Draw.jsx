@@ -19,6 +19,8 @@ import { atom } from 'recoil';
 import Ver3 from './Description';
 import Loading from '../Draw/Loading';
 import Modal from '../Modal';
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../recoil/recoilState';
 
 // Recoil을 사용하여 캔버스의 내용을 상태로 관리
 const canvasContentState = atom({
@@ -58,6 +60,15 @@ function Draw() {
   //   setModalOpen(false);
   //   Navigate('/result'); //결과페이지로 이동
   // }
+
+  // 버튼 클릭했을 때 화면 이동
+  const Navigate = useNavigate();
+
+  // 로그인 상태
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  if(!isLoggedIn){
+    Navigate('/');
+  }
 
   useEffect(() => {
     // 페이지 컴포넌트가 마운트되면 body 태그에 클래스를 추가
@@ -121,8 +132,7 @@ useEffect(() => {
     };
   }, []);
 
-  // 버튼 클릭했을 때 화면 이동
-  const Navigate = useNavigate();
+  
 
 
   //토글 구현
