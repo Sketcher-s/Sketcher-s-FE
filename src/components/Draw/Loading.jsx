@@ -27,7 +27,10 @@ export default function Loading() {
 
   //사진첨부에서 받아온 이미지 불러오기
   const location = useLocation();
-  const imageData = location?.state?.imageData;
+  // const imageData = location?.state?.imageData;
+  // const imageWidth = location?.state?.width;
+  // const imageHeight = location?.state?.height;
+  const { imageData, width: imageWidth, height: imageHeight } = location.state || {};
 
   useEffect(() => {
     if (imageData) {
@@ -35,8 +38,10 @@ export default function Loading() {
       if (imgElement) {
         imgElement.src = imageData;
       }
+      console.log(imageWidth);
+      console.log(imageHeight);
     }
-  }, [imageData]);
+  }, [imageData, imageWidth, imageHeight]);
 
 
   return (
@@ -51,21 +56,19 @@ export default function Loading() {
     </TexDiv>
     {/* <ImageData>
     </ImageData> */}
-    <DrawingArea>
-
-<CanvasContainer>
+    {/* <DrawingArea>
+    </DrawingArea> */}
+    <CanvasContainer>
   {imageData && (
-    <ImageData>
-      <img id="loadedImage" src={imageData} style={{ maxWidth: '20rem', maxHeight: '20rem'}} />
+    <ImageData sizeW={imageWidth} sizeH={imageHeight}>
+      <Img id="loadedImage" src={imageData} sizeW={imageWidth} sizeH={imageHeight}/>
     </ImageData>
   )}
   </CanvasContainer>
-
-</DrawingArea>
     </TContainer>
 
     
-    <Scan/>
+    <Scan sizeH={imageHeight}/>
     {/* 모달을 열기 위한 버튼 */}
     {modalOpen && (
         <Modal
@@ -150,12 +153,19 @@ const Text = styled.div`
 
 
 const CanvasContainer = styled.div`
-  width: 20rem; //482px;
-  height: 24.625rem; //482px;
+  display: flex;
+  // width: 20rem; //482px;
+  // height: 24.625rem; //482px;
 
   ${theme.media.mobile`
-    width: 18.625rem;
-    height: 23.375rem;
+  width: 70%;
+  //height: ${(props) => (props.sizeH)};
+  `}
+
+  ${theme.media.desktop`
+  width: 40%;
+  //height: ${(props) => (props.sizeH)};
+  margin-top: 4rem;
   `}
 `;
 
@@ -169,10 +179,23 @@ const TexDiv = styled.div`
 `;
 
 const ImageData = styled.div`
-  width: 20rem; //482px;
-  height: 24.625rem; //482px;
-
+  
   ${theme.media.mobile`
   text-align: center;
+  width: ${(props) => (props.sizeW)};
+  height: ${(props) => (props.sizeH)};
 `}
+
+  ${theme.media.desktop`
+  width: ${(props) => (props.sizeW)};
+  height: ${(props) => (props.sizeH)};
+`}
+
+
+`;
+
+const Img = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 `;

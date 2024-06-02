@@ -24,4 +24,27 @@ input:-webkit-autofill {
     padding: 0;
   }
 
+  @keyframes SlideM {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(200px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes SlideD {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(450px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
   
