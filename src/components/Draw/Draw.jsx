@@ -33,19 +33,31 @@ WPencil.defaultProps = {
 
 
 function Draw() {  
-  // const [isModalVisible, setIsModalVisible] = useState(false);
-  // const [modalMessage, setModalMessage] = useState('');
 
-  const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
- 
-  const handleModalOpen = () => {
-    setModalOpen(true); // 모달을 열기 위해 상태를 변경하는 함수
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+
+  const handleModalOpen = (message) => {
+    setModalMessage(message);  // 모달에 표시할 메시지 설정
+    setModalOpen(true);   // 모달을 열기
   };
 
   const handleModalClose = () => {
     setModalOpen(false);
-    Navigate('/result'); //결과페이지로 이동
+    setModalMessage('');
+    Navigate('/result'); // 모달을 닫고 결과 페이지로 이동
   }
+
+  // const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
+ 
+  // const handleModalOpen = () => {
+  //   setModalOpen(true); // 모달을 열기 위해 상태를 변경하는 함수
+  // };
+
+  // const handleModalClose = () => {
+  //   setModalOpen(false);
+  //   Navigate('/result'); //결과페이지로 이동
+  // }
 
   useEffect(() => {
     // 페이지 컴포넌트가 마운트되면 body 태그에 클래스를 추가
@@ -428,7 +440,6 @@ const uploadImageToServer = async () => {
     const text = await response.text();
     if (!text) {
       console.error("응답이 비어 있습니다");
-      setModalOpen(true);
       throw new Error("응답이 비어 있습니다");
     }
 
@@ -449,6 +460,8 @@ const uploadImageToServer = async () => {
 
   } catch (error) {
     console.error('파일 업로드 실패:', error.message);
+    console.log('모달 열리나 ?');
+    handleModalOpen();
   }finally {
     setIsLoading(false); // 로딩 상태 비활성화
   }
