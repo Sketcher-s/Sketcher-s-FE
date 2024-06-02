@@ -4,6 +4,8 @@ import { ReactComponent as PrepareDraw1 } from '../../assets/Draw/PrepareDraw1.s
 import { ReactComponent as Check } from '../../assets/Draw/Check.svg';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '../../theme';
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../recoil/recoilState';
 
 const StyledPrepareDraw1 = styled(PrepareDraw1)`
   width: ${props => props.width || '2.5rem'};
@@ -12,6 +14,12 @@ const StyledPrepareDraw1 = styled(PrepareDraw1)`
 
 function PrepareDraw() {
   const Navigate = useNavigate();
+
+  // 로그인 상태
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  if(!isLoggedIn){
+    Navigate('/');
+  }
 
   function handleDrawClick() {
     Navigate('/draw');
