@@ -242,8 +242,8 @@ useEffect(() => {
 
 
       if (screenWidth < 768) {
-        newWidth = 300;
-        newHeight = 250;
+        newWidth = 310;
+        newHeight = 310;
       } else if(768 <= screenWidth && screenWidth < 1500){
         newWidth = 570;
         newHeight = 400;
@@ -301,8 +301,8 @@ useEffect(() => {
   // };
 
   if (window.innerWidth < 768) { // 가정: 768px 미만은 모바일로 간주
-    width = 300;
-    height = 250;
+    width = 310;
+    height = 310;
   } else if(768 <= window.innerWidth && window.innerWidth < 1500){
     width = 570;
     height = 400;
