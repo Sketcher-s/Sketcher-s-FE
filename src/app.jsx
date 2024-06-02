@@ -14,6 +14,7 @@ import Main from './pages/Main';
 import Camera from './components/Draw/Camera';
 import Navbar from './components/Navbar/Navbar';
 import Sidebar from './components/Sidebar/Sidebar';
+import ScrollToTop from './components/ScrollToTop';
 import { RecoilRoot } from 'recoil';
 import styled from 'styled-components';
 
@@ -31,6 +32,7 @@ const PageLayout = () => {
         <Navbar/>
             <Sidebar/>
             <Routes>
+        
               <Route path="/login" element={<Login/>} />
               <Route path="/register" element={<Register/>} />
               <Route path="/mypage" element={<MyPage/>} />
@@ -49,7 +51,7 @@ const PageLayout = () => {
 
 function App() {
   return(
-    <BrowserRouter>
+    <BrowserRouter forceScrollRestoration={false}>
       <PageLayout/>
     </BrowserRouter>
   )

@@ -1,12 +1,13 @@
 import React, { useState,useEffect } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import MainModal from '../components/MainModal';  // Modal 컴포넌트의 경로를 확인하고 적절히 수정하세요.
 import { ReactComponent as Main1 } from '../assets/Main/Main1.svg';
 import { ReactComponent as Main2 } from  '../assets/Main/Main2.svg';
 import { ReactComponent as Main3 } from  '../assets/Main/Main3.svg';
 import { theme } from '../theme';
 import { ButtonWrapper } from '../components/Login/LoginStyle';
+
 const StyledMain1 = styled(Main1)`
   width: ${props => props.width || '90%'};
   height: ${props => props.height || '22.4475rem'};
@@ -30,7 +31,14 @@ function Main() {
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('jwtToken'));
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname === '/') { // 메인 페이지로 이동했을 경우에만 스크롤을 최상단으로 이동
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname]); // location.pathname을 의존성 배열에 추가
+  
+  
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
@@ -99,7 +107,8 @@ function Main() {
 export default Main;
 
 const MainContainer = styled.div`
-  overflow: hidden;
+overflow: auto;
+height: 100vh; // 뷰포트의 전체 높이
 `;
 
 const InspectionSection = styled.div`
