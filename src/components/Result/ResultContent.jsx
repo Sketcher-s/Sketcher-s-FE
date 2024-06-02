@@ -21,7 +21,7 @@ function ResultContent() {
   };
   const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
   const pictureId = location.state?.response?.pictureDto?.id;
-  
+
   useEffect(() => {
     const fetchPictureDetails = async () => {
       if (!jwtToken) {
@@ -113,6 +113,7 @@ export default ResultContent;
 
 
 const Resultcontent = styled.div`
+
 ${theme.media.mobile`
 
     margin: 0 auto; // 가운데 정렬 추가
@@ -192,8 +193,10 @@ const DetailsSection = styled.div`
 const SectionTitle = styled.h2`
   font-size: 1rem;
   color: #333;
+
   ${theme.media.mobile`  // 모바일에서는 글자 크기를 조금 줄임
-    font-size: 1rem;
+    font-size: 0.9rem;
+
   `}
 `;
 
@@ -202,8 +205,9 @@ const SectionContent = styled.p`
   color: #666;
 font-family: Pretendard;
 font-weight: 600;
-text-align: justified;
-
+text-align: justified; 
+align-items: center;
+ 
   ${theme.media.mobile`  // 모바일에서는 글자 크기를 조금 줄임
     font-size: 0.8rem;
   `}
