@@ -35,6 +35,18 @@ input:-webkit-autofill {
       transform: translateY(0);
     }
   }
+
+  @keyframes SlideD {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(450px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
   
   body.draw-page-style {
     width:100%;
