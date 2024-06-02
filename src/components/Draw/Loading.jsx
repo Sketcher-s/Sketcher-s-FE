@@ -14,6 +14,7 @@ import { LoginState } from '../../recoil/recoilState';
 export default function Loading() {
 
   const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
+ 
   const navigate = useNavigate();
 
   // 로그인 상태

@@ -46,12 +46,12 @@ function PrepareDraw() {
                   가능한 한 집, 나무, 사람을 포함하여 그릴 수 있도록 지도해 주세요.
                 </NoteText>
             </SubContainer>
-            <SubContainer>
+            {/* <SubContainer>
               <TextContainer>
                 <Check />
               </TextContainer>
                 <NoteText>아동이 정서적으로 안정된 상태에서 테스트를 진행하도록 해주세요.</NoteText>
-            </SubContainer>
+            </SubContainer> */}
             <SubContainer>
               <TextContainer>
                 <Check />
@@ -104,7 +104,7 @@ const OuterContainer = styled.div`
 
 const InnerContainer = styled.div`
   width: 40.25rem; //644px;
-  height: 32.4375rem; //519px;
+  //height: 32.4375rem; //519px;
   padding-top: 2.5rem; //40px;
   padding-bottom: 2.5rem; //40px;
   flex-direction: column;
@@ -118,7 +118,7 @@ const InnerContainer = styled.div`
   ${theme.media.mobile`
   padding: 2rem 1rem;
   width: 80%;
-  height: 80%;
+  height: 75%;
 `}
 `;
 
@@ -178,7 +178,7 @@ const Text = styled.div`
 
 const NoteContainer = styled.div`
   //width: 30.25rem; //484px;
-  height: 40%; //266px;
+  //height: 40%; //266px;
   padding: 1.8rem; //30px;
   background: white;
   border-radius: 0.625rem; //10px;
@@ -191,7 +191,7 @@ const NoteContainer = styled.div`
 
   ${theme.media.mobile`
   width: 90%;
-  height: 50%;
+  //height: 50%;
   border: none;
   padding: 0;
   //align-items: center;
@@ -246,6 +246,7 @@ const PicButtonBox = styled.div`
 
   ${theme.media.mobile`
  
+  // width: 15.625rem;
   width: 15.625rem;
   height: 2.5rem;
   padding: 0 1.25rem;
