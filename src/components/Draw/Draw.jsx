@@ -33,6 +33,16 @@ WPencil.defaultProps = {
 
 function Draw() {  
 
+  useEffect(() => {
+    // 페이지 컴포넌트가 마운트되면 body 태그에 클래스를 추가
+    document.body.classList.add('draw-page-style');
+
+    // 컴포넌트 언마운트 시 클래스 제거
+    return () => {
+      document.body.classList.remove('draw-page-style');
+    };
+  }, []);
+
   // Ref를 사용하여 Signaturecanvas 컴포넌트에 접근한다.
   const signatureCanvasRef = useRef(null);
   //그림 저장 상태
@@ -448,7 +458,7 @@ const handleDoneClick = () => {
 
     <Wrap className="scrollContainer">
 
-      <OutContainer className="scrollContainer">
+      <OutContainer>
       <MobileBtn>
         {!isDescriptionVisible && (
         <Container>
