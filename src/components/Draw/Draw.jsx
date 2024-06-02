@@ -418,6 +418,9 @@ const uploadImageToServer = async () => {
 
     console.log('파일 업로드 성공:', data);
     Navigate('/result', { state: { response: data } }); // 업로드 완료 후 결과 페이지로 이동
+
+    //흔적 남아있는 부분 지우기
+    handleClear(); // 서버로 파일이 성공적으로 업로드된 후 캔버스를 클리어합니다.
   } catch (error) {
     console.error('파일 업로드 실패:', error.message);
   }finally {
