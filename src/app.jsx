@@ -23,10 +23,10 @@ const PageLayout = () => {
   const isMainPage = location.pathname === '/';
   const isPicPage = location.pathname === '/preparepicture';
   const isResultPage = location.pathname === '/result';
-  //const isDraw = location.pathname === '/draw';
+  const isDraw = location.pathname === '/draw';
 
   return (
-    <Container isMainPage={isMainPage} isPicPage={isPicPage} isResultPage={isResultPage}>
+    <Container isMainPage={isMainPage} isPicPage={isPicPage} isResultPage={isResultPage} isDraw={isDraw}>
       <RecoilRoot>
         <Navbar/>
             <Sidebar/>
@@ -61,6 +61,6 @@ function App() {
 export default App;
 
 const Container = styled.div`
-  height: ${(props) => (props.isMainPage || props.isPicPage || props.isResultPage || props.isDraw ? 'auto' : '100vh')};
-  overflow: ${(props) => (props.isMainPage  || props.isPicPage || props.isResultPage || props.isDraw ? 'auto' : 'hidden')};
+  height: ${(props) => (props.isMainPage || props.isPicPage || props.isResultPage ? 'auto' : '100vh')};
+  overflow: ${(props) => (props.isMainPage  || props.isPicPage || props.isResultPage ? 'auto' : 'hidden')};
 `;

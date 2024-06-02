@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import MainModal from '../components/MainModal';  // Modal 컴포넌트의 경로를 확인하고 적절히 수정하세요.
@@ -23,13 +23,24 @@ const StyledMain3 = styled(Main3)`
   width: ${props => props.width || '100%'};
   height: ${props => props.height || 'auto'};
 `;
-
+ 
 
 function Main() {
   const Navigate = useNavigate(); 
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('jwtToken'));
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   function handleDrawClick() {
     if (isLoggedIn) {
       Navigate('/preparedraw'); 
@@ -74,9 +85,10 @@ function Main() {
             <FooterTitle>
               CatchMind에서는 이렇게 검사해요!
             </FooterTitle>
-            <FooterContent>
-              예상 검사 소요 시간은 20분이며,<br/>만 18세 미만의 청소년 및 아동의 그림으로 심리 검사가 진행됩니다.<br/>비용은 발생하지 않습니다. 
-            </FooterContent>
+            <FooterContent dangerouslySetInnerHTML={{ __html: isMobile ? 
+      "예상 검사 소요 시간은 20분이며,<br/>만 18세 미만의 청소년 및 아동의 그림으로 <br/> 심리 검사가 진행됩니다.<br/>비용은 발생하지 않습니다." : 
+      "예상 검사 소요 시간은 20분이며,<br/>만 18세 미만의 청소년 및 아동의 그림으로 심리 검사가 진행됩니다.<br/>비용은 발생하지 않습니다." }} />
+
           </FooterBox>
         </Footer>
         {isModalOpen && <MainModal close={closeModal} />}
@@ -250,12 +262,12 @@ const Footer = styled.footer`
   background: #27282B;
   text-align:center;
   ${theme.media.mobile`
-    padding: 3.125rem 1.35rem;
+   
   `}
 `;
 
 const FooterBox = styled.footer`
-  padding:4.375rem;
+  padding:3.5rem;
   text-align:center;
 `;
 
@@ -267,7 +279,7 @@ const FooterTitle = styled.div`
   color:white;
   margin-bottom:1.25rem;
   ${theme.media.mobile`
-    font-size: 1rem;
+    font-size: 0.8rem;
   `}
 `;
 
@@ -278,6 +290,6 @@ const FooterContent = styled.div`
   text-align: center;
   color:white;
   ${theme.media.mobile`
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   `}
 `;

@@ -33,6 +33,16 @@ WPencil.defaultProps = {
 
 function Draw() {  
 
+  useEffect(() => {
+    // 페이지 컴포넌트가 마운트되면 body 태그에 클래스를 추가
+    document.body.classList.add('draw-page-style');
+
+    // 컴포넌트 언마운트 시 클래스 제거
+    return () => {
+      document.body.classList.remove('draw-page-style');
+    };
+  }, []);
+
   // Ref를 사용하여 Signaturecanvas 컴포넌트에 접근한다.
   const signatureCanvasRef = useRef(null);
   //그림 저장 상태
@@ -418,6 +428,9 @@ const uploadImageToServer = async () => {
 
     console.log('파일 업로드 성공:', data);
     Navigate('/result', { state: { response: data } }); // 업로드 완료 후 결과 페이지로 이동
+
+    //흔적 남아있는 부분 지우기
+    handleClear(); // 서버로 파일이 성공적으로 업로드된 후 캔버스를 클리어합니다.
   } catch (error) {
     console.error('파일 업로드 실패:', error.message);
   }finally {
@@ -445,7 +458,7 @@ const handleDoneClick = () => {
 
     <Wrap className="scrollContainer">
 
-      <OutContainer className="scrollContainer">
+      <OutContainer>
       <MobileBtn>
         {!isDescriptionVisible && (
         <Container>

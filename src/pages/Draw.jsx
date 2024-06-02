@@ -20,7 +20,7 @@ export default function DrawPage() {
 }
 
 const Container = styled.div`
-width: 100%;
+  width: 100%;
   height: 100%;
   padding-top: 40px;
   padding-bottom: 40px;

@@ -13,7 +13,7 @@ function Result() {
   const [image, setImage] = useState('');
   const [analysisResult, setAnalysisResult] = useState('');
   const [error, setError] = useState('');
-  const isFromMyPage = location.state?.fromMyPage ?? false;
+  const isFromMyPage = location.state?.response?.fromMyPage ?? false;
   const [isEditing, setIsEditing] = useState(!isFromMyPage);  
   const jwtToken = localStorage.getItem('jwtToken');  // 로컬 스토리지에서 토큰을 가져옵니다.
   const pictureId = location.state?.response?.pictureDto?.id;
@@ -25,8 +25,9 @@ function Result() {
     Navigate('/');
   }
   useEffect(() => {
-
-    if (location.state?.response?.fromMyPage) {
+    console.log("fromePage",location.state?.fromMyPage);
+    console.log(location.state); // 전체 state 로깅
+    if (location.state?.fromMyPage) {
       setIsEditing(false);  // 마이페이지에서 온 경우
     } else {
       setIsEditing(true);  // 다른 경우 (기본 설정)
@@ -104,7 +105,6 @@ function Result() {
     } catch (error) {
       console.error('Error updating title:', error);
     }
-
     setIsEditing(false);
 };
 
@@ -161,9 +161,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center; // 중앙 정렬
   justify-content: center; // 중앙 정렬
-  padding: 20px 0; // 상하 패딩
+  padding: 2rem 0; // 상하 패딩
   ${theme.media.mobile`
-    padding: 15px 10px; // 모바일에서 패딩 조정
+  
   `}
 `;
 
@@ -173,12 +173,10 @@ const DrawingSection = styled.div`
   justify-content: center;
   background: white;
   border-radius: 0.8rem;
-  margin-top:2rem;
-  padding: 3rem 5rem; // 데스크탑에서의 패딩
+  padding: 1.5rem 3.2rem; // 데스크탑에서의 패딩
   ${theme.media.mobile`  
   width: 60%; // 기본 화면에서의 너비
-    padding: 30px 20px; // 모바일에서 패딩 조정
-    margin-bottom: 30px; // 하단 마진 추가
+
   `}
 `;
 const TitleSection = styled.div`
