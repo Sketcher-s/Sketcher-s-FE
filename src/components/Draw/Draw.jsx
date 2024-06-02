@@ -481,7 +481,25 @@ const uploadImageToServer = async () => {
 const handleDoneClick = () => {
   console.log('완료 버튼 클릭');
   //addWhiteBack(signatureCanvasRef.current);
-  const imageData = signatureCanvasRef.current.toDataURL('image/png');
+  //const imageData = signatureCanvasRef.current.toDataURL('image/png');
+  // 원본 캔버스에서 이미지 데이터를 가져옵니다.
+  const originalCanvas = signatureCanvasRef.current.getCanvas();
+  const originalContext = originalCanvas.getContext('2d');
+
+  // 새 캔버스를 생성합니다.
+  const newCanvas = document.createElement('canvas');
+  const newContext = newCanvas.getContext('2d');
+
+  // 새 캔버스의 크기를 원하는 크기로 설정합니다. (예: 800x600)
+  newCanvas.width = 800;
+  newCanvas.height = 600;
+
+  // 새 캔버스에 원본 이미지 데이터를 원하는 크기로 그립니다.
+  newContext.drawImage(originalCanvas, 0, 0, newCanvas.width, newCanvas.height);
+
+  // 새 캔버스에서 이미지 데이터를 추출합니다.
+  const imageData = newCanvas.toDataURL('image/png');
+
     Navigate('/loading', { state: { imageData } });
     uploadImageToServer(imageData); // 서버로 이미지 전송
    // handleTokenClear(); //캔버스 토큰 삭제
