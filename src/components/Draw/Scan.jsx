@@ -1,12 +1,14 @@
 import styled, {keyframes} from "styled-components";
-import { ReactComponent as SpinnerImg } from "../../assets/Login/line_shadow.svg";
+import { ReactComponent as SpinnerImg } from "../../assets/Scan/line_shadow.svg";
+import { ReactComponent as SpinnerBar } from "../../assets/Scan/bar.svg";
 import React from "react";
 import { theme } from "../../theme";
 
 const Scan = () => {
   return (
     <SpinnerWrapper>
-      <StyledSpinnerImg/>
+        <SpinnerBarStyled/>
+        <StyledSpinnerImg/>
     </SpinnerWrapper>
   );  
 };
@@ -26,29 +28,32 @@ const Slide = keyframes`
 }
 `;
 
+
 const SpinnerWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   animation: ${Slide} 2.7s linear infinite both;
   height: 100%;
   position: absolute;
-  top: 1;
-  left: 50;
+  //left: 50;
   z-index: 1;
-  margin-top: 4rem;
+  //margin-top: 4rem;
 
   ${theme.media.mobile`
-    width: 21.125rem;
+    //width: 21.125rem;
     margin-top: 0rem;
+    top: 25%;
 `}
 
   ${theme.media.desktop`
-    width: 40rem;
+    //width: 40rem;
+    top: 20%;
 `}
 `;
 
 const StyledSpinnerImg = styled(SpinnerImg)`
-  width: 100%;
-  height: 100%;
+  //width: 100%;
+  //height: 100%;
 
   ${theme.media.desktop`
     width: 40rem;
@@ -56,5 +61,17 @@ const StyledSpinnerImg = styled(SpinnerImg)`
 
 ${theme.media.mobile`
     width: 21.125rem;
+`}
+`;
+
+const SpinnerBarStyled = styled(SpinnerBar)`
+//height: 100%;
+
+${theme.media.desktop`
+width: 40rem;
+`}
+
+${theme.media.mobile`
+width: 21.125rem;
 `}
 `;
