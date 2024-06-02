@@ -98,6 +98,31 @@ function Draw() {
   }, []);
 
 
+  //흰색 배경 유지 코드 추가
+  useEffect(() => {
+    const canvas = signatureCanvasRef.current.getCanvas();
+    const ctx = canvas.getContext('2d');
+  
+    // 캔버스 초기화 및 배경 설정 함수
+    function initializeCanvas() {
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+  
+    // 윈도우 리사이즈 이벤트에 반응하여 캔버스를 다시 초기화
+    window.addEventListener('resize', initializeCanvas);
+  
+    // 컴포넌트 마운트 시 초기화 수행
+    initializeCanvas();
+  
+    return () => {
+      window.removeEventListener('resize', initializeCanvas);
+    };
+  }, []);
+  
+
+
+
 useEffect(() => {
   const savedData = localStorage.getItem('canvasData');
   if (savedData) {
