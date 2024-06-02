@@ -19,9 +19,32 @@ function Result() {
   const pictureId = location.state?.response?.pictureDto?.id;
   const [canSave, setCanSave] = useState(false);
 
-  function handleMyPageClick() {
-    Navigate('/mypage', { state: { id: id, title: title } });
+   const handleMyPageClick = async () => {
+    if (!title || title.length > 15) {
+      alert('제목은 필수이며, 15자를 넘지 말아주세요.');
+    } else {
+      Navigate('/mypage', { state: { id, title } });
+    }
+    if (!jwtToken) {
+      console.error('토큰오류임');
+      return;
+    }
+    try {
+      const response = await fetch(`https://dev.catchmind.shop/api/picture/title`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${jwtToken}`
+        },
+        body: JSON.stringify({ id: pictureId, title: title })
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Error updating title:', error);
   }
+}
   function handleMainClick() {
     Navigate('/');
     window.scrollTo(0, 0);
@@ -37,9 +60,9 @@ function Result() {
   }, [location.state]);
 
   
-  useEffect(() => {
-    validateTitle(title);  // 초기 렌더링 시 제목의 유효성을 검사합니다.
-  }, []);  // 의존성 배열을 비워 컴포넌트 마운트 시 한 번만 실행되도록 합니다.
+  // useEffect(() => {
+  //   validateTitle(title);  // 초기 렌더링 시 제목의 유효성을 검사합니다.
+  // }, []);  // 의존성 배열을 비워 컴포넌트 마운트 시 한 번만 실행되도록 합니다.
   
   useEffect(() => {
     const fetchPictureDetails = async () => {
@@ -97,7 +120,6 @@ function Result() {
       console.error('토큰오류임');
       return;
     }
-
     try {
       const response = await fetch(`https://dev.catchmind.shop/api/picture/title`, {
         method: 'PATCH',
@@ -106,13 +128,10 @@ function Result() {
           'Authorization': `Bearer ${jwtToken}`
         },
         body: JSON.stringify({ id: pictureId, title: title })
-      });
-
+      })
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
-      
     } catch (error) {
       console.error('Error updating title:', error);
     }
@@ -138,7 +157,7 @@ function Result() {
                     isError={error.length > 0}
                 />
                 <SaveButton onClick={!isEditing ? handleEdit : handleSave}
-                disabled={!canSave}>
+              >
                 {!isEditing ? "수정" : "저장"}
                 
               </SaveButton>
