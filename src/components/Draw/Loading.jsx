@@ -12,7 +12,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Loading() {
 
-    const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
+  const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
  
   const handleModalOpen = () => {
     setModalOpen(true); // 모달을 열기 위해 상태를 변경하는 함수

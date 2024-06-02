@@ -209,7 +209,7 @@ function PreparePicture() {
                 <Preparation>
                   <Check />
                 </Preparation>
-                <Text>연필, 볼펜, 색연필 등은 사용할 수 없으며, 지우개와 A4 용지 한 장을 준비해주세요.</Text>
+                <Text>지우개와 연필 혹은 볼펜과 A4용지 한 장을 준비해주세요.</Text>
                 </PreContainer>
                 <PreContainer>
                 <Preparation>

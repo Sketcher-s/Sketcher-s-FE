@@ -18,6 +18,7 @@ import {} from 'recoil';
 import { atom } from 'recoil';
 import Ver3 from './Description';
 import Loading from '../Draw/Loading';
+import Modal from '../Modal';
 
 // Recoil을 사용하여 캔버스의 내용을 상태로 관리
 const canvasContentState = atom({
@@ -32,6 +33,19 @@ WPencil.defaultProps = {
 
 
 function Draw() {  
+  // const [isModalVisible, setIsModalVisible] = useState(false);
+  // const [modalMessage, setModalMessage] = useState('');
+
+  const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
+ 
+  const handleModalOpen = () => {
+    setModalOpen(true); // 모달을 열기 위해 상태를 변경하는 함수
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    Navigate('/result'); //결과페이지로 이동
+  }
 
   useEffect(() => {
     // 페이지 컴포넌트가 마운트되면 body 태그에 클래스를 추가
@@ -414,6 +428,7 @@ const uploadImageToServer = async () => {
     const text = await response.text();
     if (!text) {
       console.error("응답이 비어 있습니다");
+      setModalOpen(true);
       throw new Error("응답이 비어 있습니다");
     }
 
@@ -431,6 +446,7 @@ const uploadImageToServer = async () => {
 
     //흔적 남아있는 부분 지우기
     handleClear(); // 서버로 파일이 성공적으로 업로드된 후 캔버스를 클리어합니다.
+
   } catch (error) {
     console.error('파일 업로드 실패:', error.message);
   }finally {
@@ -452,6 +468,14 @@ const handleDoneClick = () => {
   return (
 
     <>
+    {/* 모달 */}
+    {modalOpen && (
+        <Modal
+          title="그림 확인이 필요해요 !"
+          message="집, 나무, 사람이 제대로 그려졌는지 확인해주세요."
+          close={handleModalClose} // 모달을 닫는 핸들러를 전달
+        />
+      )}
     {isLoading ? (
         <Loading />
       ) : (
