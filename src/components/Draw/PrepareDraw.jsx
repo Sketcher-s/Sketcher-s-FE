@@ -46,12 +46,12 @@ function PrepareDraw() {
                   가능한 한 집, 나무, 사람을 포함하여 그릴 수 있도록 지도해 주세요.
                 </NoteText>
             </SubContainer>
-            {/* <SubContainer>
+            <SubContainer>
               <TextContainer>
                 <Check />
               </TextContainer>
-                <NoteText>아동이 정서적으로 안정된 상태에서 테스트를 진행하도록 해주세요.</NoteText>
-            </SubContainer> */}
+                <NoteText>작은화면(모바일)로 그림을 그리면 검사가 원활하게 이뤄지지 않을 수도 있어요.</NoteText>
+            </SubContainer>
             <SubContainer>
               <TextContainer>
                 <Check />
