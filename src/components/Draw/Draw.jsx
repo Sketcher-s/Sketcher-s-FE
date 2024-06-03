@@ -36,20 +36,6 @@ WPencil.defaultProps = {
 
 function Draw() {  
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
-
-  const handleModalOpen = (message) => {
-    setModalMessage(message);  // 모달에 표시할 메시지 설정
-    setModalOpen(true);   // 모달을 열기
-  };
-
-  const handleModalClose = () => {
-    setModalOpen(false);
-    setModalMessage('');
-    Navigate('/result'); // 모달을 닫고 결과 페이지로 이동
-  }
-
   // const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
  
   // const handleModalOpen = () => {
@@ -68,6 +54,35 @@ function Draw() {
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
   if(!isLoggedIn){
     Navigate('/');
+  }
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+
+  const handleModalOpen = (message) => {
+    setModalMessage(message);  // 모달에 표시할 메시지 설정
+    setModalOpen(true);   // 모달을 열기
+  };
+
+  useEffect(() => {
+    // 로그인 상태가 아니면 홈으로 리다이렉트
+    if (!isLoggedIn) {
+      Navigate('/');
+    }
+
+    // 모달을 12초 후에 자동으로 열기
+    const timer = setTimeout(() => {
+      setModalMessage('12초가 지났습니다. 그림을 확인해 주세요.');
+      setModalOpen(true);
+    }, 12000); // 12000 밀리초 후에 실행
+
+    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 해제
+  }, [isLoggedIn, Navigate]);
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    setModalMessage('');
+    Navigate('/result'); // 모달을 닫고 결과 페이지로 이동
   }
 
   useEffect(() => {
