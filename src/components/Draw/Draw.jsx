@@ -39,16 +39,6 @@ function Draw() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
 
-  const handleModalOpen = (message) => {
-    setModalMessage(message);  // 모달에 표시할 메시지 설정
-    setModalOpen(true);   // 모달을 열기
-  };
-
-  const handleModalClose = () => {
-    setModalOpen(false);
-    setModalMessage('');
-    Navigate('/result'); // 모달을 닫고 결과 페이지로 이동
-  }
 
   // const [modalOpen, setModalOpen] = useState(false); // 모달의 열림/닫힘 상태를 관리합니다.
  
@@ -428,79 +418,145 @@ useEffect(() => {
   };
 
  // 이미지 데이터를 서버로 전송하는 함수
-const uploadImageToServer = async () => {
+// const uploadImageToServer = async () => {
 
+//   const token = localStorage.getItem('jwtToken');
+//   if (!token) {
+//     console.error("JWT token not found in local storage");
+//     return;
+//   }
+
+
+//   console.log('JWT token found:', token);
+
+//   const imageData = signatureCanvasRef.current.toDataURL('image/png'); // 이미지를 PNG 형식으로 변환
+//   console.log('Image data URL:', imageData);
+
+//   const blob = dataURLtoBlob(imageData);
+
+//   const formData = new FormData();
+//   formData.append('file', blob, 'image.png'); // Blob을 파일로 처리하여 추가
+
+//   // 로그 추가: 요청 전송 직전
+//   console.log('Sending POST request to server with form data:');
+//   for (let pair of formData.entries()) {
+//     console.log(pair[0], pair[1]);
+//   }
+
+
+//   setIsLoading(true);
+
+//   try {
+
+//     const response = await fetch('https://dev.catchmind.shop/api/picture', {
+//       method: 'POST',
+//       headers: {
+//         'Authorization': `Bearer ${token}`,
+//       },
+//       body: formData,
+//     });
+
+//     if (!response.ok) {
+//       const errorText = await response.text();
+//       console.error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+//       throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+//     }
+   
+//     // 응답이 비어 있는지 확인
+//     const text = await response.text();
+//     if (!text) {
+//       console.error("응답이 비어 있습니다");
+//       throw new Error("응답이 비어 있습니다");
+//     }
+
+//     // JSON 데이터가 있는지 안전하게 확인
+//     let data;
+//     try {
+//       data = JSON.parse(text);
+//     } catch (error) {
+//       console.error("응답 데이터가 JSON 형식이 아닙니다:", text);
+//       throw new Error("응답 데이터가 JSON 형식이 아닙니다");
+//     }
+
+//     console.log('파일 업로드 성공:', data);
+//     Navigate('/result', { state: { response: data } }); // 업로드 완료 후 결과 페이지로 이동
+
+//     //흔적 남아있는 부분 지우기
+//     handleClear(); // 서버로 파일이 성공적으로 업로드된 후 캔버스를 클리어합니다.
+
+//   } catch (error) {
+//     console.error('파일 업로드 실패:', error.message);
+//     console.log('모달 열리나 ?');
+//     handleModalOpen();
+//   }finally {
+//     setIsLoading(false); // 로딩 상태 비활성화
+//   }
+// };
+
+
+const uploadImageToServer = async () => {
   const token = localStorage.getItem('jwtToken');
   if (!token) {
     console.error("JWT token not found in local storage");
     return;
   }
 
-  console.log('JWT token found:', token);
+  if (signatureCanvasRef.current) {
+    const canvas = signatureCanvasRef.current.getCanvas();
+    let imageData = canvas.toDataURL('image/png'); // 원본 이미지 데이터
 
-  const imageData = signatureCanvasRef.current.toDataURL('image/png'); // 이미지를 PNG 형식으로 변환
-  console.log('Image data URL:', imageData);
-
-  const blob = dataURLtoBlob(imageData);
-
-  const formData = new FormData();
-  formData.append('file', blob, 'image.png'); // Blob을 파일로 처리하여 추가
-
-  // 로그 추가: 요청 전송 직전
-  console.log('Sending POST request to server with form data:');
-  for (let pair of formData.entries()) {
-    console.log(pair[0], pair[1]);
-  }
-
-
-  setIsLoading(true);
-
-  try {
-
-    const response = await fetch('https://dev.catchmind.shop/api/picture', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-      body: formData,
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`HTTP error! status: ${response.status}, message: ${errorText}`);
-      throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
-    }
-   
-    // 응답이 비어 있는지 확인
-    const text = await response.text();
-    if (!text) {
-      console.error("응답이 비어 있습니다");
-      throw new Error("응답이 비어 있습니다");
+    // 화면 크기가 768px 미만인 경우, 이미지 크기를 조정합니다.
+    if (window.innerWidth < 768) {
+      // 원본 캔버스에서 이미지를 크게 조정
+      imageData = resizeCanvasImage(canvas, 500, 500, 'white'); // 모바일에서는 800x600 크기로 조정
     }
 
-    // JSON 데이터가 있는지 안전하게 확인
-    let data;
+    const blob = dataURLtoBlob(imageData);
+    const formData = new FormData();
+    formData.append('file', blob, 'image.png');
+
+    console.log('Sending POST request to server with form data:');
+    setIsLoading(true);
+
     try {
-      data = JSON.parse(text);
+      const response = await fetch('https://dev.catchmind.shop/api/picture', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+      }
+
+      let data = await response.json();
+      console.log('File upload successful:', data);
+      Navigate('/result', { state: { response: data } });
+      handleClear(); // 이미지 업로드 후 캔버스 클리어
     } catch (error) {
-      console.error("응답 데이터가 JSON 형식이 아닙니다:", text);
-      throw new Error("응답 데이터가 JSON 형식이 아닙니다");
+      console.error('File upload failed:', error.message);
+    } finally {
+      setIsLoading(false);
     }
-
-    console.log('파일 업로드 성공:', data);
-    Navigate('/result', { state: { response: data } }); // 업로드 완료 후 결과 페이지로 이동
-
-    //흔적 남아있는 부분 지우기
-    handleClear(); // 서버로 파일이 성공적으로 업로드된 후 캔버스를 클리어합니다.
-
-  } catch (error) {
-    console.error('파일 업로드 실패:', error.message);
-    console.log('모달 열리나 ?');
-    handleModalOpen();
-  }finally {
-    setIsLoading(false); // 로딩 상태 비활성화
   }
 };
+
+// 이미지 크기 조정을 위한 함수
+function resizeCanvasImage(originalCanvas, targetWidth, targetHeight, backgroundColor='white') {
+  const tempCanvas = document.createElement('canvas');
+  const tempCtx = tempCanvas.getContext('2d');
+  tempCanvas.width = targetWidth;
+  tempCanvas.height = targetHeight;
+  // 배경색 설정
+  tempCtx.fillStyle = backgroundColor;
+  tempCtx.fillRect(0, 0, targetWidth, targetHeight);
+  tempCtx.drawImage(originalCanvas, 0, 0, originalCanvas.width, originalCanvas.height, 0, 0, targetWidth, targetHeight);
+  return tempCanvas.toDataURL('image/png');
+}
 
 
 const handleDoneClick = () => {
@@ -517,14 +573,6 @@ const handleDoneClick = () => {
   return (
 
     <>
-    {/* 모달 */}
-    {modalOpen && (
-        <Modal
-          title="그림 확인이 필요해요 !"
-          message="집, 나무, 사람이 제대로 그려졌는지 확인해주세요."
-          close={handleModalClose} // 모달을 닫는 핸들러를 전달
-        />
-      )}
     {isLoading ? (
         <Loading />
       ) : (

@@ -22,6 +22,16 @@ export default function Loading() {
   if(!isLoggedIn){
     navigate('/');
   }
+
+  // 모달을 12초 후에 자동으로 열기
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setModalOpen(true); // 12초 후 모달 열기
+    }, 16000);
+
+    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 해제
+  }, []);
+
   
   const handleModalOpen = () => {
     setModalOpen(true); // 모달을 열기 위해 상태를 변경하는 함수
