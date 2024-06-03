@@ -546,11 +546,14 @@ const uploadImageToServer = async () => {
 };
 
 // 이미지 크기 조정을 위한 함수
-function resizeCanvasImage(originalCanvas, targetWidth, targetHeight) {
+function resizeCanvasImage(originalCanvas, targetWidth, targetHeight, backgroundColor='white') {
   const tempCanvas = document.createElement('canvas');
   const tempCtx = tempCanvas.getContext('2d');
   tempCanvas.width = targetWidth;
   tempCanvas.height = targetHeight;
+  // 배경색 설정
+  tempCtx.fillStyle = backgroundColor;
+  tempCtx.fillRect(0, 0, targetWidth, targetHeight);
   tempCtx.drawImage(originalCanvas, 0, 0, originalCanvas.width, originalCanvas.height, 0, 0, targetWidth, targetHeight);
   return tempCanvas.toDataURL('image/png');
 }
@@ -561,7 +564,7 @@ const handleDoneClick = () => {
   //addWhiteBack(signatureCanvasRef.current);
   const imageData = signatureCanvasRef.current.toDataURL('image/png');
     Navigate('/loading', { state: { imageData } });
-    uploadImageToServer(imageData); // 서버로 이미지 전송
+    //uploadImageToServer(imageData); // 서버로 이미지 전송
    // handleTokenClear(); //캔버스 토큰 삭제
   uploadImageToServer(); // 서버로 이미지 전송
 };
