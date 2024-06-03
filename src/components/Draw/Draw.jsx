@@ -508,7 +508,7 @@ const uploadImageToServer = async () => {
     // 화면 크기가 768px 미만인 경우, 이미지 크기를 조정합니다.
     if (window.innerWidth < 768) {
       // 원본 캔버스에서 이미지를 크게 조정
-      imageData = resizeCanvasImage(canvas, 500, 500); // 모바일에서는 800x600 크기로 조정
+      imageData = resizeCanvasImage(canvas, 500, 500, 'white'); // 모바일에서는 800x600 크기로 조정
     }
 
     const blob = dataURLtoBlob(imageData);
@@ -564,7 +564,7 @@ const handleDoneClick = () => {
   //addWhiteBack(signatureCanvasRef.current);
   const imageData = signatureCanvasRef.current.toDataURL('image/png');
     Navigate('/loading', { state: { imageData } });
-    //uploadImageToServer(imageData); // 서버로 이미지 전송
+    uploadImageToServer(imageData); // 서버로 이미지 전송
    // handleTokenClear(); //캔버스 토큰 삭제
   uploadImageToServer(); // 서버로 이미지 전송
 };
